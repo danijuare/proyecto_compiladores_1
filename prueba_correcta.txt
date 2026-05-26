@@ -1,0 +1,13 @@
+Programa prueba(){
+    entero a;
+    entero b;
+
+    a = Ingresar("Ingrese a");
+    b = Ingresar("Ingrese b");
+
+    si (a > b){
+        Imprimir("El numero mayor es". a);
+    }delocontrario{
+        Imprimir("El numero mayor es". b);
+    }
+}

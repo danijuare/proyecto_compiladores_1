@@ -1,0 +1,3577 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    FUNCION
+    HACER
+    PARA
+    PROCEDIMIENTO
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> PROGRAMA ID PARIZQ PARDER LLAVEIZQ sentencias LLAVEDER
+Rule 2     sentencias -> sentencias sentencia
+Rule 3     sentencias -> sentencia
+Rule 4     sentencias -> empty
+Rule 5     sentencia -> declaracion
+Rule 6     sentencia -> declaracion_arreglo
+Rule 7     sentencia -> asignacion
+Rule 8     sentencia -> imprimir
+Rule 9     sentencia -> ingresar
+Rule 10    sentencia -> si
+Rule 11    sentencia -> mientras
+Rule 12    sentencia -> casos
+Rule 13    sentencia -> retornar
+Rule 14    sentencia -> funcion
+Rule 15    sentencia -> procedimiento
+Rule 16    tipo -> ENTERO
+Rule 17    tipo -> DECIMAL
+Rule 18    tipo -> DOBLE
+Rule 19    tipo -> CARACTER
+Rule 20    tipo -> BOLEANO
+Rule 21    declaracion -> tipo ID PUNTOCOMA
+Rule 22    declaracion -> CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+Rule 23    declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+Rule 24    dimensiones -> NUMERO
+Rule 25    dimensiones -> dimensiones COMA NUMERO
+Rule 26    asignacion -> ID IGUAL expresion PUNTOCOMA
+Rule 27    asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+Rule 28    ingresar -> INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+Rule 29    imprimir -> IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+Rule 30    parametros -> expresion
+Rule 31    parametros -> parametros COMA expresion
+Rule 32    parametros -> parametros PUNTO expresion
+Rule 33    parametros -> empty
+Rule 34    si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+Rule 35    si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+Rule 36    mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+Rule 37    casos -> CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+Rule 38    lista_casos -> lista_casos caso
+Rule 39    lista_casos -> caso
+Rule 40    caso -> CASO NUMERO DOSPUNTOS sentencias PARAR PUNTOCOMA
+Rule 41    defecto -> DEFECTO DOSPUNTOS sentencias
+Rule 42    defecto -> empty
+Rule 43    funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+Rule 44    procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+Rule 45    parametros_funcion -> tipo ID
+Rule 46    parametros_funcion -> parametros_funcion COMA tipo ID
+Rule 47    parametros_funcion -> empty
+Rule 48    retornar -> RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+Rule 49    condicion -> expresion operador_relacional expresion
+Rule 50    condicion -> VERDADERO
+Rule 51    operador_relacional -> MAYOR
+Rule 52    operador_relacional -> MENOR
+Rule 53    operador_relacional -> MAYORIGUAL
+Rule 54    operador_relacional -> MENORIGUAL
+Rule 55    operador_relacional -> IGUALIGUAL
+Rule 56    operador_relacional -> DIFERENTE
+Rule 57    expresion -> expresion MAS termino
+Rule 58    expresion -> expresion MENOS termino
+Rule 59    expresion -> termino
+Rule 60    termino -> termino POR factor
+Rule 61    termino -> termino DIVIDIDO factor
+Rule 62    termino -> factor
+Rule 63    factor -> NUMERO
+Rule 64    factor -> CADENA
+Rule 65    factor -> ID
+Rule 66    factor -> VERDADERO
+Rule 67    factor -> PARIZQ expresion PARDER
+Rule 68    empty -> <empty>
+
+Terminals, with rules where they appear
+
+BOLEANO              : 20
+CADENA               : 64
+CARACTER             : 19
+CASO                 : 40
+CASOS                : 37
+COMA                 : 25 31 46
+CONSTANTE            : 22
+CORCHETEDER          : 23
+CORCHETEIZQ          : 23
+DECIMAL              : 17
+DEFECTO              : 41
+DELOCONTRARIO        : 35
+DIFERENTE            : 56
+DIVIDIDO             : 61
+DOBLE                : 18
+DOSPUNTOS            : 40 41
+ENTERO               : 16
+FUNCION              : 
+HACER                : 
+ID                   : 1 21 22 23 26 27 37 43 44 45 46 65
+IGUAL                : 22 26 27
+IGUALIGUAL           : 55
+IMPRIMIR             : 29
+INGRESAR             : 27 28
+LLAVEDER             : 1 34 35 35 36 37 43 44
+LLAVEIZQ             : 1 34 35 35 36 37 43 44
+MAS                  : 57
+MAYOR                : 51
+MAYORIGUAL           : 53
+MENOR                : 52
+MENORIGUAL           : 54
+MENOS                : 58
+MIENTRAS             : 36
+NUMERO               : 24 25 40 63
+PARA                 : 
+PARAR                : 40
+PARDER               : 1 27 28 29 34 35 36 43 44 48 67
+PARIZQ               : 1 27 28 29 34 35 36 43 44 48 67
+POR                  : 60
+PROCEDIMIENTO        : 
+PROGRAMA             : 1
+PUNTO                : 32
+PUNTOCOMA            : 21 22 23 26 27 28 29 40 48
+RETORNAR             : 48
+SI                   : 34 35
+VERDADERO            : 50 66
+error                : 
+
+Nonterminals, with rules where they appear
+
+asignacion           : 7
+caso                 : 38 39
+casos                : 12
+condicion            : 34 35 36
+declaracion          : 5
+declaracion_arreglo  : 6
+defecto              : 37
+dimensiones          : 23 25
+empty                : 4 33 42 47
+expresion            : 22 26 30 31 32 48 49 49 57 58 67
+factor               : 60 61 62
+funcion              : 14
+imprimir             : 8
+ingresar             : 9
+lista_casos          : 37 38
+mientras             : 11
+operador_relacional  : 49
+parametros           : 27 28 29 31 32
+parametros_funcion   : 43 44 46
+procedimiento        : 15
+programa             : 0
+retornar             : 13
+sentencia            : 2 3
+sentencias           : 1 2 34 35 35 36 40 41 43 44
+si                   : 10
+termino              : 57 58 59 60 61
+tipo                 : 21 22 23 43 45 46
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . PROGRAMA ID PARIZQ PARDER LLAVEIZQ sentencias LLAVEDER
+
+    PROGRAMA        shift and go to state 2
+
+    programa                       shift and go to state 1
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> PROGRAMA . ID PARIZQ PARDER LLAVEIZQ sentencias LLAVEDER
+
+    ID              shift and go to state 3
+
+
+state 3
+
+    (1) programa -> PROGRAMA ID . PARIZQ PARDER LLAVEIZQ sentencias LLAVEDER
+
+    PARIZQ          shift and go to state 4
+
+
+state 4
+
+    (1) programa -> PROGRAMA ID PARIZQ . PARDER LLAVEIZQ sentencias LLAVEDER
+
+    PARDER          shift and go to state 5
+
+
+state 5
+
+    (1) programa -> PROGRAMA ID PARIZQ PARDER . LLAVEIZQ sentencias LLAVEDER
+
+    LLAVEIZQ        shift and go to state 6
+
+
+state 6
+
+    (1) programa -> PROGRAMA ID PARIZQ PARDER LLAVEIZQ . sentencias LLAVEDER
+    (2) sentencias -> . sentencias sentencia
+    (3) sentencias -> . sentencia
+    (4) sentencias -> . empty
+    (5) sentencia -> . declaracion
+    (6) sentencia -> . declaracion_arreglo
+    (7) sentencia -> . asignacion
+    (8) sentencia -> . imprimir
+    (9) sentencia -> . ingresar
+    (10) sentencia -> . si
+    (11) sentencia -> . mientras
+    (12) sentencia -> . casos
+    (13) sentencia -> . retornar
+    (14) sentencia -> . funcion
+    (15) sentencia -> . procedimiento
+    (68) empty -> .
+    (21) declaracion -> . tipo ID PUNTOCOMA
+    (22) declaracion -> . CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    (23) declaracion_arreglo -> . tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (26) asignacion -> . ID IGUAL expresion PUNTOCOMA
+    (27) asignacion -> . ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (29) imprimir -> . IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+    (28) ingresar -> . INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (34) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (36) mientras -> . MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (37) casos -> . CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+    (48) retornar -> . RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+    (43) funcion -> . tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (44) procedimiento -> . ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+  ! shift/reduce conflict for CONSTANTE resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IMPRIMIR resolved as shift
+  ! shift/reduce conflict for INGRESAR resolved as shift
+  ! shift/reduce conflict for SI resolved as shift
+  ! shift/reduce conflict for MIENTRAS resolved as shift
+  ! shift/reduce conflict for CASOS resolved as shift
+  ! shift/reduce conflict for RETORNAR resolved as shift
+  ! shift/reduce conflict for ENTERO resolved as shift
+  ! shift/reduce conflict for DECIMAL resolved as shift
+  ! shift/reduce conflict for DOBLE resolved as shift
+  ! shift/reduce conflict for CARACTER resolved as shift
+  ! shift/reduce conflict for BOLEANO resolved as shift
+    LLAVEDER        reduce using rule 68 (empty -> .)
+    CONSTANTE       shift and go to state 23
+    ID              shift and go to state 7
+    IMPRIMIR        shift and go to state 25
+    INGRESAR        shift and go to state 24
+    SI              shift and go to state 26
+    MIENTRAS        shift and go to state 27
+    CASOS           shift and go to state 28
+    RETORNAR        shift and go to state 29
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+  ! CONSTANTE       [ reduce using rule 68 (empty -> .) ]
+  ! ID              [ reduce using rule 68 (empty -> .) ]
+  ! IMPRIMIR        [ reduce using rule 68 (empty -> .) ]
+  ! INGRESAR        [ reduce using rule 68 (empty -> .) ]
+  ! SI              [ reduce using rule 68 (empty -> .) ]
+  ! MIENTRAS        [ reduce using rule 68 (empty -> .) ]
+  ! CASOS           [ reduce using rule 68 (empty -> .) ]
+  ! RETORNAR        [ reduce using rule 68 (empty -> .) ]
+  ! ENTERO          [ reduce using rule 68 (empty -> .) ]
+  ! DECIMAL         [ reduce using rule 68 (empty -> .) ]
+  ! DOBLE           [ reduce using rule 68 (empty -> .) ]
+  ! CARACTER        [ reduce using rule 68 (empty -> .) ]
+  ! BOLEANO         [ reduce using rule 68 (empty -> .) ]
+
+    sentencias                     shift and go to state 8
+    sentencia                      shift and go to state 9
+    empty                          shift and go to state 10
+    declaracion                    shift and go to state 11
+    declaracion_arreglo            shift and go to state 12
+    asignacion                     shift and go to state 13
+    imprimir                       shift and go to state 14
+    ingresar                       shift and go to state 15
+    si                             shift and go to state 16
+    mientras                       shift and go to state 17
+    casos                          shift and go to state 18
+    retornar                       shift and go to state 19
+    funcion                        shift and go to state 20
+    procedimiento                  shift and go to state 21
+    tipo                           shift and go to state 22
+
+state 7
+
+    (26) asignacion -> ID . IGUAL expresion PUNTOCOMA
+    (27) asignacion -> ID . IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (44) procedimiento -> ID . PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+
+    IGUAL           shift and go to state 35
+    PARIZQ          shift and go to state 36
+
+
+state 8
+
+    (1) programa -> PROGRAMA ID PARIZQ PARDER LLAVEIZQ sentencias . LLAVEDER
+    (2) sentencias -> sentencias . sentencia
+    (5) sentencia -> . declaracion
+    (6) sentencia -> . declaracion_arreglo
+    (7) sentencia -> . asignacion
+    (8) sentencia -> . imprimir
+    (9) sentencia -> . ingresar
+    (10) sentencia -> . si
+    (11) sentencia -> . mientras
+    (12) sentencia -> . casos
+    (13) sentencia -> . retornar
+    (14) sentencia -> . funcion
+    (15) sentencia -> . procedimiento
+    (21) declaracion -> . tipo ID PUNTOCOMA
+    (22) declaracion -> . CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    (23) declaracion_arreglo -> . tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (26) asignacion -> . ID IGUAL expresion PUNTOCOMA
+    (27) asignacion -> . ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (29) imprimir -> . IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+    (28) ingresar -> . INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (34) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (36) mientras -> . MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (37) casos -> . CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+    (48) retornar -> . RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+    (43) funcion -> . tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (44) procedimiento -> . ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+    LLAVEDER        shift and go to state 37
+    CONSTANTE       shift and go to state 23
+    ID              shift and go to state 7
+    IMPRIMIR        shift and go to state 25
+    INGRESAR        shift and go to state 24
+    SI              shift and go to state 26
+    MIENTRAS        shift and go to state 27
+    CASOS           shift and go to state 28
+    RETORNAR        shift and go to state 29
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+    sentencia                      shift and go to state 38
+    declaracion                    shift and go to state 11
+    declaracion_arreglo            shift and go to state 12
+    asignacion                     shift and go to state 13
+    imprimir                       shift and go to state 14
+    ingresar                       shift and go to state 15
+    si                             shift and go to state 16
+    mientras                       shift and go to state 17
+    casos                          shift and go to state 18
+    retornar                       shift and go to state 19
+    funcion                        shift and go to state 20
+    procedimiento                  shift and go to state 21
+    tipo                           shift and go to state 22
+
+state 9
+
+    (3) sentencias -> sentencia .
+
+    LLAVEDER        reduce using rule 3 (sentencias -> sentencia .)
+    CONSTANTE       reduce using rule 3 (sentencias -> sentencia .)
+    ID              reduce using rule 3 (sentencias -> sentencia .)
+    IMPRIMIR        reduce using rule 3 (sentencias -> sentencia .)
+    INGRESAR        reduce using rule 3 (sentencias -> sentencia .)
+    SI              reduce using rule 3 (sentencias -> sentencia .)
+    MIENTRAS        reduce using rule 3 (sentencias -> sentencia .)
+    CASOS           reduce using rule 3 (sentencias -> sentencia .)
+    RETORNAR        reduce using rule 3 (sentencias -> sentencia .)
+    ENTERO          reduce using rule 3 (sentencias -> sentencia .)
+    DECIMAL         reduce using rule 3 (sentencias -> sentencia .)
+    DOBLE           reduce using rule 3 (sentencias -> sentencia .)
+    CARACTER        reduce using rule 3 (sentencias -> sentencia .)
+    BOLEANO         reduce using rule 3 (sentencias -> sentencia .)
+    PARAR           reduce using rule 3 (sentencias -> sentencia .)
+
+
+state 10
+
+    (4) sentencias -> empty .
+
+    LLAVEDER        reduce using rule 4 (sentencias -> empty .)
+    CONSTANTE       reduce using rule 4 (sentencias -> empty .)
+    ID              reduce using rule 4 (sentencias -> empty .)
+    IMPRIMIR        reduce using rule 4 (sentencias -> empty .)
+    INGRESAR        reduce using rule 4 (sentencias -> empty .)
+    SI              reduce using rule 4 (sentencias -> empty .)
+    MIENTRAS        reduce using rule 4 (sentencias -> empty .)
+    CASOS           reduce using rule 4 (sentencias -> empty .)
+    RETORNAR        reduce using rule 4 (sentencias -> empty .)
+    ENTERO          reduce using rule 4 (sentencias -> empty .)
+    DECIMAL         reduce using rule 4 (sentencias -> empty .)
+    DOBLE           reduce using rule 4 (sentencias -> empty .)
+    CARACTER        reduce using rule 4 (sentencias -> empty .)
+    BOLEANO         reduce using rule 4 (sentencias -> empty .)
+    PARAR           reduce using rule 4 (sentencias -> empty .)
+
+
+state 11
+
+    (5) sentencia -> declaracion .
+
+    LLAVEDER        reduce using rule 5 (sentencia -> declaracion .)
+    CONSTANTE       reduce using rule 5 (sentencia -> declaracion .)
+    ID              reduce using rule 5 (sentencia -> declaracion .)
+    IMPRIMIR        reduce using rule 5 (sentencia -> declaracion .)
+    INGRESAR        reduce using rule 5 (sentencia -> declaracion .)
+    SI              reduce using rule 5 (sentencia -> declaracion .)
+    MIENTRAS        reduce using rule 5 (sentencia -> declaracion .)
+    CASOS           reduce using rule 5 (sentencia -> declaracion .)
+    RETORNAR        reduce using rule 5 (sentencia -> declaracion .)
+    ENTERO          reduce using rule 5 (sentencia -> declaracion .)
+    DECIMAL         reduce using rule 5 (sentencia -> declaracion .)
+    DOBLE           reduce using rule 5 (sentencia -> declaracion .)
+    CARACTER        reduce using rule 5 (sentencia -> declaracion .)
+    BOLEANO         reduce using rule 5 (sentencia -> declaracion .)
+    PARAR           reduce using rule 5 (sentencia -> declaracion .)
+
+
+state 12
+
+    (6) sentencia -> declaracion_arreglo .
+
+    LLAVEDER        reduce using rule 6 (sentencia -> declaracion_arreglo .)
+    CONSTANTE       reduce using rule 6 (sentencia -> declaracion_arreglo .)
+    ID              reduce using rule 6 (sentencia -> declaracion_arreglo .)
+    IMPRIMIR        reduce using rule 6 (sentencia -> declaracion_arreglo .)
+    INGRESAR        reduce using rule 6 (sentencia -> declaracion_arreglo .)
+    SI              reduce using rule 6 (sentencia -> declaracion_arreglo .)
+    MIENTRAS        reduce using rule 6 (sentencia -> declaracion_arreglo .)
+    CASOS           reduce using rule 6 (sentencia -> declaracion_arreglo .)
+    RETORNAR        reduce using rule 6 (sentencia -> declaracion_arreglo .)
+    ENTERO          reduce using rule 6 (sentencia -> declaracion_arreglo .)
+    DECIMAL         reduce using rule 6 (sentencia -> declaracion_arreglo .)
+    DOBLE           reduce using rule 6 (sentencia -> declaracion_arreglo .)
+    CARACTER        reduce using rule 6 (sentencia -> declaracion_arreglo .)
+    BOLEANO         reduce using rule 6 (sentencia -> declaracion_arreglo .)
+    PARAR           reduce using rule 6 (sentencia -> declaracion_arreglo .)
+
+
+state 13
+
+    (7) sentencia -> asignacion .
+
+    LLAVEDER        reduce using rule 7 (sentencia -> asignacion .)
+    CONSTANTE       reduce using rule 7 (sentencia -> asignacion .)
+    ID              reduce using rule 7 (sentencia -> asignacion .)
+    IMPRIMIR        reduce using rule 7 (sentencia -> asignacion .)
+    INGRESAR        reduce using rule 7 (sentencia -> asignacion .)
+    SI              reduce using rule 7 (sentencia -> asignacion .)
+    MIENTRAS        reduce using rule 7 (sentencia -> asignacion .)
+    CASOS           reduce using rule 7 (sentencia -> asignacion .)
+    RETORNAR        reduce using rule 7 (sentencia -> asignacion .)
+    ENTERO          reduce using rule 7 (sentencia -> asignacion .)
+    DECIMAL         reduce using rule 7 (sentencia -> asignacion .)
+    DOBLE           reduce using rule 7 (sentencia -> asignacion .)
+    CARACTER        reduce using rule 7 (sentencia -> asignacion .)
+    BOLEANO         reduce using rule 7 (sentencia -> asignacion .)
+    PARAR           reduce using rule 7 (sentencia -> asignacion .)
+
+
+state 14
+
+    (8) sentencia -> imprimir .
+
+    LLAVEDER        reduce using rule 8 (sentencia -> imprimir .)
+    CONSTANTE       reduce using rule 8 (sentencia -> imprimir .)
+    ID              reduce using rule 8 (sentencia -> imprimir .)
+    IMPRIMIR        reduce using rule 8 (sentencia -> imprimir .)
+    INGRESAR        reduce using rule 8 (sentencia -> imprimir .)
+    SI              reduce using rule 8 (sentencia -> imprimir .)
+    MIENTRAS        reduce using rule 8 (sentencia -> imprimir .)
+    CASOS           reduce using rule 8 (sentencia -> imprimir .)
+    RETORNAR        reduce using rule 8 (sentencia -> imprimir .)
+    ENTERO          reduce using rule 8 (sentencia -> imprimir .)
+    DECIMAL         reduce using rule 8 (sentencia -> imprimir .)
+    DOBLE           reduce using rule 8 (sentencia -> imprimir .)
+    CARACTER        reduce using rule 8 (sentencia -> imprimir .)
+    BOLEANO         reduce using rule 8 (sentencia -> imprimir .)
+    PARAR           reduce using rule 8 (sentencia -> imprimir .)
+
+
+state 15
+
+    (9) sentencia -> ingresar .
+
+    LLAVEDER        reduce using rule 9 (sentencia -> ingresar .)
+    CONSTANTE       reduce using rule 9 (sentencia -> ingresar .)
+    ID              reduce using rule 9 (sentencia -> ingresar .)
+    IMPRIMIR        reduce using rule 9 (sentencia -> ingresar .)
+    INGRESAR        reduce using rule 9 (sentencia -> ingresar .)
+    SI              reduce using rule 9 (sentencia -> ingresar .)
+    MIENTRAS        reduce using rule 9 (sentencia -> ingresar .)
+    CASOS           reduce using rule 9 (sentencia -> ingresar .)
+    RETORNAR        reduce using rule 9 (sentencia -> ingresar .)
+    ENTERO          reduce using rule 9 (sentencia -> ingresar .)
+    DECIMAL         reduce using rule 9 (sentencia -> ingresar .)
+    DOBLE           reduce using rule 9 (sentencia -> ingresar .)
+    CARACTER        reduce using rule 9 (sentencia -> ingresar .)
+    BOLEANO         reduce using rule 9 (sentencia -> ingresar .)
+    PARAR           reduce using rule 9 (sentencia -> ingresar .)
+
+
+state 16
+
+    (10) sentencia -> si .
+
+    LLAVEDER        reduce using rule 10 (sentencia -> si .)
+    CONSTANTE       reduce using rule 10 (sentencia -> si .)
+    ID              reduce using rule 10 (sentencia -> si .)
+    IMPRIMIR        reduce using rule 10 (sentencia -> si .)
+    INGRESAR        reduce using rule 10 (sentencia -> si .)
+    SI              reduce using rule 10 (sentencia -> si .)
+    MIENTRAS        reduce using rule 10 (sentencia -> si .)
+    CASOS           reduce using rule 10 (sentencia -> si .)
+    RETORNAR        reduce using rule 10 (sentencia -> si .)
+    ENTERO          reduce using rule 10 (sentencia -> si .)
+    DECIMAL         reduce using rule 10 (sentencia -> si .)
+    DOBLE           reduce using rule 10 (sentencia -> si .)
+    CARACTER        reduce using rule 10 (sentencia -> si .)
+    BOLEANO         reduce using rule 10 (sentencia -> si .)
+    PARAR           reduce using rule 10 (sentencia -> si .)
+
+
+state 17
+
+    (11) sentencia -> mientras .
+
+    LLAVEDER        reduce using rule 11 (sentencia -> mientras .)
+    CONSTANTE       reduce using rule 11 (sentencia -> mientras .)
+    ID              reduce using rule 11 (sentencia -> mientras .)
+    IMPRIMIR        reduce using rule 11 (sentencia -> mientras .)
+    INGRESAR        reduce using rule 11 (sentencia -> mientras .)
+    SI              reduce using rule 11 (sentencia -> mientras .)
+    MIENTRAS        reduce using rule 11 (sentencia -> mientras .)
+    CASOS           reduce using rule 11 (sentencia -> mientras .)
+    RETORNAR        reduce using rule 11 (sentencia -> mientras .)
+    ENTERO          reduce using rule 11 (sentencia -> mientras .)
+    DECIMAL         reduce using rule 11 (sentencia -> mientras .)
+    DOBLE           reduce using rule 11 (sentencia -> mientras .)
+    CARACTER        reduce using rule 11 (sentencia -> mientras .)
+    BOLEANO         reduce using rule 11 (sentencia -> mientras .)
+    PARAR           reduce using rule 11 (sentencia -> mientras .)
+
+
+state 18
+
+    (12) sentencia -> casos .
+
+    LLAVEDER        reduce using rule 12 (sentencia -> casos .)
+    CONSTANTE       reduce using rule 12 (sentencia -> casos .)
+    ID              reduce using rule 12 (sentencia -> casos .)
+    IMPRIMIR        reduce using rule 12 (sentencia -> casos .)
+    INGRESAR        reduce using rule 12 (sentencia -> casos .)
+    SI              reduce using rule 12 (sentencia -> casos .)
+    MIENTRAS        reduce using rule 12 (sentencia -> casos .)
+    CASOS           reduce using rule 12 (sentencia -> casos .)
+    RETORNAR        reduce using rule 12 (sentencia -> casos .)
+    ENTERO          reduce using rule 12 (sentencia -> casos .)
+    DECIMAL         reduce using rule 12 (sentencia -> casos .)
+    DOBLE           reduce using rule 12 (sentencia -> casos .)
+    CARACTER        reduce using rule 12 (sentencia -> casos .)
+    BOLEANO         reduce using rule 12 (sentencia -> casos .)
+    PARAR           reduce using rule 12 (sentencia -> casos .)
+
+
+state 19
+
+    (13) sentencia -> retornar .
+
+    LLAVEDER        reduce using rule 13 (sentencia -> retornar .)
+    CONSTANTE       reduce using rule 13 (sentencia -> retornar .)
+    ID              reduce using rule 13 (sentencia -> retornar .)
+    IMPRIMIR        reduce using rule 13 (sentencia -> retornar .)
+    INGRESAR        reduce using rule 13 (sentencia -> retornar .)
+    SI              reduce using rule 13 (sentencia -> retornar .)
+    MIENTRAS        reduce using rule 13 (sentencia -> retornar .)
+    CASOS           reduce using rule 13 (sentencia -> retornar .)
+    RETORNAR        reduce using rule 13 (sentencia -> retornar .)
+    ENTERO          reduce using rule 13 (sentencia -> retornar .)
+    DECIMAL         reduce using rule 13 (sentencia -> retornar .)
+    DOBLE           reduce using rule 13 (sentencia -> retornar .)
+    CARACTER        reduce using rule 13 (sentencia -> retornar .)
+    BOLEANO         reduce using rule 13 (sentencia -> retornar .)
+    PARAR           reduce using rule 13 (sentencia -> retornar .)
+
+
+state 20
+
+    (14) sentencia -> funcion .
+
+    LLAVEDER        reduce using rule 14 (sentencia -> funcion .)
+    CONSTANTE       reduce using rule 14 (sentencia -> funcion .)
+    ID              reduce using rule 14 (sentencia -> funcion .)
+    IMPRIMIR        reduce using rule 14 (sentencia -> funcion .)
+    INGRESAR        reduce using rule 14 (sentencia -> funcion .)
+    SI              reduce using rule 14 (sentencia -> funcion .)
+    MIENTRAS        reduce using rule 14 (sentencia -> funcion .)
+    CASOS           reduce using rule 14 (sentencia -> funcion .)
+    RETORNAR        reduce using rule 14 (sentencia -> funcion .)
+    ENTERO          reduce using rule 14 (sentencia -> funcion .)
+    DECIMAL         reduce using rule 14 (sentencia -> funcion .)
+    DOBLE           reduce using rule 14 (sentencia -> funcion .)
+    CARACTER        reduce using rule 14 (sentencia -> funcion .)
+    BOLEANO         reduce using rule 14 (sentencia -> funcion .)
+    PARAR           reduce using rule 14 (sentencia -> funcion .)
+
+
+state 21
+
+    (15) sentencia -> procedimiento .
+
+    LLAVEDER        reduce using rule 15 (sentencia -> procedimiento .)
+    CONSTANTE       reduce using rule 15 (sentencia -> procedimiento .)
+    ID              reduce using rule 15 (sentencia -> procedimiento .)
+    IMPRIMIR        reduce using rule 15 (sentencia -> procedimiento .)
+    INGRESAR        reduce using rule 15 (sentencia -> procedimiento .)
+    SI              reduce using rule 15 (sentencia -> procedimiento .)
+    MIENTRAS        reduce using rule 15 (sentencia -> procedimiento .)
+    CASOS           reduce using rule 15 (sentencia -> procedimiento .)
+    RETORNAR        reduce using rule 15 (sentencia -> procedimiento .)
+    ENTERO          reduce using rule 15 (sentencia -> procedimiento .)
+    DECIMAL         reduce using rule 15 (sentencia -> procedimiento .)
+    DOBLE           reduce using rule 15 (sentencia -> procedimiento .)
+    CARACTER        reduce using rule 15 (sentencia -> procedimiento .)
+    BOLEANO         reduce using rule 15 (sentencia -> procedimiento .)
+    PARAR           reduce using rule 15 (sentencia -> procedimiento .)
+
+
+state 22
+
+    (21) declaracion -> tipo . ID PUNTOCOMA
+    (23) declaracion_arreglo -> tipo . ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (43) funcion -> tipo . ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+
+    ID              shift and go to state 39
+
+
+state 23
+
+    (22) declaracion -> CONSTANTE . tipo ID IGUAL expresion PUNTOCOMA
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+    tipo                           shift and go to state 40
+
+state 24
+
+    (28) ingresar -> INGRESAR . PARIZQ parametros PARDER PUNTOCOMA
+
+    PARIZQ          shift and go to state 41
+
+
+state 25
+
+    (29) imprimir -> IMPRIMIR . PARIZQ parametros PARDER PUNTOCOMA
+
+    PARIZQ          shift and go to state 42
+
+
+state 26
+
+    (34) si -> SI . PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> SI . PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+
+    PARIZQ          shift and go to state 43
+
+
+state 27
+
+    (36) mientras -> MIENTRAS . PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+
+    PARIZQ          shift and go to state 44
+
+
+state 28
+
+    (37) casos -> CASOS . ID LLAVEIZQ lista_casos defecto LLAVEDER
+
+    ID              shift and go to state 45
+
+
+state 29
+
+    (48) retornar -> RETORNAR . PARIZQ expresion PARDER PUNTOCOMA
+
+    PARIZQ          shift and go to state 46
+
+
+state 30
+
+    (16) tipo -> ENTERO .
+
+    ID              reduce using rule 16 (tipo -> ENTERO .)
+
+
+state 31
+
+    (17) tipo -> DECIMAL .
+
+    ID              reduce using rule 17 (tipo -> DECIMAL .)
+
+
+state 32
+
+    (18) tipo -> DOBLE .
+
+    ID              reduce using rule 18 (tipo -> DOBLE .)
+
+
+state 33
+
+    (19) tipo -> CARACTER .
+
+    ID              reduce using rule 19 (tipo -> CARACTER .)
+
+
+state 34
+
+    (20) tipo -> BOLEANO .
+
+    ID              reduce using rule 20 (tipo -> BOLEANO .)
+
+
+state 35
+
+    (26) asignacion -> ID IGUAL . expresion PUNTOCOMA
+    (27) asignacion -> ID IGUAL . INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (57) expresion -> . expresion MAS termino
+    (58) expresion -> . expresion MENOS termino
+    (59) expresion -> . termino
+    (60) termino -> . termino POR factor
+    (61) termino -> . termino DIVIDIDO factor
+    (62) termino -> . factor
+    (63) factor -> . NUMERO
+    (64) factor -> . CADENA
+    (65) factor -> . ID
+    (66) factor -> . VERDADERO
+    (67) factor -> . PARIZQ expresion PARDER
+
+    INGRESAR        shift and go to state 49
+    NUMERO          shift and go to state 53
+    CADENA          shift and go to state 54
+    ID              shift and go to state 47
+    VERDADERO       shift and go to state 55
+    PARIZQ          shift and go to state 50
+
+    expresion                      shift and go to state 48
+    termino                        shift and go to state 51
+    factor                         shift and go to state 52
+
+state 36
+
+    (44) procedimiento -> ID PARIZQ . parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (45) parametros_funcion -> . tipo ID
+    (46) parametros_funcion -> . parametros_funcion COMA tipo ID
+    (47) parametros_funcion -> . empty
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+    (68) empty -> .
+
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+    PARDER          reduce using rule 68 (empty -> .)
+    COMA            reduce using rule 68 (empty -> .)
+
+    parametros_funcion             shift and go to state 56
+    tipo                           shift and go to state 57
+    empty                          shift and go to state 58
+
+state 37
+
+    (1) programa -> PROGRAMA ID PARIZQ PARDER LLAVEIZQ sentencias LLAVEDER .
+
+    $end            reduce using rule 1 (programa -> PROGRAMA ID PARIZQ PARDER LLAVEIZQ sentencias LLAVEDER .)
+
+
+state 38
+
+    (2) sentencias -> sentencias sentencia .
+
+    LLAVEDER        reduce using rule 2 (sentencias -> sentencias sentencia .)
+    CONSTANTE       reduce using rule 2 (sentencias -> sentencias sentencia .)
+    ID              reduce using rule 2 (sentencias -> sentencias sentencia .)
+    IMPRIMIR        reduce using rule 2 (sentencias -> sentencias sentencia .)
+    INGRESAR        reduce using rule 2 (sentencias -> sentencias sentencia .)
+    SI              reduce using rule 2 (sentencias -> sentencias sentencia .)
+    MIENTRAS        reduce using rule 2 (sentencias -> sentencias sentencia .)
+    CASOS           reduce using rule 2 (sentencias -> sentencias sentencia .)
+    RETORNAR        reduce using rule 2 (sentencias -> sentencias sentencia .)
+    ENTERO          reduce using rule 2 (sentencias -> sentencias sentencia .)
+    DECIMAL         reduce using rule 2 (sentencias -> sentencias sentencia .)
+    DOBLE           reduce using rule 2 (sentencias -> sentencias sentencia .)
+    CARACTER        reduce using rule 2 (sentencias -> sentencias sentencia .)
+    BOLEANO         reduce using rule 2 (sentencias -> sentencias sentencia .)
+    PARAR           reduce using rule 2 (sentencias -> sentencias sentencia .)
+
+
+state 39
+
+    (21) declaracion -> tipo ID . PUNTOCOMA
+    (23) declaracion_arreglo -> tipo ID . CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (43) funcion -> tipo ID . PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+
+    PUNTOCOMA       shift and go to state 59
+    CORCHETEIZQ     shift and go to state 60
+    PARIZQ          shift and go to state 61
+
+
+state 40
+
+    (22) declaracion -> CONSTANTE tipo . ID IGUAL expresion PUNTOCOMA
+
+    ID              shift and go to state 62
+
+
+state 41
+
+    (28) ingresar -> INGRESAR PARIZQ . parametros PARDER PUNTOCOMA
+    (30) parametros -> . expresion
+    (31) parametros -> . parametros COMA expresion
+    (32) parametros -> . parametros PUNTO expresion
+    (33) parametros -> . empty
+    (57) expresion -> . expresion MAS termino
+    (58) expresion -> . expresion MENOS termino
+    (59) expresion -> . termino
+    (68) empty -> .
+    (60) termino -> . termino POR factor
+    (61) termino -> . termino DIVIDIDO factor
+    (62) termino -> . factor
+    (63) factor -> . NUMERO
+    (64) factor -> . CADENA
+    (65) factor -> . ID
+    (66) factor -> . VERDADERO
+    (67) factor -> . PARIZQ expresion PARDER
+
+    PARDER          reduce using rule 68 (empty -> .)
+    COMA            reduce using rule 68 (empty -> .)
+    PUNTO           reduce using rule 68 (empty -> .)
+    NUMERO          shift and go to state 53
+    CADENA          shift and go to state 54
+    ID              shift and go to state 47
+    VERDADERO       shift and go to state 55
+    PARIZQ          shift and go to state 50
+
+    parametros                     shift and go to state 63
+    expresion                      shift and go to state 64
+    empty                          shift and go to state 65
+    termino                        shift and go to state 51
+    factor                         shift and go to state 52
+
+state 42
+
+    (29) imprimir -> IMPRIMIR PARIZQ . parametros PARDER PUNTOCOMA
+    (30) parametros -> . expresion
+    (31) parametros -> . parametros COMA expresion
+    (32) parametros -> . parametros PUNTO expresion
+    (33) parametros -> . empty
+    (57) expresion -> . expresion MAS termino
+    (58) expresion -> . expresion MENOS termino
+    (59) expresion -> . termino
+    (68) empty -> .
+    (60) termino -> . termino POR factor
+    (61) termino -> . termino DIVIDIDO factor
+    (62) termino -> . factor
+    (63) factor -> . NUMERO
+    (64) factor -> . CADENA
+    (65) factor -> . ID
+    (66) factor -> . VERDADERO
+    (67) factor -> . PARIZQ expresion PARDER
+
+    PARDER          reduce using rule 68 (empty -> .)
+    COMA            reduce using rule 68 (empty -> .)
+    PUNTO           reduce using rule 68 (empty -> .)
+    NUMERO          shift and go to state 53
+    CADENA          shift and go to state 54
+    ID              shift and go to state 47
+    VERDADERO       shift and go to state 55
+    PARIZQ          shift and go to state 50
+
+    parametros                     shift and go to state 66
+    expresion                      shift and go to state 64
+    empty                          shift and go to state 65
+    termino                        shift and go to state 51
+    factor                         shift and go to state 52
+
+state 43
+
+    (34) si -> SI PARIZQ . condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> SI PARIZQ . condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (49) condicion -> . expresion operador_relacional expresion
+    (50) condicion -> . VERDADERO
+    (57) expresion -> . expresion MAS termino
+    (58) expresion -> . expresion MENOS termino
+    (59) expresion -> . termino
+    (60) termino -> . termino POR factor
+    (61) termino -> . termino DIVIDIDO factor
+    (62) termino -> . factor
+    (63) factor -> . NUMERO
+    (64) factor -> . CADENA
+    (65) factor -> . ID
+    (66) factor -> . VERDADERO
+    (67) factor -> . PARIZQ expresion PARDER
+
+    VERDADERO       shift and go to state 69
+    NUMERO          shift and go to state 53
+    CADENA          shift and go to state 54
+    ID              shift and go to state 47
+    PARIZQ          shift and go to state 50
+
+    condicion                      shift and go to state 67
+    expresion                      shift and go to state 68
+    termino                        shift and go to state 51
+    factor                         shift and go to state 52
+
+state 44
+
+    (36) mientras -> MIENTRAS PARIZQ . condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (49) condicion -> . expresion operador_relacional expresion
+    (50) condicion -> . VERDADERO
+    (57) expresion -> . expresion MAS termino
+    (58) expresion -> . expresion MENOS termino
+    (59) expresion -> . termino
+    (60) termino -> . termino POR factor
+    (61) termino -> . termino DIVIDIDO factor
+    (62) termino -> . factor
+    (63) factor -> . NUMERO
+    (64) factor -> . CADENA
+    (65) factor -> . ID
+    (66) factor -> . VERDADERO
+    (67) factor -> . PARIZQ expresion PARDER
+
+    VERDADERO       shift and go to state 69
+    NUMERO          shift and go to state 53
+    CADENA          shift and go to state 54
+    ID              shift and go to state 47
+    PARIZQ          shift and go to state 50
+
+    condicion                      shift and go to state 70
+    expresion                      shift and go to state 68
+    termino                        shift and go to state 51
+    factor                         shift and go to state 52
+
+state 45
+
+    (37) casos -> CASOS ID . LLAVEIZQ lista_casos defecto LLAVEDER
+
+    LLAVEIZQ        shift and go to state 71
+
+
+state 46
+
+    (48) retornar -> RETORNAR PARIZQ . expresion PARDER PUNTOCOMA
+    (57) expresion -> . expresion MAS termino
+    (58) expresion -> . expresion MENOS termino
+    (59) expresion -> . termino
+    (60) termino -> . termino POR factor
+    (61) termino -> . termino DIVIDIDO factor
+    (62) termino -> . factor
+    (63) factor -> . NUMERO
+    (64) factor -> . CADENA
+    (65) factor -> . ID
+    (66) factor -> . VERDADERO
+    (67) factor -> . PARIZQ expresion PARDER
+
+    NUMERO          shift and go to state 53
+    CADENA          shift and go to state 54
+    ID              shift and go to state 47
+    VERDADERO       shift and go to state 55
+    PARIZQ          shift and go to state 50
+
+    expresion                      shift and go to state 72
+    termino                        shift and go to state 51
+    factor                         shift and go to state 52
+
+state 47
+
+    (65) factor -> ID .
+
+    POR             reduce using rule 65 (factor -> ID .)
+    DIVIDIDO        reduce using rule 65 (factor -> ID .)
+    PUNTOCOMA       reduce using rule 65 (factor -> ID .)
+    MAS             reduce using rule 65 (factor -> ID .)
+    MENOS           reduce using rule 65 (factor -> ID .)
+    PARDER          reduce using rule 65 (factor -> ID .)
+    COMA            reduce using rule 65 (factor -> ID .)
+    PUNTO           reduce using rule 65 (factor -> ID .)
+    MAYOR           reduce using rule 65 (factor -> ID .)
+    MENOR           reduce using rule 65 (factor -> ID .)
+    MAYORIGUAL      reduce using rule 65 (factor -> ID .)
+    MENORIGUAL      reduce using rule 65 (factor -> ID .)
+    IGUALIGUAL      reduce using rule 65 (factor -> ID .)
+    DIFERENTE       reduce using rule 65 (factor -> ID .)
+
+
+state 48
+
+    (26) asignacion -> ID IGUAL expresion . PUNTOCOMA
+    (57) expresion -> expresion . MAS termino
+    (58) expresion -> expresion . MENOS termino
+
+    PUNTOCOMA       shift and go to state 73
+    MAS             shift and go to state 74
+    MENOS           shift and go to state 75
+
+
+state 49
+
+    (27) asignacion -> ID IGUAL INGRESAR . PARIZQ parametros PARDER PUNTOCOMA
+
+    PARIZQ          shift and go to state 76
+
+
+state 50
+
+    (67) factor -> PARIZQ . expresion PARDER
+    (57) expresion -> . expresion MAS termino
+    (58) expresion -> . expresion MENOS termino
+    (59) expresion -> . termino
+    (60) termino -> . termino POR factor
+    (61) termino -> . termino DIVIDIDO factor
+    (62) termino -> . factor
+    (63) factor -> . NUMERO
+    (64) factor -> . CADENA
+    (65) factor -> . ID
+    (66) factor -> . VERDADERO
+    (67) factor -> . PARIZQ expresion PARDER
+
+    NUMERO          shift and go to state 53
+    CADENA          shift and go to state 54
+    ID              shift and go to state 47
+    VERDADERO       shift and go to state 55
+    PARIZQ          shift and go to state 50
+
+    expresion                      shift and go to state 77
+    termino                        shift and go to state 51
+    factor                         shift and go to state 52
+
+state 51
+
+    (59) expresion -> termino .
+    (60) termino -> termino . POR factor
+    (61) termino -> termino . DIVIDIDO factor
+
+    PUNTOCOMA       reduce using rule 59 (expresion -> termino .)
+    MAS             reduce using rule 59 (expresion -> termino .)
+    MENOS           reduce using rule 59 (expresion -> termino .)
+    PARDER          reduce using rule 59 (expresion -> termino .)
+    COMA            reduce using rule 59 (expresion -> termino .)
+    PUNTO           reduce using rule 59 (expresion -> termino .)
+    MAYOR           reduce using rule 59 (expresion -> termino .)
+    MENOR           reduce using rule 59 (expresion -> termino .)
+    MAYORIGUAL      reduce using rule 59 (expresion -> termino .)
+    MENORIGUAL      reduce using rule 59 (expresion -> termino .)
+    IGUALIGUAL      reduce using rule 59 (expresion -> termino .)
+    DIFERENTE       reduce using rule 59 (expresion -> termino .)
+    POR             shift and go to state 78
+    DIVIDIDO        shift and go to state 79
+
+
+state 52
+
+    (62) termino -> factor .
+
+    POR             reduce using rule 62 (termino -> factor .)
+    DIVIDIDO        reduce using rule 62 (termino -> factor .)
+    PUNTOCOMA       reduce using rule 62 (termino -> factor .)
+    MAS             reduce using rule 62 (termino -> factor .)
+    MENOS           reduce using rule 62 (termino -> factor .)
+    PARDER          reduce using rule 62 (termino -> factor .)
+    COMA            reduce using rule 62 (termino -> factor .)
+    PUNTO           reduce using rule 62 (termino -> factor .)
+    MAYOR           reduce using rule 62 (termino -> factor .)
+    MENOR           reduce using rule 62 (termino -> factor .)
+    MAYORIGUAL      reduce using rule 62 (termino -> factor .)
+    MENORIGUAL      reduce using rule 62 (termino -> factor .)
+    IGUALIGUAL      reduce using rule 62 (termino -> factor .)
+    DIFERENTE       reduce using rule 62 (termino -> factor .)
+
+
+state 53
+
+    (63) factor -> NUMERO .
+
+    POR             reduce using rule 63 (factor -> NUMERO .)
+    DIVIDIDO        reduce using rule 63 (factor -> NUMERO .)
+    PUNTOCOMA       reduce using rule 63 (factor -> NUMERO .)
+    MAS             reduce using rule 63 (factor -> NUMERO .)
+    MENOS           reduce using rule 63 (factor -> NUMERO .)
+    PARDER          reduce using rule 63 (factor -> NUMERO .)
+    COMA            reduce using rule 63 (factor -> NUMERO .)
+    PUNTO           reduce using rule 63 (factor -> NUMERO .)
+    MAYOR           reduce using rule 63 (factor -> NUMERO .)
+    MENOR           reduce using rule 63 (factor -> NUMERO .)
+    MAYORIGUAL      reduce using rule 63 (factor -> NUMERO .)
+    MENORIGUAL      reduce using rule 63 (factor -> NUMERO .)
+    IGUALIGUAL      reduce using rule 63 (factor -> NUMERO .)
+    DIFERENTE       reduce using rule 63 (factor -> NUMERO .)
+
+
+state 54
+
+    (64) factor -> CADENA .
+
+    POR             reduce using rule 64 (factor -> CADENA .)
+    DIVIDIDO        reduce using rule 64 (factor -> CADENA .)
+    PUNTOCOMA       reduce using rule 64 (factor -> CADENA .)
+    MAS             reduce using rule 64 (factor -> CADENA .)
+    MENOS           reduce using rule 64 (factor -> CADENA .)
+    PARDER          reduce using rule 64 (factor -> CADENA .)
+    COMA            reduce using rule 64 (factor -> CADENA .)
+    PUNTO           reduce using rule 64 (factor -> CADENA .)
+    MAYOR           reduce using rule 64 (factor -> CADENA .)
+    MENOR           reduce using rule 64 (factor -> CADENA .)
+    MAYORIGUAL      reduce using rule 64 (factor -> CADENA .)
+    MENORIGUAL      reduce using rule 64 (factor -> CADENA .)
+    IGUALIGUAL      reduce using rule 64 (factor -> CADENA .)
+    DIFERENTE       reduce using rule 64 (factor -> CADENA .)
+
+
+state 55
+
+    (66) factor -> VERDADERO .
+
+    POR             reduce using rule 66 (factor -> VERDADERO .)
+    DIVIDIDO        reduce using rule 66 (factor -> VERDADERO .)
+    PUNTOCOMA       reduce using rule 66 (factor -> VERDADERO .)
+    MAS             reduce using rule 66 (factor -> VERDADERO .)
+    MENOS           reduce using rule 66 (factor -> VERDADERO .)
+    PARDER          reduce using rule 66 (factor -> VERDADERO .)
+    COMA            reduce using rule 66 (factor -> VERDADERO .)
+    PUNTO           reduce using rule 66 (factor -> VERDADERO .)
+    MAYOR           reduce using rule 66 (factor -> VERDADERO .)
+    MENOR           reduce using rule 66 (factor -> VERDADERO .)
+    MAYORIGUAL      reduce using rule 66 (factor -> VERDADERO .)
+    MENORIGUAL      reduce using rule 66 (factor -> VERDADERO .)
+    IGUALIGUAL      reduce using rule 66 (factor -> VERDADERO .)
+    DIFERENTE       reduce using rule 66 (factor -> VERDADERO .)
+
+
+state 56
+
+    (44) procedimiento -> ID PARIZQ parametros_funcion . PARDER LLAVEIZQ sentencias LLAVEDER
+    (46) parametros_funcion -> parametros_funcion . COMA tipo ID
+
+    PARDER          shift and go to state 80
+    COMA            shift and go to state 81
+
+
+state 57
+
+    (45) parametros_funcion -> tipo . ID
+
+    ID              shift and go to state 82
+
+
+state 58
+
+    (47) parametros_funcion -> empty .
+
+    PARDER          reduce using rule 47 (parametros_funcion -> empty .)
+    COMA            reduce using rule 47 (parametros_funcion -> empty .)
+
+
+state 59
+
+    (21) declaracion -> tipo ID PUNTOCOMA .
+
+    LLAVEDER        reduce using rule 21 (declaracion -> tipo ID PUNTOCOMA .)
+    CONSTANTE       reduce using rule 21 (declaracion -> tipo ID PUNTOCOMA .)
+    ID              reduce using rule 21 (declaracion -> tipo ID PUNTOCOMA .)
+    IMPRIMIR        reduce using rule 21 (declaracion -> tipo ID PUNTOCOMA .)
+    INGRESAR        reduce using rule 21 (declaracion -> tipo ID PUNTOCOMA .)
+    SI              reduce using rule 21 (declaracion -> tipo ID PUNTOCOMA .)
+    MIENTRAS        reduce using rule 21 (declaracion -> tipo ID PUNTOCOMA .)
+    CASOS           reduce using rule 21 (declaracion -> tipo ID PUNTOCOMA .)
+    RETORNAR        reduce using rule 21 (declaracion -> tipo ID PUNTOCOMA .)
+    ENTERO          reduce using rule 21 (declaracion -> tipo ID PUNTOCOMA .)
+    DECIMAL         reduce using rule 21 (declaracion -> tipo ID PUNTOCOMA .)
+    DOBLE           reduce using rule 21 (declaracion -> tipo ID PUNTOCOMA .)
+    CARACTER        reduce using rule 21 (declaracion -> tipo ID PUNTOCOMA .)
+    BOLEANO         reduce using rule 21 (declaracion -> tipo ID PUNTOCOMA .)
+    PARAR           reduce using rule 21 (declaracion -> tipo ID PUNTOCOMA .)
+
+
+state 60
+
+    (23) declaracion_arreglo -> tipo ID CORCHETEIZQ . dimensiones CORCHETEDER PUNTOCOMA
+    (24) dimensiones -> . NUMERO
+    (25) dimensiones -> . dimensiones COMA NUMERO
+
+    NUMERO          shift and go to state 84
+
+    dimensiones                    shift and go to state 83
+
+state 61
+
+    (43) funcion -> tipo ID PARIZQ . parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (45) parametros_funcion -> . tipo ID
+    (46) parametros_funcion -> . parametros_funcion COMA tipo ID
+    (47) parametros_funcion -> . empty
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+    (68) empty -> .
+
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+    PARDER          reduce using rule 68 (empty -> .)
+    COMA            reduce using rule 68 (empty -> .)
+
+    tipo                           shift and go to state 57
+    parametros_funcion             shift and go to state 85
+    empty                          shift and go to state 58
+
+state 62
+
+    (22) declaracion -> CONSTANTE tipo ID . IGUAL expresion PUNTOCOMA
+
+    IGUAL           shift and go to state 86
+
+
+state 63
+
+    (28) ingresar -> INGRESAR PARIZQ parametros . PARDER PUNTOCOMA
+    (31) parametros -> parametros . COMA expresion
+    (32) parametros -> parametros . PUNTO expresion
+
+    PARDER          shift and go to state 87
+    COMA            shift and go to state 88
+    PUNTO           shift and go to state 89
+
+
+state 64
+
+    (30) parametros -> expresion .
+    (57) expresion -> expresion . MAS termino
+    (58) expresion -> expresion . MENOS termino
+
+    PARDER          reduce using rule 30 (parametros -> expresion .)
+    COMA            reduce using rule 30 (parametros -> expresion .)
+    PUNTO           reduce using rule 30 (parametros -> expresion .)
+    MAS             shift and go to state 74
+    MENOS           shift and go to state 75
+
+
+state 65
+
+    (33) parametros -> empty .
+
+    PARDER          reduce using rule 33 (parametros -> empty .)
+    COMA            reduce using rule 33 (parametros -> empty .)
+    PUNTO           reduce using rule 33 (parametros -> empty .)
+
+
+state 66
+
+    (29) imprimir -> IMPRIMIR PARIZQ parametros . PARDER PUNTOCOMA
+    (31) parametros -> parametros . COMA expresion
+    (32) parametros -> parametros . PUNTO expresion
+
+    PARDER          shift and go to state 90
+    COMA            shift and go to state 88
+    PUNTO           shift and go to state 89
+
+
+state 67
+
+    (34) si -> SI PARIZQ condicion . PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> SI PARIZQ condicion . PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+
+    PARDER          shift and go to state 91
+
+
+state 68
+
+    (49) condicion -> expresion . operador_relacional expresion
+    (57) expresion -> expresion . MAS termino
+    (58) expresion -> expresion . MENOS termino
+    (51) operador_relacional -> . MAYOR
+    (52) operador_relacional -> . MENOR
+    (53) operador_relacional -> . MAYORIGUAL
+    (54) operador_relacional -> . MENORIGUAL
+    (55) operador_relacional -> . IGUALIGUAL
+    (56) operador_relacional -> . DIFERENTE
+
+    MAS             shift and go to state 74
+    MENOS           shift and go to state 75
+    MAYOR           shift and go to state 93
+    MENOR           shift and go to state 94
+    MAYORIGUAL      shift and go to state 95
+    MENORIGUAL      shift and go to state 96
+    IGUALIGUAL      shift and go to state 97
+    DIFERENTE       shift and go to state 98
+
+    operador_relacional            shift and go to state 92
+
+state 69
+
+    (50) condicion -> VERDADERO .
+    (66) factor -> VERDADERO .
+
+    PARDER          reduce using rule 50 (condicion -> VERDADERO .)
+    POR             reduce using rule 66 (factor -> VERDADERO .)
+    DIVIDIDO        reduce using rule 66 (factor -> VERDADERO .)
+    MAS             reduce using rule 66 (factor -> VERDADERO .)
+    MENOS           reduce using rule 66 (factor -> VERDADERO .)
+    MAYOR           reduce using rule 66 (factor -> VERDADERO .)
+    MENOR           reduce using rule 66 (factor -> VERDADERO .)
+    MAYORIGUAL      reduce using rule 66 (factor -> VERDADERO .)
+    MENORIGUAL      reduce using rule 66 (factor -> VERDADERO .)
+    IGUALIGUAL      reduce using rule 66 (factor -> VERDADERO .)
+    DIFERENTE       reduce using rule 66 (factor -> VERDADERO .)
+
+
+state 70
+
+    (36) mientras -> MIENTRAS PARIZQ condicion . PARDER LLAVEIZQ sentencias LLAVEDER
+
+    PARDER          shift and go to state 99
+
+
+state 71
+
+    (37) casos -> CASOS ID LLAVEIZQ . lista_casos defecto LLAVEDER
+    (38) lista_casos -> . lista_casos caso
+    (39) lista_casos -> . caso
+    (40) caso -> . CASO NUMERO DOSPUNTOS sentencias PARAR PUNTOCOMA
+
+    CASO            shift and go to state 102
+
+    lista_casos                    shift and go to state 100
+    caso                           shift and go to state 101
+
+state 72
+
+    (48) retornar -> RETORNAR PARIZQ expresion . PARDER PUNTOCOMA
+    (57) expresion -> expresion . MAS termino
+    (58) expresion -> expresion . MENOS termino
+
+    PARDER          shift and go to state 103
+    MAS             shift and go to state 74
+    MENOS           shift and go to state 75
+
+
+state 73
+
+    (26) asignacion -> ID IGUAL expresion PUNTOCOMA .
+
+    LLAVEDER        reduce using rule 26 (asignacion -> ID IGUAL expresion PUNTOCOMA .)
+    CONSTANTE       reduce using rule 26 (asignacion -> ID IGUAL expresion PUNTOCOMA .)
+    ID              reduce using rule 26 (asignacion -> ID IGUAL expresion PUNTOCOMA .)
+    IMPRIMIR        reduce using rule 26 (asignacion -> ID IGUAL expresion PUNTOCOMA .)
+    INGRESAR        reduce using rule 26 (asignacion -> ID IGUAL expresion PUNTOCOMA .)
+    SI              reduce using rule 26 (asignacion -> ID IGUAL expresion PUNTOCOMA .)
+    MIENTRAS        reduce using rule 26 (asignacion -> ID IGUAL expresion PUNTOCOMA .)
+    CASOS           reduce using rule 26 (asignacion -> ID IGUAL expresion PUNTOCOMA .)
+    RETORNAR        reduce using rule 26 (asignacion -> ID IGUAL expresion PUNTOCOMA .)
+    ENTERO          reduce using rule 26 (asignacion -> ID IGUAL expresion PUNTOCOMA .)
+    DECIMAL         reduce using rule 26 (asignacion -> ID IGUAL expresion PUNTOCOMA .)
+    DOBLE           reduce using rule 26 (asignacion -> ID IGUAL expresion PUNTOCOMA .)
+    CARACTER        reduce using rule 26 (asignacion -> ID IGUAL expresion PUNTOCOMA .)
+    BOLEANO         reduce using rule 26 (asignacion -> ID IGUAL expresion PUNTOCOMA .)
+    PARAR           reduce using rule 26 (asignacion -> ID IGUAL expresion PUNTOCOMA .)
+
+
+state 74
+
+    (57) expresion -> expresion MAS . termino
+    (60) termino -> . termino POR factor
+    (61) termino -> . termino DIVIDIDO factor
+    (62) termino -> . factor
+    (63) factor -> . NUMERO
+    (64) factor -> . CADENA
+    (65) factor -> . ID
+    (66) factor -> . VERDADERO
+    (67) factor -> . PARIZQ expresion PARDER
+
+    NUMERO          shift and go to state 53
+    CADENA          shift and go to state 54
+    ID              shift and go to state 47
+    VERDADERO       shift and go to state 55
+    PARIZQ          shift and go to state 50
+
+    termino                        shift and go to state 104
+    factor                         shift and go to state 52
+
+state 75
+
+    (58) expresion -> expresion MENOS . termino
+    (60) termino -> . termino POR factor
+    (61) termino -> . termino DIVIDIDO factor
+    (62) termino -> . factor
+    (63) factor -> . NUMERO
+    (64) factor -> . CADENA
+    (65) factor -> . ID
+    (66) factor -> . VERDADERO
+    (67) factor -> . PARIZQ expresion PARDER
+
+    NUMERO          shift and go to state 53
+    CADENA          shift and go to state 54
+    ID              shift and go to state 47
+    VERDADERO       shift and go to state 55
+    PARIZQ          shift and go to state 50
+
+    termino                        shift and go to state 105
+    factor                         shift and go to state 52
+
+state 76
+
+    (27) asignacion -> ID IGUAL INGRESAR PARIZQ . parametros PARDER PUNTOCOMA
+    (30) parametros -> . expresion
+    (31) parametros -> . parametros COMA expresion
+    (32) parametros -> . parametros PUNTO expresion
+    (33) parametros -> . empty
+    (57) expresion -> . expresion MAS termino
+    (58) expresion -> . expresion MENOS termino
+    (59) expresion -> . termino
+    (68) empty -> .
+    (60) termino -> . termino POR factor
+    (61) termino -> . termino DIVIDIDO factor
+    (62) termino -> . factor
+    (63) factor -> . NUMERO
+    (64) factor -> . CADENA
+    (65) factor -> . ID
+    (66) factor -> . VERDADERO
+    (67) factor -> . PARIZQ expresion PARDER
+
+    PARDER          reduce using rule 68 (empty -> .)
+    COMA            reduce using rule 68 (empty -> .)
+    PUNTO           reduce using rule 68 (empty -> .)
+    NUMERO          shift and go to state 53
+    CADENA          shift and go to state 54
+    ID              shift and go to state 47
+    VERDADERO       shift and go to state 55
+    PARIZQ          shift and go to state 50
+
+    parametros                     shift and go to state 106
+    expresion                      shift and go to state 64
+    empty                          shift and go to state 65
+    termino                        shift and go to state 51
+    factor                         shift and go to state 52
+
+state 77
+
+    (67) factor -> PARIZQ expresion . PARDER
+    (57) expresion -> expresion . MAS termino
+    (58) expresion -> expresion . MENOS termino
+
+    PARDER          shift and go to state 107
+    MAS             shift and go to state 74
+    MENOS           shift and go to state 75
+
+
+state 78
+
+    (60) termino -> termino POR . factor
+    (63) factor -> . NUMERO
+    (64) factor -> . CADENA
+    (65) factor -> . ID
+    (66) factor -> . VERDADERO
+    (67) factor -> . PARIZQ expresion PARDER
+
+    NUMERO          shift and go to state 53
+    CADENA          shift and go to state 54
+    ID              shift and go to state 47
+    VERDADERO       shift and go to state 55
+    PARIZQ          shift and go to state 50
+
+    factor                         shift and go to state 108
+
+state 79
+
+    (61) termino -> termino DIVIDIDO . factor
+    (63) factor -> . NUMERO
+    (64) factor -> . CADENA
+    (65) factor -> . ID
+    (66) factor -> . VERDADERO
+    (67) factor -> . PARIZQ expresion PARDER
+
+    NUMERO          shift and go to state 53
+    CADENA          shift and go to state 54
+    ID              shift and go to state 47
+    VERDADERO       shift and go to state 55
+    PARIZQ          shift and go to state 50
+
+    factor                         shift and go to state 109
+
+state 80
+
+    (44) procedimiento -> ID PARIZQ parametros_funcion PARDER . LLAVEIZQ sentencias LLAVEDER
+
+    LLAVEIZQ        shift and go to state 110
+
+
+state 81
+
+    (46) parametros_funcion -> parametros_funcion COMA . tipo ID
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+    tipo                           shift and go to state 111
+
+state 82
+
+    (45) parametros_funcion -> tipo ID .
+
+    PARDER          reduce using rule 45 (parametros_funcion -> tipo ID .)
+    COMA            reduce using rule 45 (parametros_funcion -> tipo ID .)
+
+
+state 83
+
+    (23) declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones . CORCHETEDER PUNTOCOMA
+    (25) dimensiones -> dimensiones . COMA NUMERO
+
+    CORCHETEDER     shift and go to state 112
+    COMA            shift and go to state 113
+
+
+state 84
+
+    (24) dimensiones -> NUMERO .
+
+    CORCHETEDER     reduce using rule 24 (dimensiones -> NUMERO .)
+    COMA            reduce using rule 24 (dimensiones -> NUMERO .)
+
+
+state 85
+
+    (43) funcion -> tipo ID PARIZQ parametros_funcion . PARDER LLAVEIZQ sentencias LLAVEDER
+    (46) parametros_funcion -> parametros_funcion . COMA tipo ID
+
+    PARDER          shift and go to state 114
+    COMA            shift and go to state 81
+
+
+state 86
+
+    (22) declaracion -> CONSTANTE tipo ID IGUAL . expresion PUNTOCOMA
+    (57) expresion -> . expresion MAS termino
+    (58) expresion -> . expresion MENOS termino
+    (59) expresion -> . termino
+    (60) termino -> . termino POR factor
+    (61) termino -> . termino DIVIDIDO factor
+    (62) termino -> . factor
+    (63) factor -> . NUMERO
+    (64) factor -> . CADENA
+    (65) factor -> . ID
+    (66) factor -> . VERDADERO
+    (67) factor -> . PARIZQ expresion PARDER
+
+    NUMERO          shift and go to state 53
+    CADENA          shift and go to state 54
+    ID              shift and go to state 47
+    VERDADERO       shift and go to state 55
+    PARIZQ          shift and go to state 50
+
+    expresion                      shift and go to state 115
+    termino                        shift and go to state 51
+    factor                         shift and go to state 52
+
+state 87
+
+    (28) ingresar -> INGRESAR PARIZQ parametros PARDER . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 116
+
+
+state 88
+
+    (31) parametros -> parametros COMA . expresion
+    (57) expresion -> . expresion MAS termino
+    (58) expresion -> . expresion MENOS termino
+    (59) expresion -> . termino
+    (60) termino -> . termino POR factor
+    (61) termino -> . termino DIVIDIDO factor
+    (62) termino -> . factor
+    (63) factor -> . NUMERO
+    (64) factor -> . CADENA
+    (65) factor -> . ID
+    (66) factor -> . VERDADERO
+    (67) factor -> . PARIZQ expresion PARDER
+
+    NUMERO          shift and go to state 53
+    CADENA          shift and go to state 54
+    ID              shift and go to state 47
+    VERDADERO       shift and go to state 55
+    PARIZQ          shift and go to state 50
+
+    expresion                      shift and go to state 117
+    termino                        shift and go to state 51
+    factor                         shift and go to state 52
+
+state 89
+
+    (32) parametros -> parametros PUNTO . expresion
+    (57) expresion -> . expresion MAS termino
+    (58) expresion -> . expresion MENOS termino
+    (59) expresion -> . termino
+    (60) termino -> . termino POR factor
+    (61) termino -> . termino DIVIDIDO factor
+    (62) termino -> . factor
+    (63) factor -> . NUMERO
+    (64) factor -> . CADENA
+    (65) factor -> . ID
+    (66) factor -> . VERDADERO
+    (67) factor -> . PARIZQ expresion PARDER
+
+    NUMERO          shift and go to state 53
+    CADENA          shift and go to state 54
+    ID              shift and go to state 47
+    VERDADERO       shift and go to state 55
+    PARIZQ          shift and go to state 50
+
+    expresion                      shift and go to state 118
+    termino                        shift and go to state 51
+    factor                         shift and go to state 52
+
+state 90
+
+    (29) imprimir -> IMPRIMIR PARIZQ parametros PARDER . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 119
+
+
+state 91
+
+    (34) si -> SI PARIZQ condicion PARDER . LLAVEIZQ sentencias LLAVEDER
+    (35) si -> SI PARIZQ condicion PARDER . LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+
+    LLAVEIZQ        shift and go to state 120
+
+
+state 92
+
+    (49) condicion -> expresion operador_relacional . expresion
+    (57) expresion -> . expresion MAS termino
+    (58) expresion -> . expresion MENOS termino
+    (59) expresion -> . termino
+    (60) termino -> . termino POR factor
+    (61) termino -> . termino DIVIDIDO factor
+    (62) termino -> . factor
+    (63) factor -> . NUMERO
+    (64) factor -> . CADENA
+    (65) factor -> . ID
+    (66) factor -> . VERDADERO
+    (67) factor -> . PARIZQ expresion PARDER
+
+    NUMERO          shift and go to state 53
+    CADENA          shift and go to state 54
+    ID              shift and go to state 47
+    VERDADERO       shift and go to state 55
+    PARIZQ          shift and go to state 50
+
+    expresion                      shift and go to state 121
+    termino                        shift and go to state 51
+    factor                         shift and go to state 52
+
+state 93
+
+    (51) operador_relacional -> MAYOR .
+
+    NUMERO          reduce using rule 51 (operador_relacional -> MAYOR .)
+    CADENA          reduce using rule 51 (operador_relacional -> MAYOR .)
+    ID              reduce using rule 51 (operador_relacional -> MAYOR .)
+    VERDADERO       reduce using rule 51 (operador_relacional -> MAYOR .)
+    PARIZQ          reduce using rule 51 (operador_relacional -> MAYOR .)
+
+
+state 94
+
+    (52) operador_relacional -> MENOR .
+
+    NUMERO          reduce using rule 52 (operador_relacional -> MENOR .)
+    CADENA          reduce using rule 52 (operador_relacional -> MENOR .)
+    ID              reduce using rule 52 (operador_relacional -> MENOR .)
+    VERDADERO       reduce using rule 52 (operador_relacional -> MENOR .)
+    PARIZQ          reduce using rule 52 (operador_relacional -> MENOR .)
+
+
+state 95
+
+    (53) operador_relacional -> MAYORIGUAL .
+
+    NUMERO          reduce using rule 53 (operador_relacional -> MAYORIGUAL .)
+    CADENA          reduce using rule 53 (operador_relacional -> MAYORIGUAL .)
+    ID              reduce using rule 53 (operador_relacional -> MAYORIGUAL .)
+    VERDADERO       reduce using rule 53 (operador_relacional -> MAYORIGUAL .)
+    PARIZQ          reduce using rule 53 (operador_relacional -> MAYORIGUAL .)
+
+
+state 96
+
+    (54) operador_relacional -> MENORIGUAL .
+
+    NUMERO          reduce using rule 54 (operador_relacional -> MENORIGUAL .)
+    CADENA          reduce using rule 54 (operador_relacional -> MENORIGUAL .)
+    ID              reduce using rule 54 (operador_relacional -> MENORIGUAL .)
+    VERDADERO       reduce using rule 54 (operador_relacional -> MENORIGUAL .)
+    PARIZQ          reduce using rule 54 (operador_relacional -> MENORIGUAL .)
+
+
+state 97
+
+    (55) operador_relacional -> IGUALIGUAL .
+
+    NUMERO          reduce using rule 55 (operador_relacional -> IGUALIGUAL .)
+    CADENA          reduce using rule 55 (operador_relacional -> IGUALIGUAL .)
+    ID              reduce using rule 55 (operador_relacional -> IGUALIGUAL .)
+    VERDADERO       reduce using rule 55 (operador_relacional -> IGUALIGUAL .)
+    PARIZQ          reduce using rule 55 (operador_relacional -> IGUALIGUAL .)
+
+
+state 98
+
+    (56) operador_relacional -> DIFERENTE .
+
+    NUMERO          reduce using rule 56 (operador_relacional -> DIFERENTE .)
+    CADENA          reduce using rule 56 (operador_relacional -> DIFERENTE .)
+    ID              reduce using rule 56 (operador_relacional -> DIFERENTE .)
+    VERDADERO       reduce using rule 56 (operador_relacional -> DIFERENTE .)
+    PARIZQ          reduce using rule 56 (operador_relacional -> DIFERENTE .)
+
+
+state 99
+
+    (36) mientras -> MIENTRAS PARIZQ condicion PARDER . LLAVEIZQ sentencias LLAVEDER
+
+    LLAVEIZQ        shift and go to state 122
+
+
+state 100
+
+    (37) casos -> CASOS ID LLAVEIZQ lista_casos . defecto LLAVEDER
+    (38) lista_casos -> lista_casos . caso
+    (41) defecto -> . DEFECTO DOSPUNTOS sentencias
+    (42) defecto -> . empty
+    (40) caso -> . CASO NUMERO DOSPUNTOS sentencias PARAR PUNTOCOMA
+    (68) empty -> .
+
+    DEFECTO         shift and go to state 125
+    CASO            shift and go to state 102
+    LLAVEDER        reduce using rule 68 (empty -> .)
+
+    defecto                        shift and go to state 123
+    caso                           shift and go to state 124
+    empty                          shift and go to state 126
+
+state 101
+
+    (39) lista_casos -> caso .
+
+    DEFECTO         reduce using rule 39 (lista_casos -> caso .)
+    CASO            reduce using rule 39 (lista_casos -> caso .)
+    LLAVEDER        reduce using rule 39 (lista_casos -> caso .)
+
+
+state 102
+
+    (40) caso -> CASO . NUMERO DOSPUNTOS sentencias PARAR PUNTOCOMA
+
+    NUMERO          shift and go to state 127
+
+
+state 103
+
+    (48) retornar -> RETORNAR PARIZQ expresion PARDER . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 128
+
+
+state 104
+
+    (57) expresion -> expresion MAS termino .
+    (60) termino -> termino . POR factor
+    (61) termino -> termino . DIVIDIDO factor
+
+    PUNTOCOMA       reduce using rule 57 (expresion -> expresion MAS termino .)
+    MAS             reduce using rule 57 (expresion -> expresion MAS termino .)
+    MENOS           reduce using rule 57 (expresion -> expresion MAS termino .)
+    PARDER          reduce using rule 57 (expresion -> expresion MAS termino .)
+    COMA            reduce using rule 57 (expresion -> expresion MAS termino .)
+    PUNTO           reduce using rule 57 (expresion -> expresion MAS termino .)
+    MAYOR           reduce using rule 57 (expresion -> expresion MAS termino .)
+    MENOR           reduce using rule 57 (expresion -> expresion MAS termino .)
+    MAYORIGUAL      reduce using rule 57 (expresion -> expresion MAS termino .)
+    MENORIGUAL      reduce using rule 57 (expresion -> expresion MAS termino .)
+    IGUALIGUAL      reduce using rule 57 (expresion -> expresion MAS termino .)
+    DIFERENTE       reduce using rule 57 (expresion -> expresion MAS termino .)
+    POR             shift and go to state 78
+    DIVIDIDO        shift and go to state 79
+
+
+state 105
+
+    (58) expresion -> expresion MENOS termino .
+    (60) termino -> termino . POR factor
+    (61) termino -> termino . DIVIDIDO factor
+
+    PUNTOCOMA       reduce using rule 58 (expresion -> expresion MENOS termino .)
+    MAS             reduce using rule 58 (expresion -> expresion MENOS termino .)
+    MENOS           reduce using rule 58 (expresion -> expresion MENOS termino .)
+    PARDER          reduce using rule 58 (expresion -> expresion MENOS termino .)
+    COMA            reduce using rule 58 (expresion -> expresion MENOS termino .)
+    PUNTO           reduce using rule 58 (expresion -> expresion MENOS termino .)
+    MAYOR           reduce using rule 58 (expresion -> expresion MENOS termino .)
+    MENOR           reduce using rule 58 (expresion -> expresion MENOS termino .)
+    MAYORIGUAL      reduce using rule 58 (expresion -> expresion MENOS termino .)
+    MENORIGUAL      reduce using rule 58 (expresion -> expresion MENOS termino .)
+    IGUALIGUAL      reduce using rule 58 (expresion -> expresion MENOS termino .)
+    DIFERENTE       reduce using rule 58 (expresion -> expresion MENOS termino .)
+    POR             shift and go to state 78
+    DIVIDIDO        shift and go to state 79
+
+
+state 106
+
+    (27) asignacion -> ID IGUAL INGRESAR PARIZQ parametros . PARDER PUNTOCOMA
+    (31) parametros -> parametros . COMA expresion
+    (32) parametros -> parametros . PUNTO expresion
+
+    PARDER          shift and go to state 129
+    COMA            shift and go to state 88
+    PUNTO           shift and go to state 89
+
+
+state 107
+
+    (67) factor -> PARIZQ expresion PARDER .
+
+    POR             reduce using rule 67 (factor -> PARIZQ expresion PARDER .)
+    DIVIDIDO        reduce using rule 67 (factor -> PARIZQ expresion PARDER .)
+    PUNTOCOMA       reduce using rule 67 (factor -> PARIZQ expresion PARDER .)
+    MAS             reduce using rule 67 (factor -> PARIZQ expresion PARDER .)
+    MENOS           reduce using rule 67 (factor -> PARIZQ expresion PARDER .)
+    PARDER          reduce using rule 67 (factor -> PARIZQ expresion PARDER .)
+    COMA            reduce using rule 67 (factor -> PARIZQ expresion PARDER .)
+    PUNTO           reduce using rule 67 (factor -> PARIZQ expresion PARDER .)
+    MAYOR           reduce using rule 67 (factor -> PARIZQ expresion PARDER .)
+    MENOR           reduce using rule 67 (factor -> PARIZQ expresion PARDER .)
+    MAYORIGUAL      reduce using rule 67 (factor -> PARIZQ expresion PARDER .)
+    MENORIGUAL      reduce using rule 67 (factor -> PARIZQ expresion PARDER .)
+    IGUALIGUAL      reduce using rule 67 (factor -> PARIZQ expresion PARDER .)
+    DIFERENTE       reduce using rule 67 (factor -> PARIZQ expresion PARDER .)
+
+
+state 108
+
+    (60) termino -> termino POR factor .
+
+    POR             reduce using rule 60 (termino -> termino POR factor .)
+    DIVIDIDO        reduce using rule 60 (termino -> termino POR factor .)
+    PUNTOCOMA       reduce using rule 60 (termino -> termino POR factor .)
+    MAS             reduce using rule 60 (termino -> termino POR factor .)
+    MENOS           reduce using rule 60 (termino -> termino POR factor .)
+    PARDER          reduce using rule 60 (termino -> termino POR factor .)
+    COMA            reduce using rule 60 (termino -> termino POR factor .)
+    PUNTO           reduce using rule 60 (termino -> termino POR factor .)
+    MAYOR           reduce using rule 60 (termino -> termino POR factor .)
+    MENOR           reduce using rule 60 (termino -> termino POR factor .)
+    MAYORIGUAL      reduce using rule 60 (termino -> termino POR factor .)
+    MENORIGUAL      reduce using rule 60 (termino -> termino POR factor .)
+    IGUALIGUAL      reduce using rule 60 (termino -> termino POR factor .)
+    DIFERENTE       reduce using rule 60 (termino -> termino POR factor .)
+
+
+state 109
+
+    (61) termino -> termino DIVIDIDO factor .
+
+    POR             reduce using rule 61 (termino -> termino DIVIDIDO factor .)
+    DIVIDIDO        reduce using rule 61 (termino -> termino DIVIDIDO factor .)
+    PUNTOCOMA       reduce using rule 61 (termino -> termino DIVIDIDO factor .)
+    MAS             reduce using rule 61 (termino -> termino DIVIDIDO factor .)
+    MENOS           reduce using rule 61 (termino -> termino DIVIDIDO factor .)
+    PARDER          reduce using rule 61 (termino -> termino DIVIDIDO factor .)
+    COMA            reduce using rule 61 (termino -> termino DIVIDIDO factor .)
+    PUNTO           reduce using rule 61 (termino -> termino DIVIDIDO factor .)
+    MAYOR           reduce using rule 61 (termino -> termino DIVIDIDO factor .)
+    MENOR           reduce using rule 61 (termino -> termino DIVIDIDO factor .)
+    MAYORIGUAL      reduce using rule 61 (termino -> termino DIVIDIDO factor .)
+    MENORIGUAL      reduce using rule 61 (termino -> termino DIVIDIDO factor .)
+    IGUALIGUAL      reduce using rule 61 (termino -> termino DIVIDIDO factor .)
+    DIFERENTE       reduce using rule 61 (termino -> termino DIVIDIDO factor .)
+
+
+state 110
+
+    (44) procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ . sentencias LLAVEDER
+    (2) sentencias -> . sentencias sentencia
+    (3) sentencias -> . sentencia
+    (4) sentencias -> . empty
+    (5) sentencia -> . declaracion
+    (6) sentencia -> . declaracion_arreglo
+    (7) sentencia -> . asignacion
+    (8) sentencia -> . imprimir
+    (9) sentencia -> . ingresar
+    (10) sentencia -> . si
+    (11) sentencia -> . mientras
+    (12) sentencia -> . casos
+    (13) sentencia -> . retornar
+    (14) sentencia -> . funcion
+    (15) sentencia -> . procedimiento
+    (68) empty -> .
+    (21) declaracion -> . tipo ID PUNTOCOMA
+    (22) declaracion -> . CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    (23) declaracion_arreglo -> . tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (26) asignacion -> . ID IGUAL expresion PUNTOCOMA
+    (27) asignacion -> . ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (29) imprimir -> . IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+    (28) ingresar -> . INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (34) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (36) mientras -> . MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (37) casos -> . CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+    (48) retornar -> . RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+    (43) funcion -> . tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (44) procedimiento -> . ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+  ! shift/reduce conflict for CONSTANTE resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IMPRIMIR resolved as shift
+  ! shift/reduce conflict for INGRESAR resolved as shift
+  ! shift/reduce conflict for SI resolved as shift
+  ! shift/reduce conflict for MIENTRAS resolved as shift
+  ! shift/reduce conflict for CASOS resolved as shift
+  ! shift/reduce conflict for RETORNAR resolved as shift
+  ! shift/reduce conflict for ENTERO resolved as shift
+  ! shift/reduce conflict for DECIMAL resolved as shift
+  ! shift/reduce conflict for DOBLE resolved as shift
+  ! shift/reduce conflict for CARACTER resolved as shift
+  ! shift/reduce conflict for BOLEANO resolved as shift
+    LLAVEDER        reduce using rule 68 (empty -> .)
+    CONSTANTE       shift and go to state 23
+    ID              shift and go to state 7
+    IMPRIMIR        shift and go to state 25
+    INGRESAR        shift and go to state 24
+    SI              shift and go to state 26
+    MIENTRAS        shift and go to state 27
+    CASOS           shift and go to state 28
+    RETORNAR        shift and go to state 29
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+  ! CONSTANTE       [ reduce using rule 68 (empty -> .) ]
+  ! ID              [ reduce using rule 68 (empty -> .) ]
+  ! IMPRIMIR        [ reduce using rule 68 (empty -> .) ]
+  ! INGRESAR        [ reduce using rule 68 (empty -> .) ]
+  ! SI              [ reduce using rule 68 (empty -> .) ]
+  ! MIENTRAS        [ reduce using rule 68 (empty -> .) ]
+  ! CASOS           [ reduce using rule 68 (empty -> .) ]
+  ! RETORNAR        [ reduce using rule 68 (empty -> .) ]
+  ! ENTERO          [ reduce using rule 68 (empty -> .) ]
+  ! DECIMAL         [ reduce using rule 68 (empty -> .) ]
+  ! DOBLE           [ reduce using rule 68 (empty -> .) ]
+  ! CARACTER        [ reduce using rule 68 (empty -> .) ]
+  ! BOLEANO         [ reduce using rule 68 (empty -> .) ]
+
+    sentencias                     shift and go to state 130
+    sentencia                      shift and go to state 9
+    empty                          shift and go to state 10
+    declaracion                    shift and go to state 11
+    declaracion_arreglo            shift and go to state 12
+    asignacion                     shift and go to state 13
+    imprimir                       shift and go to state 14
+    ingresar                       shift and go to state 15
+    si                             shift and go to state 16
+    mientras                       shift and go to state 17
+    casos                          shift and go to state 18
+    retornar                       shift and go to state 19
+    funcion                        shift and go to state 20
+    procedimiento                  shift and go to state 21
+    tipo                           shift and go to state 22
+
+state 111
+
+    (46) parametros_funcion -> parametros_funcion COMA tipo . ID
+
+    ID              shift and go to state 131
+
+
+state 112
+
+    (23) declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 132
+
+
+state 113
+
+    (25) dimensiones -> dimensiones COMA . NUMERO
+
+    NUMERO          shift and go to state 133
+
+
+state 114
+
+    (43) funcion -> tipo ID PARIZQ parametros_funcion PARDER . LLAVEIZQ sentencias LLAVEDER
+
+    LLAVEIZQ        shift and go to state 134
+
+
+state 115
+
+    (22) declaracion -> CONSTANTE tipo ID IGUAL expresion . PUNTOCOMA
+    (57) expresion -> expresion . MAS termino
+    (58) expresion -> expresion . MENOS termino
+
+    PUNTOCOMA       shift and go to state 135
+    MAS             shift and go to state 74
+    MENOS           shift and go to state 75
+
+
+state 116
+
+    (28) ingresar -> INGRESAR PARIZQ parametros PARDER PUNTOCOMA .
+
+    LLAVEDER        reduce using rule 28 (ingresar -> INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    CONSTANTE       reduce using rule 28 (ingresar -> INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    ID              reduce using rule 28 (ingresar -> INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    IMPRIMIR        reduce using rule 28 (ingresar -> INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    INGRESAR        reduce using rule 28 (ingresar -> INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    SI              reduce using rule 28 (ingresar -> INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    MIENTRAS        reduce using rule 28 (ingresar -> INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    CASOS           reduce using rule 28 (ingresar -> INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    RETORNAR        reduce using rule 28 (ingresar -> INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    ENTERO          reduce using rule 28 (ingresar -> INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    DECIMAL         reduce using rule 28 (ingresar -> INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    DOBLE           reduce using rule 28 (ingresar -> INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    CARACTER        reduce using rule 28 (ingresar -> INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    BOLEANO         reduce using rule 28 (ingresar -> INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    PARAR           reduce using rule 28 (ingresar -> INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+
+
+state 117
+
+    (31) parametros -> parametros COMA expresion .
+    (57) expresion -> expresion . MAS termino
+    (58) expresion -> expresion . MENOS termino
+
+    PARDER          reduce using rule 31 (parametros -> parametros COMA expresion .)
+    COMA            reduce using rule 31 (parametros -> parametros COMA expresion .)
+    PUNTO           reduce using rule 31 (parametros -> parametros COMA expresion .)
+    MAS             shift and go to state 74
+    MENOS           shift and go to state 75
+
+
+state 118
+
+    (32) parametros -> parametros PUNTO expresion .
+    (57) expresion -> expresion . MAS termino
+    (58) expresion -> expresion . MENOS termino
+
+    PARDER          reduce using rule 32 (parametros -> parametros PUNTO expresion .)
+    COMA            reduce using rule 32 (parametros -> parametros PUNTO expresion .)
+    PUNTO           reduce using rule 32 (parametros -> parametros PUNTO expresion .)
+    MAS             shift and go to state 74
+    MENOS           shift and go to state 75
+
+
+state 119
+
+    (29) imprimir -> IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA .
+
+    LLAVEDER        reduce using rule 29 (imprimir -> IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA .)
+    CONSTANTE       reduce using rule 29 (imprimir -> IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA .)
+    ID              reduce using rule 29 (imprimir -> IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA .)
+    IMPRIMIR        reduce using rule 29 (imprimir -> IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA .)
+    INGRESAR        reduce using rule 29 (imprimir -> IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA .)
+    SI              reduce using rule 29 (imprimir -> IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA .)
+    MIENTRAS        reduce using rule 29 (imprimir -> IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA .)
+    CASOS           reduce using rule 29 (imprimir -> IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA .)
+    RETORNAR        reduce using rule 29 (imprimir -> IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA .)
+    ENTERO          reduce using rule 29 (imprimir -> IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA .)
+    DECIMAL         reduce using rule 29 (imprimir -> IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA .)
+    DOBLE           reduce using rule 29 (imprimir -> IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA .)
+    CARACTER        reduce using rule 29 (imprimir -> IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA .)
+    BOLEANO         reduce using rule 29 (imprimir -> IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA .)
+    PARAR           reduce using rule 29 (imprimir -> IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA .)
+
+
+state 120
+
+    (34) si -> SI PARIZQ condicion PARDER LLAVEIZQ . sentencias LLAVEDER
+    (35) si -> SI PARIZQ condicion PARDER LLAVEIZQ . sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (2) sentencias -> . sentencias sentencia
+    (3) sentencias -> . sentencia
+    (4) sentencias -> . empty
+    (5) sentencia -> . declaracion
+    (6) sentencia -> . declaracion_arreglo
+    (7) sentencia -> . asignacion
+    (8) sentencia -> . imprimir
+    (9) sentencia -> . ingresar
+    (10) sentencia -> . si
+    (11) sentencia -> . mientras
+    (12) sentencia -> . casos
+    (13) sentencia -> . retornar
+    (14) sentencia -> . funcion
+    (15) sentencia -> . procedimiento
+    (68) empty -> .
+    (21) declaracion -> . tipo ID PUNTOCOMA
+    (22) declaracion -> . CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    (23) declaracion_arreglo -> . tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (26) asignacion -> . ID IGUAL expresion PUNTOCOMA
+    (27) asignacion -> . ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (29) imprimir -> . IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+    (28) ingresar -> . INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (34) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (36) mientras -> . MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (37) casos -> . CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+    (48) retornar -> . RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+    (43) funcion -> . tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (44) procedimiento -> . ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+  ! shift/reduce conflict for CONSTANTE resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IMPRIMIR resolved as shift
+  ! shift/reduce conflict for INGRESAR resolved as shift
+  ! shift/reduce conflict for SI resolved as shift
+  ! shift/reduce conflict for MIENTRAS resolved as shift
+  ! shift/reduce conflict for CASOS resolved as shift
+  ! shift/reduce conflict for RETORNAR resolved as shift
+  ! shift/reduce conflict for ENTERO resolved as shift
+  ! shift/reduce conflict for DECIMAL resolved as shift
+  ! shift/reduce conflict for DOBLE resolved as shift
+  ! shift/reduce conflict for CARACTER resolved as shift
+  ! shift/reduce conflict for BOLEANO resolved as shift
+    LLAVEDER        reduce using rule 68 (empty -> .)
+    CONSTANTE       shift and go to state 23
+    ID              shift and go to state 7
+    IMPRIMIR        shift and go to state 25
+    INGRESAR        shift and go to state 24
+    SI              shift and go to state 26
+    MIENTRAS        shift and go to state 27
+    CASOS           shift and go to state 28
+    RETORNAR        shift and go to state 29
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+  ! CONSTANTE       [ reduce using rule 68 (empty -> .) ]
+  ! ID              [ reduce using rule 68 (empty -> .) ]
+  ! IMPRIMIR        [ reduce using rule 68 (empty -> .) ]
+  ! INGRESAR        [ reduce using rule 68 (empty -> .) ]
+  ! SI              [ reduce using rule 68 (empty -> .) ]
+  ! MIENTRAS        [ reduce using rule 68 (empty -> .) ]
+  ! CASOS           [ reduce using rule 68 (empty -> .) ]
+  ! RETORNAR        [ reduce using rule 68 (empty -> .) ]
+  ! ENTERO          [ reduce using rule 68 (empty -> .) ]
+  ! DECIMAL         [ reduce using rule 68 (empty -> .) ]
+  ! DOBLE           [ reduce using rule 68 (empty -> .) ]
+  ! CARACTER        [ reduce using rule 68 (empty -> .) ]
+  ! BOLEANO         [ reduce using rule 68 (empty -> .) ]
+
+    sentencias                     shift and go to state 136
+    sentencia                      shift and go to state 9
+    empty                          shift and go to state 10
+    declaracion                    shift and go to state 11
+    declaracion_arreglo            shift and go to state 12
+    asignacion                     shift and go to state 13
+    imprimir                       shift and go to state 14
+    ingresar                       shift and go to state 15
+    si                             shift and go to state 16
+    mientras                       shift and go to state 17
+    casos                          shift and go to state 18
+    retornar                       shift and go to state 19
+    funcion                        shift and go to state 20
+    procedimiento                  shift and go to state 21
+    tipo                           shift and go to state 22
+
+state 121
+
+    (49) condicion -> expresion operador_relacional expresion .
+    (57) expresion -> expresion . MAS termino
+    (58) expresion -> expresion . MENOS termino
+
+    PARDER          reduce using rule 49 (condicion -> expresion operador_relacional expresion .)
+    MAS             shift and go to state 74
+    MENOS           shift and go to state 75
+
+
+state 122
+
+    (36) mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ . sentencias LLAVEDER
+    (2) sentencias -> . sentencias sentencia
+    (3) sentencias -> . sentencia
+    (4) sentencias -> . empty
+    (5) sentencia -> . declaracion
+    (6) sentencia -> . declaracion_arreglo
+    (7) sentencia -> . asignacion
+    (8) sentencia -> . imprimir
+    (9) sentencia -> . ingresar
+    (10) sentencia -> . si
+    (11) sentencia -> . mientras
+    (12) sentencia -> . casos
+    (13) sentencia -> . retornar
+    (14) sentencia -> . funcion
+    (15) sentencia -> . procedimiento
+    (68) empty -> .
+    (21) declaracion -> . tipo ID PUNTOCOMA
+    (22) declaracion -> . CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    (23) declaracion_arreglo -> . tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (26) asignacion -> . ID IGUAL expresion PUNTOCOMA
+    (27) asignacion -> . ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (29) imprimir -> . IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+    (28) ingresar -> . INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (34) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (36) mientras -> . MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (37) casos -> . CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+    (48) retornar -> . RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+    (43) funcion -> . tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (44) procedimiento -> . ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+  ! shift/reduce conflict for CONSTANTE resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IMPRIMIR resolved as shift
+  ! shift/reduce conflict for INGRESAR resolved as shift
+  ! shift/reduce conflict for SI resolved as shift
+  ! shift/reduce conflict for MIENTRAS resolved as shift
+  ! shift/reduce conflict for CASOS resolved as shift
+  ! shift/reduce conflict for RETORNAR resolved as shift
+  ! shift/reduce conflict for ENTERO resolved as shift
+  ! shift/reduce conflict for DECIMAL resolved as shift
+  ! shift/reduce conflict for DOBLE resolved as shift
+  ! shift/reduce conflict for CARACTER resolved as shift
+  ! shift/reduce conflict for BOLEANO resolved as shift
+    LLAVEDER        reduce using rule 68 (empty -> .)
+    CONSTANTE       shift and go to state 23
+    ID              shift and go to state 7
+    IMPRIMIR        shift and go to state 25
+    INGRESAR        shift and go to state 24
+    SI              shift and go to state 26
+    MIENTRAS        shift and go to state 27
+    CASOS           shift and go to state 28
+    RETORNAR        shift and go to state 29
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+  ! CONSTANTE       [ reduce using rule 68 (empty -> .) ]
+  ! ID              [ reduce using rule 68 (empty -> .) ]
+  ! IMPRIMIR        [ reduce using rule 68 (empty -> .) ]
+  ! INGRESAR        [ reduce using rule 68 (empty -> .) ]
+  ! SI              [ reduce using rule 68 (empty -> .) ]
+  ! MIENTRAS        [ reduce using rule 68 (empty -> .) ]
+  ! CASOS           [ reduce using rule 68 (empty -> .) ]
+  ! RETORNAR        [ reduce using rule 68 (empty -> .) ]
+  ! ENTERO          [ reduce using rule 68 (empty -> .) ]
+  ! DECIMAL         [ reduce using rule 68 (empty -> .) ]
+  ! DOBLE           [ reduce using rule 68 (empty -> .) ]
+  ! CARACTER        [ reduce using rule 68 (empty -> .) ]
+  ! BOLEANO         [ reduce using rule 68 (empty -> .) ]
+
+    sentencias                     shift and go to state 137
+    sentencia                      shift and go to state 9
+    empty                          shift and go to state 10
+    declaracion                    shift and go to state 11
+    declaracion_arreglo            shift and go to state 12
+    asignacion                     shift and go to state 13
+    imprimir                       shift and go to state 14
+    ingresar                       shift and go to state 15
+    si                             shift and go to state 16
+    mientras                       shift and go to state 17
+    casos                          shift and go to state 18
+    retornar                       shift and go to state 19
+    funcion                        shift and go to state 20
+    procedimiento                  shift and go to state 21
+    tipo                           shift and go to state 22
+
+state 123
+
+    (37) casos -> CASOS ID LLAVEIZQ lista_casos defecto . LLAVEDER
+
+    LLAVEDER        shift and go to state 138
+
+
+state 124
+
+    (38) lista_casos -> lista_casos caso .
+
+    DEFECTO         reduce using rule 38 (lista_casos -> lista_casos caso .)
+    CASO            reduce using rule 38 (lista_casos -> lista_casos caso .)
+    LLAVEDER        reduce using rule 38 (lista_casos -> lista_casos caso .)
+
+
+state 125
+
+    (41) defecto -> DEFECTO . DOSPUNTOS sentencias
+
+    DOSPUNTOS       shift and go to state 139
+
+
+state 126
+
+    (42) defecto -> empty .
+
+    LLAVEDER        reduce using rule 42 (defecto -> empty .)
+
+
+state 127
+
+    (40) caso -> CASO NUMERO . DOSPUNTOS sentencias PARAR PUNTOCOMA
+
+    DOSPUNTOS       shift and go to state 140
+
+
+state 128
+
+    (48) retornar -> RETORNAR PARIZQ expresion PARDER PUNTOCOMA .
+
+    LLAVEDER        reduce using rule 48 (retornar -> RETORNAR PARIZQ expresion PARDER PUNTOCOMA .)
+    CONSTANTE       reduce using rule 48 (retornar -> RETORNAR PARIZQ expresion PARDER PUNTOCOMA .)
+    ID              reduce using rule 48 (retornar -> RETORNAR PARIZQ expresion PARDER PUNTOCOMA .)
+    IMPRIMIR        reduce using rule 48 (retornar -> RETORNAR PARIZQ expresion PARDER PUNTOCOMA .)
+    INGRESAR        reduce using rule 48 (retornar -> RETORNAR PARIZQ expresion PARDER PUNTOCOMA .)
+    SI              reduce using rule 48 (retornar -> RETORNAR PARIZQ expresion PARDER PUNTOCOMA .)
+    MIENTRAS        reduce using rule 48 (retornar -> RETORNAR PARIZQ expresion PARDER PUNTOCOMA .)
+    CASOS           reduce using rule 48 (retornar -> RETORNAR PARIZQ expresion PARDER PUNTOCOMA .)
+    RETORNAR        reduce using rule 48 (retornar -> RETORNAR PARIZQ expresion PARDER PUNTOCOMA .)
+    ENTERO          reduce using rule 48 (retornar -> RETORNAR PARIZQ expresion PARDER PUNTOCOMA .)
+    DECIMAL         reduce using rule 48 (retornar -> RETORNAR PARIZQ expresion PARDER PUNTOCOMA .)
+    DOBLE           reduce using rule 48 (retornar -> RETORNAR PARIZQ expresion PARDER PUNTOCOMA .)
+    CARACTER        reduce using rule 48 (retornar -> RETORNAR PARIZQ expresion PARDER PUNTOCOMA .)
+    BOLEANO         reduce using rule 48 (retornar -> RETORNAR PARIZQ expresion PARDER PUNTOCOMA .)
+    PARAR           reduce using rule 48 (retornar -> RETORNAR PARIZQ expresion PARDER PUNTOCOMA .)
+
+
+state 129
+
+    (27) asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 141
+
+
+state 130
+
+    (44) procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias . LLAVEDER
+    (2) sentencias -> sentencias . sentencia
+    (5) sentencia -> . declaracion
+    (6) sentencia -> . declaracion_arreglo
+    (7) sentencia -> . asignacion
+    (8) sentencia -> . imprimir
+    (9) sentencia -> . ingresar
+    (10) sentencia -> . si
+    (11) sentencia -> . mientras
+    (12) sentencia -> . casos
+    (13) sentencia -> . retornar
+    (14) sentencia -> . funcion
+    (15) sentencia -> . procedimiento
+    (21) declaracion -> . tipo ID PUNTOCOMA
+    (22) declaracion -> . CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    (23) declaracion_arreglo -> . tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (26) asignacion -> . ID IGUAL expresion PUNTOCOMA
+    (27) asignacion -> . ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (29) imprimir -> . IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+    (28) ingresar -> . INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (34) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (36) mientras -> . MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (37) casos -> . CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+    (48) retornar -> . RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+    (43) funcion -> . tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (44) procedimiento -> . ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+    LLAVEDER        shift and go to state 142
+    CONSTANTE       shift and go to state 23
+    ID              shift and go to state 7
+    IMPRIMIR        shift and go to state 25
+    INGRESAR        shift and go to state 24
+    SI              shift and go to state 26
+    MIENTRAS        shift and go to state 27
+    CASOS           shift and go to state 28
+    RETORNAR        shift and go to state 29
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+    sentencia                      shift and go to state 38
+    declaracion                    shift and go to state 11
+    declaracion_arreglo            shift and go to state 12
+    asignacion                     shift and go to state 13
+    imprimir                       shift and go to state 14
+    ingresar                       shift and go to state 15
+    si                             shift and go to state 16
+    mientras                       shift and go to state 17
+    casos                          shift and go to state 18
+    retornar                       shift and go to state 19
+    funcion                        shift and go to state 20
+    procedimiento                  shift and go to state 21
+    tipo                           shift and go to state 22
+
+state 131
+
+    (46) parametros_funcion -> parametros_funcion COMA tipo ID .
+
+    PARDER          reduce using rule 46 (parametros_funcion -> parametros_funcion COMA tipo ID .)
+    COMA            reduce using rule 46 (parametros_funcion -> parametros_funcion COMA tipo ID .)
+
+
+state 132
+
+    (23) declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA .
+
+    LLAVEDER        reduce using rule 23 (declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA .)
+    CONSTANTE       reduce using rule 23 (declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA .)
+    ID              reduce using rule 23 (declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA .)
+    IMPRIMIR        reduce using rule 23 (declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA .)
+    INGRESAR        reduce using rule 23 (declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA .)
+    SI              reduce using rule 23 (declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA .)
+    MIENTRAS        reduce using rule 23 (declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA .)
+    CASOS           reduce using rule 23 (declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA .)
+    RETORNAR        reduce using rule 23 (declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA .)
+    ENTERO          reduce using rule 23 (declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA .)
+    DECIMAL         reduce using rule 23 (declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA .)
+    DOBLE           reduce using rule 23 (declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA .)
+    CARACTER        reduce using rule 23 (declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA .)
+    BOLEANO         reduce using rule 23 (declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA .)
+    PARAR           reduce using rule 23 (declaracion_arreglo -> tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA .)
+
+
+state 133
+
+    (25) dimensiones -> dimensiones COMA NUMERO .
+
+    CORCHETEDER     reduce using rule 25 (dimensiones -> dimensiones COMA NUMERO .)
+    COMA            reduce using rule 25 (dimensiones -> dimensiones COMA NUMERO .)
+
+
+state 134
+
+    (43) funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ . sentencias LLAVEDER
+    (2) sentencias -> . sentencias sentencia
+    (3) sentencias -> . sentencia
+    (4) sentencias -> . empty
+    (5) sentencia -> . declaracion
+    (6) sentencia -> . declaracion_arreglo
+    (7) sentencia -> . asignacion
+    (8) sentencia -> . imprimir
+    (9) sentencia -> . ingresar
+    (10) sentencia -> . si
+    (11) sentencia -> . mientras
+    (12) sentencia -> . casos
+    (13) sentencia -> . retornar
+    (14) sentencia -> . funcion
+    (15) sentencia -> . procedimiento
+    (68) empty -> .
+    (21) declaracion -> . tipo ID PUNTOCOMA
+    (22) declaracion -> . CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    (23) declaracion_arreglo -> . tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (26) asignacion -> . ID IGUAL expresion PUNTOCOMA
+    (27) asignacion -> . ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (29) imprimir -> . IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+    (28) ingresar -> . INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (34) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (36) mientras -> . MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (37) casos -> . CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+    (48) retornar -> . RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+    (43) funcion -> . tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (44) procedimiento -> . ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+  ! shift/reduce conflict for CONSTANTE resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IMPRIMIR resolved as shift
+  ! shift/reduce conflict for INGRESAR resolved as shift
+  ! shift/reduce conflict for SI resolved as shift
+  ! shift/reduce conflict for MIENTRAS resolved as shift
+  ! shift/reduce conflict for CASOS resolved as shift
+  ! shift/reduce conflict for RETORNAR resolved as shift
+  ! shift/reduce conflict for ENTERO resolved as shift
+  ! shift/reduce conflict for DECIMAL resolved as shift
+  ! shift/reduce conflict for DOBLE resolved as shift
+  ! shift/reduce conflict for CARACTER resolved as shift
+  ! shift/reduce conflict for BOLEANO resolved as shift
+    LLAVEDER        reduce using rule 68 (empty -> .)
+    CONSTANTE       shift and go to state 23
+    ID              shift and go to state 7
+    IMPRIMIR        shift and go to state 25
+    INGRESAR        shift and go to state 24
+    SI              shift and go to state 26
+    MIENTRAS        shift and go to state 27
+    CASOS           shift and go to state 28
+    RETORNAR        shift and go to state 29
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+  ! CONSTANTE       [ reduce using rule 68 (empty -> .) ]
+  ! ID              [ reduce using rule 68 (empty -> .) ]
+  ! IMPRIMIR        [ reduce using rule 68 (empty -> .) ]
+  ! INGRESAR        [ reduce using rule 68 (empty -> .) ]
+  ! SI              [ reduce using rule 68 (empty -> .) ]
+  ! MIENTRAS        [ reduce using rule 68 (empty -> .) ]
+  ! CASOS           [ reduce using rule 68 (empty -> .) ]
+  ! RETORNAR        [ reduce using rule 68 (empty -> .) ]
+  ! ENTERO          [ reduce using rule 68 (empty -> .) ]
+  ! DECIMAL         [ reduce using rule 68 (empty -> .) ]
+  ! DOBLE           [ reduce using rule 68 (empty -> .) ]
+  ! CARACTER        [ reduce using rule 68 (empty -> .) ]
+  ! BOLEANO         [ reduce using rule 68 (empty -> .) ]
+
+    tipo                           shift and go to state 22
+    sentencias                     shift and go to state 143
+    sentencia                      shift and go to state 9
+    empty                          shift and go to state 10
+    declaracion                    shift and go to state 11
+    declaracion_arreglo            shift and go to state 12
+    asignacion                     shift and go to state 13
+    imprimir                       shift and go to state 14
+    ingresar                       shift and go to state 15
+    si                             shift and go to state 16
+    mientras                       shift and go to state 17
+    casos                          shift and go to state 18
+    retornar                       shift and go to state 19
+    funcion                        shift and go to state 20
+    procedimiento                  shift and go to state 21
+
+state 135
+
+    (22) declaracion -> CONSTANTE tipo ID IGUAL expresion PUNTOCOMA .
+
+    LLAVEDER        reduce using rule 22 (declaracion -> CONSTANTE tipo ID IGUAL expresion PUNTOCOMA .)
+    CONSTANTE       reduce using rule 22 (declaracion -> CONSTANTE tipo ID IGUAL expresion PUNTOCOMA .)
+    ID              reduce using rule 22 (declaracion -> CONSTANTE tipo ID IGUAL expresion PUNTOCOMA .)
+    IMPRIMIR        reduce using rule 22 (declaracion -> CONSTANTE tipo ID IGUAL expresion PUNTOCOMA .)
+    INGRESAR        reduce using rule 22 (declaracion -> CONSTANTE tipo ID IGUAL expresion PUNTOCOMA .)
+    SI              reduce using rule 22 (declaracion -> CONSTANTE tipo ID IGUAL expresion PUNTOCOMA .)
+    MIENTRAS        reduce using rule 22 (declaracion -> CONSTANTE tipo ID IGUAL expresion PUNTOCOMA .)
+    CASOS           reduce using rule 22 (declaracion -> CONSTANTE tipo ID IGUAL expresion PUNTOCOMA .)
+    RETORNAR        reduce using rule 22 (declaracion -> CONSTANTE tipo ID IGUAL expresion PUNTOCOMA .)
+    ENTERO          reduce using rule 22 (declaracion -> CONSTANTE tipo ID IGUAL expresion PUNTOCOMA .)
+    DECIMAL         reduce using rule 22 (declaracion -> CONSTANTE tipo ID IGUAL expresion PUNTOCOMA .)
+    DOBLE           reduce using rule 22 (declaracion -> CONSTANTE tipo ID IGUAL expresion PUNTOCOMA .)
+    CARACTER        reduce using rule 22 (declaracion -> CONSTANTE tipo ID IGUAL expresion PUNTOCOMA .)
+    BOLEANO         reduce using rule 22 (declaracion -> CONSTANTE tipo ID IGUAL expresion PUNTOCOMA .)
+    PARAR           reduce using rule 22 (declaracion -> CONSTANTE tipo ID IGUAL expresion PUNTOCOMA .)
+
+
+state 136
+
+    (34) si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias . LLAVEDER
+    (35) si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias . LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (2) sentencias -> sentencias . sentencia
+    (5) sentencia -> . declaracion
+    (6) sentencia -> . declaracion_arreglo
+    (7) sentencia -> . asignacion
+    (8) sentencia -> . imprimir
+    (9) sentencia -> . ingresar
+    (10) sentencia -> . si
+    (11) sentencia -> . mientras
+    (12) sentencia -> . casos
+    (13) sentencia -> . retornar
+    (14) sentencia -> . funcion
+    (15) sentencia -> . procedimiento
+    (21) declaracion -> . tipo ID PUNTOCOMA
+    (22) declaracion -> . CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    (23) declaracion_arreglo -> . tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (26) asignacion -> . ID IGUAL expresion PUNTOCOMA
+    (27) asignacion -> . ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (29) imprimir -> . IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+    (28) ingresar -> . INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (34) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (36) mientras -> . MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (37) casos -> . CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+    (48) retornar -> . RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+    (43) funcion -> . tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (44) procedimiento -> . ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+    LLAVEDER        shift and go to state 144
+    CONSTANTE       shift and go to state 23
+    ID              shift and go to state 7
+    IMPRIMIR        shift and go to state 25
+    INGRESAR        shift and go to state 24
+    SI              shift and go to state 26
+    MIENTRAS        shift and go to state 27
+    CASOS           shift and go to state 28
+    RETORNAR        shift and go to state 29
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+    sentencia                      shift and go to state 38
+    declaracion                    shift and go to state 11
+    declaracion_arreglo            shift and go to state 12
+    asignacion                     shift and go to state 13
+    imprimir                       shift and go to state 14
+    ingresar                       shift and go to state 15
+    si                             shift and go to state 16
+    mientras                       shift and go to state 17
+    casos                          shift and go to state 18
+    retornar                       shift and go to state 19
+    funcion                        shift and go to state 20
+    procedimiento                  shift and go to state 21
+    tipo                           shift and go to state 22
+
+state 137
+
+    (36) mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias . LLAVEDER
+    (2) sentencias -> sentencias . sentencia
+    (5) sentencia -> . declaracion
+    (6) sentencia -> . declaracion_arreglo
+    (7) sentencia -> . asignacion
+    (8) sentencia -> . imprimir
+    (9) sentencia -> . ingresar
+    (10) sentencia -> . si
+    (11) sentencia -> . mientras
+    (12) sentencia -> . casos
+    (13) sentencia -> . retornar
+    (14) sentencia -> . funcion
+    (15) sentencia -> . procedimiento
+    (21) declaracion -> . tipo ID PUNTOCOMA
+    (22) declaracion -> . CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    (23) declaracion_arreglo -> . tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (26) asignacion -> . ID IGUAL expresion PUNTOCOMA
+    (27) asignacion -> . ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (29) imprimir -> . IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+    (28) ingresar -> . INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (34) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (36) mientras -> . MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (37) casos -> . CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+    (48) retornar -> . RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+    (43) funcion -> . tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (44) procedimiento -> . ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+    LLAVEDER        shift and go to state 145
+    CONSTANTE       shift and go to state 23
+    ID              shift and go to state 7
+    IMPRIMIR        shift and go to state 25
+    INGRESAR        shift and go to state 24
+    SI              shift and go to state 26
+    MIENTRAS        shift and go to state 27
+    CASOS           shift and go to state 28
+    RETORNAR        shift and go to state 29
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+    sentencia                      shift and go to state 38
+    declaracion                    shift and go to state 11
+    declaracion_arreglo            shift and go to state 12
+    asignacion                     shift and go to state 13
+    imprimir                       shift and go to state 14
+    ingresar                       shift and go to state 15
+    si                             shift and go to state 16
+    mientras                       shift and go to state 17
+    casos                          shift and go to state 18
+    retornar                       shift and go to state 19
+    funcion                        shift and go to state 20
+    procedimiento                  shift and go to state 21
+    tipo                           shift and go to state 22
+
+state 138
+
+    (37) casos -> CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER .
+
+    LLAVEDER        reduce using rule 37 (casos -> CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER .)
+    CONSTANTE       reduce using rule 37 (casos -> CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER .)
+    ID              reduce using rule 37 (casos -> CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER .)
+    IMPRIMIR        reduce using rule 37 (casos -> CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER .)
+    INGRESAR        reduce using rule 37 (casos -> CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER .)
+    SI              reduce using rule 37 (casos -> CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER .)
+    MIENTRAS        reduce using rule 37 (casos -> CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER .)
+    CASOS           reduce using rule 37 (casos -> CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER .)
+    RETORNAR        reduce using rule 37 (casos -> CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER .)
+    ENTERO          reduce using rule 37 (casos -> CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER .)
+    DECIMAL         reduce using rule 37 (casos -> CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER .)
+    DOBLE           reduce using rule 37 (casos -> CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER .)
+    CARACTER        reduce using rule 37 (casos -> CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER .)
+    BOLEANO         reduce using rule 37 (casos -> CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER .)
+    PARAR           reduce using rule 37 (casos -> CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER .)
+
+
+state 139
+
+    (41) defecto -> DEFECTO DOSPUNTOS . sentencias
+    (2) sentencias -> . sentencias sentencia
+    (3) sentencias -> . sentencia
+    (4) sentencias -> . empty
+    (5) sentencia -> . declaracion
+    (6) sentencia -> . declaracion_arreglo
+    (7) sentencia -> . asignacion
+    (8) sentencia -> . imprimir
+    (9) sentencia -> . ingresar
+    (10) sentencia -> . si
+    (11) sentencia -> . mientras
+    (12) sentencia -> . casos
+    (13) sentencia -> . retornar
+    (14) sentencia -> . funcion
+    (15) sentencia -> . procedimiento
+    (68) empty -> .
+    (21) declaracion -> . tipo ID PUNTOCOMA
+    (22) declaracion -> . CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    (23) declaracion_arreglo -> . tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (26) asignacion -> . ID IGUAL expresion PUNTOCOMA
+    (27) asignacion -> . ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (29) imprimir -> . IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+    (28) ingresar -> . INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (34) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (36) mientras -> . MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (37) casos -> . CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+    (48) retornar -> . RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+    (43) funcion -> . tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (44) procedimiento -> . ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+  ! shift/reduce conflict for CONSTANTE resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IMPRIMIR resolved as shift
+  ! shift/reduce conflict for INGRESAR resolved as shift
+  ! shift/reduce conflict for SI resolved as shift
+  ! shift/reduce conflict for MIENTRAS resolved as shift
+  ! shift/reduce conflict for CASOS resolved as shift
+  ! shift/reduce conflict for RETORNAR resolved as shift
+  ! shift/reduce conflict for ENTERO resolved as shift
+  ! shift/reduce conflict for DECIMAL resolved as shift
+  ! shift/reduce conflict for DOBLE resolved as shift
+  ! shift/reduce conflict for CARACTER resolved as shift
+  ! shift/reduce conflict for BOLEANO resolved as shift
+    LLAVEDER        reduce using rule 68 (empty -> .)
+    CONSTANTE       shift and go to state 23
+    ID              shift and go to state 7
+    IMPRIMIR        shift and go to state 25
+    INGRESAR        shift and go to state 24
+    SI              shift and go to state 26
+    MIENTRAS        shift and go to state 27
+    CASOS           shift and go to state 28
+    RETORNAR        shift and go to state 29
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+  ! CONSTANTE       [ reduce using rule 68 (empty -> .) ]
+  ! ID              [ reduce using rule 68 (empty -> .) ]
+  ! IMPRIMIR        [ reduce using rule 68 (empty -> .) ]
+  ! INGRESAR        [ reduce using rule 68 (empty -> .) ]
+  ! SI              [ reduce using rule 68 (empty -> .) ]
+  ! MIENTRAS        [ reduce using rule 68 (empty -> .) ]
+  ! CASOS           [ reduce using rule 68 (empty -> .) ]
+  ! RETORNAR        [ reduce using rule 68 (empty -> .) ]
+  ! ENTERO          [ reduce using rule 68 (empty -> .) ]
+  ! DECIMAL         [ reduce using rule 68 (empty -> .) ]
+  ! DOBLE           [ reduce using rule 68 (empty -> .) ]
+  ! CARACTER        [ reduce using rule 68 (empty -> .) ]
+  ! BOLEANO         [ reduce using rule 68 (empty -> .) ]
+
+    sentencias                     shift and go to state 146
+    sentencia                      shift and go to state 9
+    empty                          shift and go to state 10
+    declaracion                    shift and go to state 11
+    declaracion_arreglo            shift and go to state 12
+    asignacion                     shift and go to state 13
+    imprimir                       shift and go to state 14
+    ingresar                       shift and go to state 15
+    si                             shift and go to state 16
+    mientras                       shift and go to state 17
+    casos                          shift and go to state 18
+    retornar                       shift and go to state 19
+    funcion                        shift and go to state 20
+    procedimiento                  shift and go to state 21
+    tipo                           shift and go to state 22
+
+state 140
+
+    (40) caso -> CASO NUMERO DOSPUNTOS . sentencias PARAR PUNTOCOMA
+    (2) sentencias -> . sentencias sentencia
+    (3) sentencias -> . sentencia
+    (4) sentencias -> . empty
+    (5) sentencia -> . declaracion
+    (6) sentencia -> . declaracion_arreglo
+    (7) sentencia -> . asignacion
+    (8) sentencia -> . imprimir
+    (9) sentencia -> . ingresar
+    (10) sentencia -> . si
+    (11) sentencia -> . mientras
+    (12) sentencia -> . casos
+    (13) sentencia -> . retornar
+    (14) sentencia -> . funcion
+    (15) sentencia -> . procedimiento
+    (68) empty -> .
+    (21) declaracion -> . tipo ID PUNTOCOMA
+    (22) declaracion -> . CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    (23) declaracion_arreglo -> . tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (26) asignacion -> . ID IGUAL expresion PUNTOCOMA
+    (27) asignacion -> . ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (29) imprimir -> . IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+    (28) ingresar -> . INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (34) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (36) mientras -> . MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (37) casos -> . CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+    (48) retornar -> . RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+    (43) funcion -> . tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (44) procedimiento -> . ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+  ! shift/reduce conflict for CONSTANTE resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IMPRIMIR resolved as shift
+  ! shift/reduce conflict for INGRESAR resolved as shift
+  ! shift/reduce conflict for SI resolved as shift
+  ! shift/reduce conflict for MIENTRAS resolved as shift
+  ! shift/reduce conflict for CASOS resolved as shift
+  ! shift/reduce conflict for RETORNAR resolved as shift
+  ! shift/reduce conflict for ENTERO resolved as shift
+  ! shift/reduce conflict for DECIMAL resolved as shift
+  ! shift/reduce conflict for DOBLE resolved as shift
+  ! shift/reduce conflict for CARACTER resolved as shift
+  ! shift/reduce conflict for BOLEANO resolved as shift
+    PARAR           reduce using rule 68 (empty -> .)
+    CONSTANTE       shift and go to state 23
+    ID              shift and go to state 7
+    IMPRIMIR        shift and go to state 25
+    INGRESAR        shift and go to state 24
+    SI              shift and go to state 26
+    MIENTRAS        shift and go to state 27
+    CASOS           shift and go to state 28
+    RETORNAR        shift and go to state 29
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+  ! CONSTANTE       [ reduce using rule 68 (empty -> .) ]
+  ! ID              [ reduce using rule 68 (empty -> .) ]
+  ! IMPRIMIR        [ reduce using rule 68 (empty -> .) ]
+  ! INGRESAR        [ reduce using rule 68 (empty -> .) ]
+  ! SI              [ reduce using rule 68 (empty -> .) ]
+  ! MIENTRAS        [ reduce using rule 68 (empty -> .) ]
+  ! CASOS           [ reduce using rule 68 (empty -> .) ]
+  ! RETORNAR        [ reduce using rule 68 (empty -> .) ]
+  ! ENTERO          [ reduce using rule 68 (empty -> .) ]
+  ! DECIMAL         [ reduce using rule 68 (empty -> .) ]
+  ! DOBLE           [ reduce using rule 68 (empty -> .) ]
+  ! CARACTER        [ reduce using rule 68 (empty -> .) ]
+  ! BOLEANO         [ reduce using rule 68 (empty -> .) ]
+
+    sentencias                     shift and go to state 147
+    sentencia                      shift and go to state 9
+    empty                          shift and go to state 10
+    declaracion                    shift and go to state 11
+    declaracion_arreglo            shift and go to state 12
+    asignacion                     shift and go to state 13
+    imprimir                       shift and go to state 14
+    ingresar                       shift and go to state 15
+    si                             shift and go to state 16
+    mientras                       shift and go to state 17
+    casos                          shift and go to state 18
+    retornar                       shift and go to state 19
+    funcion                        shift and go to state 20
+    procedimiento                  shift and go to state 21
+    tipo                           shift and go to state 22
+
+state 141
+
+    (27) asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA .
+
+    LLAVEDER        reduce using rule 27 (asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    CONSTANTE       reduce using rule 27 (asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    ID              reduce using rule 27 (asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    IMPRIMIR        reduce using rule 27 (asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    INGRESAR        reduce using rule 27 (asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    SI              reduce using rule 27 (asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    MIENTRAS        reduce using rule 27 (asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    CASOS           reduce using rule 27 (asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    RETORNAR        reduce using rule 27 (asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    ENTERO          reduce using rule 27 (asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    DECIMAL         reduce using rule 27 (asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    DOBLE           reduce using rule 27 (asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    CARACTER        reduce using rule 27 (asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    BOLEANO         reduce using rule 27 (asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+    PARAR           reduce using rule 27 (asignacion -> ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA .)
+
+
+state 142
+
+    (44) procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .
+
+    LLAVEDER        reduce using rule 44 (procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    CONSTANTE       reduce using rule 44 (procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    ID              reduce using rule 44 (procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    IMPRIMIR        reduce using rule 44 (procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    INGRESAR        reduce using rule 44 (procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    SI              reduce using rule 44 (procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    MIENTRAS        reduce using rule 44 (procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    CASOS           reduce using rule 44 (procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    RETORNAR        reduce using rule 44 (procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    ENTERO          reduce using rule 44 (procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    DECIMAL         reduce using rule 44 (procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    DOBLE           reduce using rule 44 (procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    CARACTER        reduce using rule 44 (procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    BOLEANO         reduce using rule 44 (procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    PARAR           reduce using rule 44 (procedimiento -> ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+
+
+state 143
+
+    (43) funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias . LLAVEDER
+    (2) sentencias -> sentencias . sentencia
+    (5) sentencia -> . declaracion
+    (6) sentencia -> . declaracion_arreglo
+    (7) sentencia -> . asignacion
+    (8) sentencia -> . imprimir
+    (9) sentencia -> . ingresar
+    (10) sentencia -> . si
+    (11) sentencia -> . mientras
+    (12) sentencia -> . casos
+    (13) sentencia -> . retornar
+    (14) sentencia -> . funcion
+    (15) sentencia -> . procedimiento
+    (21) declaracion -> . tipo ID PUNTOCOMA
+    (22) declaracion -> . CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    (23) declaracion_arreglo -> . tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (26) asignacion -> . ID IGUAL expresion PUNTOCOMA
+    (27) asignacion -> . ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (29) imprimir -> . IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+    (28) ingresar -> . INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (34) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (36) mientras -> . MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (37) casos -> . CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+    (48) retornar -> . RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+    (43) funcion -> . tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (44) procedimiento -> . ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+    LLAVEDER        shift and go to state 148
+    CONSTANTE       shift and go to state 23
+    ID              shift and go to state 7
+    IMPRIMIR        shift and go to state 25
+    INGRESAR        shift and go to state 24
+    SI              shift and go to state 26
+    MIENTRAS        shift and go to state 27
+    CASOS           shift and go to state 28
+    RETORNAR        shift and go to state 29
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+    tipo                           shift and go to state 22
+    sentencia                      shift and go to state 38
+    declaracion                    shift and go to state 11
+    declaracion_arreglo            shift and go to state 12
+    asignacion                     shift and go to state 13
+    imprimir                       shift and go to state 14
+    ingresar                       shift and go to state 15
+    si                             shift and go to state 16
+    mientras                       shift and go to state 17
+    casos                          shift and go to state 18
+    retornar                       shift and go to state 19
+    funcion                        shift and go to state 20
+    procedimiento                  shift and go to state 21
+
+state 144
+
+    (34) si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .
+    (35) si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER . DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+
+    LLAVEDER        reduce using rule 34 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    CONSTANTE       reduce using rule 34 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    ID              reduce using rule 34 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    IMPRIMIR        reduce using rule 34 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    INGRESAR        reduce using rule 34 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    SI              reduce using rule 34 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    MIENTRAS        reduce using rule 34 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    CASOS           reduce using rule 34 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    RETORNAR        reduce using rule 34 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    ENTERO          reduce using rule 34 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    DECIMAL         reduce using rule 34 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    DOBLE           reduce using rule 34 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    CARACTER        reduce using rule 34 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    BOLEANO         reduce using rule 34 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    PARAR           reduce using rule 34 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    DELOCONTRARIO   shift and go to state 149
+
+
+state 145
+
+    (36) mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .
+
+    LLAVEDER        reduce using rule 36 (mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    CONSTANTE       reduce using rule 36 (mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    ID              reduce using rule 36 (mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    IMPRIMIR        reduce using rule 36 (mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    INGRESAR        reduce using rule 36 (mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    SI              reduce using rule 36 (mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    MIENTRAS        reduce using rule 36 (mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    CASOS           reduce using rule 36 (mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    RETORNAR        reduce using rule 36 (mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    ENTERO          reduce using rule 36 (mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    DECIMAL         reduce using rule 36 (mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    DOBLE           reduce using rule 36 (mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    CARACTER        reduce using rule 36 (mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    BOLEANO         reduce using rule 36 (mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    PARAR           reduce using rule 36 (mientras -> MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER .)
+
+
+state 146
+
+    (41) defecto -> DEFECTO DOSPUNTOS sentencias .
+    (2) sentencias -> sentencias . sentencia
+    (5) sentencia -> . declaracion
+    (6) sentencia -> . declaracion_arreglo
+    (7) sentencia -> . asignacion
+    (8) sentencia -> . imprimir
+    (9) sentencia -> . ingresar
+    (10) sentencia -> . si
+    (11) sentencia -> . mientras
+    (12) sentencia -> . casos
+    (13) sentencia -> . retornar
+    (14) sentencia -> . funcion
+    (15) sentencia -> . procedimiento
+    (21) declaracion -> . tipo ID PUNTOCOMA
+    (22) declaracion -> . CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    (23) declaracion_arreglo -> . tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (26) asignacion -> . ID IGUAL expresion PUNTOCOMA
+    (27) asignacion -> . ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (29) imprimir -> . IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+    (28) ingresar -> . INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (34) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (36) mientras -> . MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (37) casos -> . CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+    (48) retornar -> . RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+    (43) funcion -> . tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (44) procedimiento -> . ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+    LLAVEDER        reduce using rule 41 (defecto -> DEFECTO DOSPUNTOS sentencias .)
+    CONSTANTE       shift and go to state 23
+    ID              shift and go to state 7
+    IMPRIMIR        shift and go to state 25
+    INGRESAR        shift and go to state 24
+    SI              shift and go to state 26
+    MIENTRAS        shift and go to state 27
+    CASOS           shift and go to state 28
+    RETORNAR        shift and go to state 29
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+    sentencia                      shift and go to state 38
+    declaracion                    shift and go to state 11
+    declaracion_arreglo            shift and go to state 12
+    asignacion                     shift and go to state 13
+    imprimir                       shift and go to state 14
+    ingresar                       shift and go to state 15
+    si                             shift and go to state 16
+    mientras                       shift and go to state 17
+    casos                          shift and go to state 18
+    retornar                       shift and go to state 19
+    funcion                        shift and go to state 20
+    procedimiento                  shift and go to state 21
+    tipo                           shift and go to state 22
+
+state 147
+
+    (40) caso -> CASO NUMERO DOSPUNTOS sentencias . PARAR PUNTOCOMA
+    (2) sentencias -> sentencias . sentencia
+    (5) sentencia -> . declaracion
+    (6) sentencia -> . declaracion_arreglo
+    (7) sentencia -> . asignacion
+    (8) sentencia -> . imprimir
+    (9) sentencia -> . ingresar
+    (10) sentencia -> . si
+    (11) sentencia -> . mientras
+    (12) sentencia -> . casos
+    (13) sentencia -> . retornar
+    (14) sentencia -> . funcion
+    (15) sentencia -> . procedimiento
+    (21) declaracion -> . tipo ID PUNTOCOMA
+    (22) declaracion -> . CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    (23) declaracion_arreglo -> . tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (26) asignacion -> . ID IGUAL expresion PUNTOCOMA
+    (27) asignacion -> . ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (29) imprimir -> . IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+    (28) ingresar -> . INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (34) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (36) mientras -> . MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (37) casos -> . CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+    (48) retornar -> . RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+    (43) funcion -> . tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (44) procedimiento -> . ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+    PARAR           shift and go to state 150
+    CONSTANTE       shift and go to state 23
+    ID              shift and go to state 7
+    IMPRIMIR        shift and go to state 25
+    INGRESAR        shift and go to state 24
+    SI              shift and go to state 26
+    MIENTRAS        shift and go to state 27
+    CASOS           shift and go to state 28
+    RETORNAR        shift and go to state 29
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+    sentencia                      shift and go to state 38
+    declaracion                    shift and go to state 11
+    declaracion_arreglo            shift and go to state 12
+    asignacion                     shift and go to state 13
+    imprimir                       shift and go to state 14
+    ingresar                       shift and go to state 15
+    si                             shift and go to state 16
+    mientras                       shift and go to state 17
+    casos                          shift and go to state 18
+    retornar                       shift and go to state 19
+    funcion                        shift and go to state 20
+    procedimiento                  shift and go to state 21
+    tipo                           shift and go to state 22
+
+state 148
+
+    (43) funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .
+
+    LLAVEDER        reduce using rule 43 (funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    CONSTANTE       reduce using rule 43 (funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    ID              reduce using rule 43 (funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    IMPRIMIR        reduce using rule 43 (funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    INGRESAR        reduce using rule 43 (funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    SI              reduce using rule 43 (funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    MIENTRAS        reduce using rule 43 (funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    CASOS           reduce using rule 43 (funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    RETORNAR        reduce using rule 43 (funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    ENTERO          reduce using rule 43 (funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    DECIMAL         reduce using rule 43 (funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    DOBLE           reduce using rule 43 (funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    CARACTER        reduce using rule 43 (funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    BOLEANO         reduce using rule 43 (funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+    PARAR           reduce using rule 43 (funcion -> tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER .)
+
+
+state 149
+
+    (35) si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO . LLAVEIZQ sentencias LLAVEDER
+
+    LLAVEIZQ        shift and go to state 151
+
+
+state 150
+
+    (40) caso -> CASO NUMERO DOSPUNTOS sentencias PARAR . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 152
+
+
+state 151
+
+    (35) si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ . sentencias LLAVEDER
+    (2) sentencias -> . sentencias sentencia
+    (3) sentencias -> . sentencia
+    (4) sentencias -> . empty
+    (5) sentencia -> . declaracion
+    (6) sentencia -> . declaracion_arreglo
+    (7) sentencia -> . asignacion
+    (8) sentencia -> . imprimir
+    (9) sentencia -> . ingresar
+    (10) sentencia -> . si
+    (11) sentencia -> . mientras
+    (12) sentencia -> . casos
+    (13) sentencia -> . retornar
+    (14) sentencia -> . funcion
+    (15) sentencia -> . procedimiento
+    (68) empty -> .
+    (21) declaracion -> . tipo ID PUNTOCOMA
+    (22) declaracion -> . CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    (23) declaracion_arreglo -> . tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (26) asignacion -> . ID IGUAL expresion PUNTOCOMA
+    (27) asignacion -> . ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (29) imprimir -> . IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+    (28) ingresar -> . INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (34) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (36) mientras -> . MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (37) casos -> . CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+    (48) retornar -> . RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+    (43) funcion -> . tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (44) procedimiento -> . ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+  ! shift/reduce conflict for CONSTANTE resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IMPRIMIR resolved as shift
+  ! shift/reduce conflict for INGRESAR resolved as shift
+  ! shift/reduce conflict for SI resolved as shift
+  ! shift/reduce conflict for MIENTRAS resolved as shift
+  ! shift/reduce conflict for CASOS resolved as shift
+  ! shift/reduce conflict for RETORNAR resolved as shift
+  ! shift/reduce conflict for ENTERO resolved as shift
+  ! shift/reduce conflict for DECIMAL resolved as shift
+  ! shift/reduce conflict for DOBLE resolved as shift
+  ! shift/reduce conflict for CARACTER resolved as shift
+  ! shift/reduce conflict for BOLEANO resolved as shift
+    LLAVEDER        reduce using rule 68 (empty -> .)
+    CONSTANTE       shift and go to state 23
+    ID              shift and go to state 7
+    IMPRIMIR        shift and go to state 25
+    INGRESAR        shift and go to state 24
+    SI              shift and go to state 26
+    MIENTRAS        shift and go to state 27
+    CASOS           shift and go to state 28
+    RETORNAR        shift and go to state 29
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+  ! CONSTANTE       [ reduce using rule 68 (empty -> .) ]
+  ! ID              [ reduce using rule 68 (empty -> .) ]
+  ! IMPRIMIR        [ reduce using rule 68 (empty -> .) ]
+  ! INGRESAR        [ reduce using rule 68 (empty -> .) ]
+  ! SI              [ reduce using rule 68 (empty -> .) ]
+  ! MIENTRAS        [ reduce using rule 68 (empty -> .) ]
+  ! CASOS           [ reduce using rule 68 (empty -> .) ]
+  ! RETORNAR        [ reduce using rule 68 (empty -> .) ]
+  ! ENTERO          [ reduce using rule 68 (empty -> .) ]
+  ! DECIMAL         [ reduce using rule 68 (empty -> .) ]
+  ! DOBLE           [ reduce using rule 68 (empty -> .) ]
+  ! CARACTER        [ reduce using rule 68 (empty -> .) ]
+  ! BOLEANO         [ reduce using rule 68 (empty -> .) ]
+
+    sentencias                     shift and go to state 153
+    sentencia                      shift and go to state 9
+    empty                          shift and go to state 10
+    declaracion                    shift and go to state 11
+    declaracion_arreglo            shift and go to state 12
+    asignacion                     shift and go to state 13
+    imprimir                       shift and go to state 14
+    ingresar                       shift and go to state 15
+    si                             shift and go to state 16
+    mientras                       shift and go to state 17
+    casos                          shift and go to state 18
+    retornar                       shift and go to state 19
+    funcion                        shift and go to state 20
+    procedimiento                  shift and go to state 21
+    tipo                           shift and go to state 22
+
+state 152
+
+    (40) caso -> CASO NUMERO DOSPUNTOS sentencias PARAR PUNTOCOMA .
+
+    DEFECTO         reduce using rule 40 (caso -> CASO NUMERO DOSPUNTOS sentencias PARAR PUNTOCOMA .)
+    CASO            reduce using rule 40 (caso -> CASO NUMERO DOSPUNTOS sentencias PARAR PUNTOCOMA .)
+    LLAVEDER        reduce using rule 40 (caso -> CASO NUMERO DOSPUNTOS sentencias PARAR PUNTOCOMA .)
+
+
+state 153
+
+    (35) si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias . LLAVEDER
+    (2) sentencias -> sentencias . sentencia
+    (5) sentencia -> . declaracion
+    (6) sentencia -> . declaracion_arreglo
+    (7) sentencia -> . asignacion
+    (8) sentencia -> . imprimir
+    (9) sentencia -> . ingresar
+    (10) sentencia -> . si
+    (11) sentencia -> . mientras
+    (12) sentencia -> . casos
+    (13) sentencia -> . retornar
+    (14) sentencia -> . funcion
+    (15) sentencia -> . procedimiento
+    (21) declaracion -> . tipo ID PUNTOCOMA
+    (22) declaracion -> . CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    (23) declaracion_arreglo -> . tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    (26) asignacion -> . ID IGUAL expresion PUNTOCOMA
+    (27) asignacion -> . ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (29) imprimir -> . IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+    (28) ingresar -> . INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    (34) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (35) si -> . SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    (36) mientras -> . MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    (37) casos -> . CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+    (48) retornar -> . RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+    (43) funcion -> . tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (44) procedimiento -> . ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+    (16) tipo -> . ENTERO
+    (17) tipo -> . DECIMAL
+    (18) tipo -> . DOBLE
+    (19) tipo -> . CARACTER
+    (20) tipo -> . BOLEANO
+
+    LLAVEDER        shift and go to state 154
+    CONSTANTE       shift and go to state 23
+    ID              shift and go to state 7
+    IMPRIMIR        shift and go to state 25
+    INGRESAR        shift and go to state 24
+    SI              shift and go to state 26
+    MIENTRAS        shift and go to state 27
+    CASOS           shift and go to state 28
+    RETORNAR        shift and go to state 29
+    ENTERO          shift and go to state 30
+    DECIMAL         shift and go to state 31
+    DOBLE           shift and go to state 32
+    CARACTER        shift and go to state 33
+    BOLEANO         shift and go to state 34
+
+    sentencia                      shift and go to state 38
+    declaracion                    shift and go to state 11
+    declaracion_arreglo            shift and go to state 12
+    asignacion                     shift and go to state 13
+    imprimir                       shift and go to state 14
+    ingresar                       shift and go to state 15
+    si                             shift and go to state 16
+    mientras                       shift and go to state 17
+    casos                          shift and go to state 18
+    retornar                       shift and go to state 19
+    funcion                        shift and go to state 20
+    procedimiento                  shift and go to state 21
+    tipo                           shift and go to state 22
+
+state 154
+
+    (35) si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER .
+
+    LLAVEDER        reduce using rule 35 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER .)
+    CONSTANTE       reduce using rule 35 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER .)
+    ID              reduce using rule 35 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER .)
+    IMPRIMIR        reduce using rule 35 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER .)
+    INGRESAR        reduce using rule 35 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER .)
+    SI              reduce using rule 35 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER .)
+    MIENTRAS        reduce using rule 35 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER .)
+    CASOS           reduce using rule 35 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER .)
+    RETORNAR        reduce using rule 35 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER .)
+    ENTERO          reduce using rule 35 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER .)
+    DECIMAL         reduce using rule 35 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER .)
+    DOBLE           reduce using rule 35 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER .)
+    CARACTER        reduce using rule 35 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER .)
+    BOLEANO         reduce using rule 35 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER .)
+    PARAR           reduce using rule 35 (si -> SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for CONSTANTE in state 6 resolved as shift
+WARNING: shift/reduce conflict for ID in state 6 resolved as shift
+WARNING: shift/reduce conflict for IMPRIMIR in state 6 resolved as shift
+WARNING: shift/reduce conflict for INGRESAR in state 6 resolved as shift
+WARNING: shift/reduce conflict for SI in state 6 resolved as shift
+WARNING: shift/reduce conflict for MIENTRAS in state 6 resolved as shift
+WARNING: shift/reduce conflict for CASOS in state 6 resolved as shift
+WARNING: shift/reduce conflict for RETORNAR in state 6 resolved as shift
+WARNING: shift/reduce conflict for ENTERO in state 6 resolved as shift
+WARNING: shift/reduce conflict for DECIMAL in state 6 resolved as shift
+WARNING: shift/reduce conflict for DOBLE in state 6 resolved as shift
+WARNING: shift/reduce conflict for CARACTER in state 6 resolved as shift
+WARNING: shift/reduce conflict for BOLEANO in state 6 resolved as shift
+WARNING: shift/reduce conflict for CONSTANTE in state 110 resolved as shift
+WARNING: shift/reduce conflict for ID in state 110 resolved as shift
+WARNING: shift/reduce conflict for IMPRIMIR in state 110 resolved as shift
+WARNING: shift/reduce conflict for INGRESAR in state 110 resolved as shift
+WARNING: shift/reduce conflict for SI in state 110 resolved as shift
+WARNING: shift/reduce conflict for MIENTRAS in state 110 resolved as shift
+WARNING: shift/reduce conflict for CASOS in state 110 resolved as shift
+WARNING: shift/reduce conflict for RETORNAR in state 110 resolved as shift
+WARNING: shift/reduce conflict for ENTERO in state 110 resolved as shift
+WARNING: shift/reduce conflict for DECIMAL in state 110 resolved as shift
+WARNING: shift/reduce conflict for DOBLE in state 110 resolved as shift
+WARNING: shift/reduce conflict for CARACTER in state 110 resolved as shift
+WARNING: shift/reduce conflict for BOLEANO in state 110 resolved as shift
+WARNING: shift/reduce conflict for CONSTANTE in state 120 resolved as shift
+WARNING: shift/reduce conflict for ID in state 120 resolved as shift
+WARNING: shift/reduce conflict for IMPRIMIR in state 120 resolved as shift
+WARNING: shift/reduce conflict for INGRESAR in state 120 resolved as shift
+WARNING: shift/reduce conflict for SI in state 120 resolved as shift
+WARNING: shift/reduce conflict for MIENTRAS in state 120 resolved as shift
+WARNING: shift/reduce conflict for CASOS in state 120 resolved as shift
+WARNING: shift/reduce conflict for RETORNAR in state 120 resolved as shift
+WARNING: shift/reduce conflict for ENTERO in state 120 resolved as shift
+WARNING: shift/reduce conflict for DECIMAL in state 120 resolved as shift
+WARNING: shift/reduce conflict for DOBLE in state 120 resolved as shift
+WARNING: shift/reduce conflict for CARACTER in state 120 resolved as shift
+WARNING: shift/reduce conflict for BOLEANO in state 120 resolved as shift
+WARNING: shift/reduce conflict for CONSTANTE in state 122 resolved as shift
+WARNING: shift/reduce conflict for ID in state 122 resolved as shift
+WARNING: shift/reduce conflict for IMPRIMIR in state 122 resolved as shift
+WARNING: shift/reduce conflict for INGRESAR in state 122 resolved as shift
+WARNING: shift/reduce conflict for SI in state 122 resolved as shift
+WARNING: shift/reduce conflict for MIENTRAS in state 122 resolved as shift
+WARNING: shift/reduce conflict for CASOS in state 122 resolved as shift
+WARNING: shift/reduce conflict for RETORNAR in state 122 resolved as shift
+WARNING: shift/reduce conflict for ENTERO in state 122 resolved as shift
+WARNING: shift/reduce conflict for DECIMAL in state 122 resolved as shift
+WARNING: shift/reduce conflict for DOBLE in state 122 resolved as shift
+WARNING: shift/reduce conflict for CARACTER in state 122 resolved as shift
+WARNING: shift/reduce conflict for BOLEANO in state 122 resolved as shift
+WARNING: shift/reduce conflict for CONSTANTE in state 134 resolved as shift
+WARNING: shift/reduce conflict for ID in state 134 resolved as shift
+WARNING: shift/reduce conflict for IMPRIMIR in state 134 resolved as shift
+WARNING: shift/reduce conflict for INGRESAR in state 134 resolved as shift
+WARNING: shift/reduce conflict for SI in state 134 resolved as shift
+WARNING: shift/reduce conflict for MIENTRAS in state 134 resolved as shift
+WARNING: shift/reduce conflict for CASOS in state 134 resolved as shift
+WARNING: shift/reduce conflict for RETORNAR in state 134 resolved as shift
+WARNING: shift/reduce conflict for ENTERO in state 134 resolved as shift
+WARNING: shift/reduce conflict for DECIMAL in state 134 resolved as shift
+WARNING: shift/reduce conflict for DOBLE in state 134 resolved as shift
+WARNING: shift/reduce conflict for CARACTER in state 134 resolved as shift
+WARNING: shift/reduce conflict for BOLEANO in state 134 resolved as shift
+WARNING: shift/reduce conflict for CONSTANTE in state 139 resolved as shift
+WARNING: shift/reduce conflict for ID in state 139 resolved as shift
+WARNING: shift/reduce conflict for IMPRIMIR in state 139 resolved as shift
+WARNING: shift/reduce conflict for INGRESAR in state 139 resolved as shift
+WARNING: shift/reduce conflict for SI in state 139 resolved as shift
+WARNING: shift/reduce conflict for MIENTRAS in state 139 resolved as shift
+WARNING: shift/reduce conflict for CASOS in state 139 resolved as shift
+WARNING: shift/reduce conflict for RETORNAR in state 139 resolved as shift
+WARNING: shift/reduce conflict for ENTERO in state 139 resolved as shift
+WARNING: shift/reduce conflict for DECIMAL in state 139 resolved as shift
+WARNING: shift/reduce conflict for DOBLE in state 139 resolved as shift
+WARNING: shift/reduce conflict for CARACTER in state 139 resolved as shift
+WARNING: shift/reduce conflict for BOLEANO in state 139 resolved as shift
+WARNING: shift/reduce conflict for CONSTANTE in state 140 resolved as shift
+WARNING: shift/reduce conflict for ID in state 140 resolved as shift
+WARNING: shift/reduce conflict for IMPRIMIR in state 140 resolved as shift
+WARNING: shift/reduce conflict for INGRESAR in state 140 resolved as shift
+WARNING: shift/reduce conflict for SI in state 140 resolved as shift
+WARNING: shift/reduce conflict for MIENTRAS in state 140 resolved as shift
+WARNING: shift/reduce conflict for CASOS in state 140 resolved as shift
+WARNING: shift/reduce conflict for RETORNAR in state 140 resolved as shift
+WARNING: shift/reduce conflict for ENTERO in state 140 resolved as shift
+WARNING: shift/reduce conflict for DECIMAL in state 140 resolved as shift
+WARNING: shift/reduce conflict for DOBLE in state 140 resolved as shift
+WARNING: shift/reduce conflict for CARACTER in state 140 resolved as shift
+WARNING: shift/reduce conflict for BOLEANO in state 140 resolved as shift
+WARNING: shift/reduce conflict for CONSTANTE in state 151 resolved as shift
+WARNING: shift/reduce conflict for ID in state 151 resolved as shift
+WARNING: shift/reduce conflict for IMPRIMIR in state 151 resolved as shift
+WARNING: shift/reduce conflict for INGRESAR in state 151 resolved as shift
+WARNING: shift/reduce conflict for SI in state 151 resolved as shift
+WARNING: shift/reduce conflict for MIENTRAS in state 151 resolved as shift
+WARNING: shift/reduce conflict for CASOS in state 151 resolved as shift
+WARNING: shift/reduce conflict for RETORNAR in state 151 resolved as shift
+WARNING: shift/reduce conflict for ENTERO in state 151 resolved as shift
+WARNING: shift/reduce conflict for DECIMAL in state 151 resolved as shift
+WARNING: shift/reduce conflict for DOBLE in state 151 resolved as shift
+WARNING: shift/reduce conflict for CARACTER in state 151 resolved as shift
+WARNING: shift/reduce conflict for BOLEANO in state 151 resolved as shift
