@@ -1,12 +1,12 @@
 Programa prueba3(){
     entero menu;
     Imprimir("Ingrese opcion ");
-    menu=Ingresar(“Ingrese opción”);
+    menu=Ingresar("Ingrese opcion");
     casos menu {
-    Caso 1: sentencias ;
+    Caso 1: Imprimir("Opcion 1");
     parar;
-    Caso 2 : sentencias;
+    Caso 2: Imprimir("Opcion 2");
     parar;
-    defecto: sentencias;
+    defecto: Imprimir("Opcion invalida");
     }
 }

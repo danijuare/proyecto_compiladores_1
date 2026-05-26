@@ -19,7 +19,6 @@ reserved = {
     'retornar': 'RETORNAR',
     'si': 'SI',
     'delocontrario': 'DELOCONTRARIO',
-    'funcion': 'FUNCION',
     'procedimiento': 'PROCEDIMIENTO',
     'Ingresar': 'INGRESAR',
     'Imprimir': 'IMPRIMIR'
@@ -97,8 +96,12 @@ def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
+errores_lexicos = []
+
 def t_error(t):
-    print(f"Error léxico en línea {t.lineno}: carácter no válido '{t.value[0]}'")
+    errores_lexicos.append(
+        f"Error léxico en línea {t.lineno}: carácter no válido '{t.value[0]}'"
+    )
     t.lexer.skip(1)
 
 lexer = lex.lex()

@@ -1,25 +1,50 @@
 import sys
-from lexer import lexer
+from lexer import lexer, errores_lexicos
 from parser import parser, errores
+
+
+def normalizar_codigo(codigo):
+    """Convierte comillas tipográficas del PDF a comillas ASCII."""
+    return (
+        codigo.replace("\u201c", '"')
+        .replace("\u201d", '"')
+        .replace("\u00ab", '"')
+        .replace("\u00bb", '"')
+    )
+
+
+def compilar_codigo(codigo):
+    codigo = normalizar_codigo(codigo)
+    lexer.lineno = 1
+    errores.clear()
+    errores_lexicos.clear()
+
+    parser.parse(codigo, lexer=lexer)
+
+    todos_errores = errores_lexicos + errores
+    if len(todos_errores) == 0:
+        return {"exito": True, "errores": []}
+    return {"exito": False, "errores": todos_errores}
+
 
 def compilar(nombre_archivo):
     try:
-        with open(nombre_archivo, 'r', encoding='utf-8') as archivo:
+        with open(nombre_archivo, "r", encoding="utf-8") as archivo:
             codigo = archivo.read()
-
-        lexer.lineno = 1
-        errores.clear()
-
-        resultado = parser.parse(codigo, lexer=lexer)
-
-        if len(errores) == 0:
-            print("Compilado correctamente")
-        else:
-            for error in errores:
-                print(error)
-
     except FileNotFoundError:
-        print("No se encontró el archivo:", nombre_archivo)
+        return {
+            "exito": False,
+            "errores": [f"No se encontró el archivo: {nombre_archivo}"],
+        }
+
+    resultado = compilar_codigo(codigo)
+    if resultado["exito"]:
+        print("Compilado correctamente")
+    else:
+        for error in resultado["errores"]:
+            print(error)
+    return resultado
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
