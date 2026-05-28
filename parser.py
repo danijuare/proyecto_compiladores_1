@@ -18,16 +18,16 @@ def p_sentencias(p):
 
 def p_sentencia(p):
     '''
-    sentencia : declaracion
+    sentencia : declaracion_o_funcion
               | declaracion_arreglo
               | asignacion
               | imprimir
               | ingresar
               | si
               | mientras
+              | para
               | casos
               | retornar
-              | funcion
               | procedimiento
     '''
 
@@ -40,10 +40,11 @@ def p_tipo(p):
          | BOLEANO
     '''
 
-def p_declaracion(p):
+def p_declaracion_o_funcion(p):
     '''
-    declaracion : tipo ID PUNTOCOMA
-                | CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    declaracion_o_funcion : tipo ID PUNTOCOMA
+                          | tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
+                          | CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
     '''
 
 def p_declaracion_arreglo(p):
@@ -60,12 +61,17 @@ def p_dimensiones(p):
 def p_asignacion(p):
     '''
     asignacion : ID IGUAL expresion PUNTOCOMA
-               | ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+               | ID IGUAL INGRESAR PARIZQ parametro_unico PARDER PUNTOCOMA
     '''
 
 def p_ingresar(p):
     '''
-    ingresar : INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    ingresar : INGRESAR PARIZQ parametro_unico PARDER PUNTOCOMA
+    '''
+
+def p_parametro_unico(p):
+    '''
+    parametro_unico : expresion
     '''
 
 def p_imprimir(p):
@@ -92,6 +98,25 @@ def p_mientras(p):
     mientras : MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
     '''
 
+def p_para(p):
+    '''
+    para : PARA PARIZQ inicializacion_para PUNTOCOMA condicion PUNTOCOMA paso_para PARDER HACER LLAVEIZQ sentencias LLAVEDER
+         | PARA PARIZQ inicializacion_para PUNTOCOMA condicion PUNTOCOMA paso_para PARDER LLAVEIZQ sentencias LLAVEDER
+    '''
+
+def p_inicializacion_para(p):
+    '''
+    inicializacion_para : ID
+                        | ID IGUAL expresion
+                        | tipo ID
+                        | tipo ID IGUAL expresion
+    '''
+
+def p_paso_para(p):
+    '''
+    paso_para : ID IGUAL expresion
+    '''
+
 def p_casos(p):
     '''
     casos : CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
@@ -114,11 +139,6 @@ def p_defecto(p):
             | empty
     '''
 
-def p_funcion(p):
-    '''
-    funcion : tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
-    '''
-
 def p_procedimiento(p):
     '''
     procedimiento : ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
@@ -126,9 +146,21 @@ def p_procedimiento(p):
 
 def p_parametros_funcion(p):
     '''
-    parametros_funcion : tipo ID
-                       | parametros_funcion COMA tipo ID
+    parametros_funcion : tipo ID opcion_mas_params
                        | empty
+    '''
+
+def p_opcion_mas_params(p):
+    '''
+    opcion_mas_params : COMA tipo ID opcion_mas_params
+                      | COMA mas_ids
+                      | empty
+    '''
+
+def p_mas_ids(p):
+    '''
+    mas_ids : ID
+            | mas_ids COMA ID
     '''
 
 def p_retornar(p):

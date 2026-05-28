@@ -1,9 +1,9 @@
 Programa prueba2(){
     entero a;
     entero b;
-    a=Ingresar(“ingrese a”);
+    a=Ingresar("ingrese a");
     mientras (a<10){
-    Imprimir(“Valor de a ”. a);
+    Imprimir("Valor de a ". a);
     a=a+1;
     }
 }

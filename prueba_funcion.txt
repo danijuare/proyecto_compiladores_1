@@ -1,0 +1,5 @@
+Programa main(){
+    entero suma(entero a, entero b){
+        retornar(a+b);
+    }
+}

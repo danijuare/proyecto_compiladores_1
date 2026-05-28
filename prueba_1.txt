@@ -1,11 +1,11 @@
 Programa prueba(){
     entero a;
     entero b;
-    a=Ingresar(“ingrese a”);
-    b= Ingresar(“ingres b”);
+    a=Ingresar("ingrese a");
+    b= Ingresar("ingres b");
     si (a>b){
-    Imprimir(“El numero mayor es”. a);
+    Imprimir("El numero mayor es". a);
     }delocontrario{
-    Imprimir(“El numero mayor es ”.b);
+    Imprimir("El numero mayor es ".b);
     }
 }
