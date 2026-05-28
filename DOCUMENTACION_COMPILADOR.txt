@@ -1,0 +1,1488 @@
+================================================================================
+                    DOCUMENTACIÓN DETALLADA DEL COMPILADOR
+                          Proyecto de Compiladores
+================================================================================
+
+ÍNDICE
+================================================================================
+1. INTRODUCCIÓN
+2. LEXER.PY - Análisis Léxico
+3. PARSER.PY - Análisis Sintáctico
+4. PARSETAB.PY - Tabla de Análisis
+5. PARSER.OUT - Salida de Depuración
+6. MAIN.PY - Programa Principal
+7. FLUJO COMPLETO DE COMPILACIÓN
+8. EJEMPLOS PRÁCTICOS
+
+
+================================================================================
+1. INTRODUCCIÓN
+================================================================================
+
+¿QUÉ ES UN COMPILADOR?
+
+Un compilador es un programa que traduce código fuente (texto que escribimos) 
+en instrucciones que la máquina puede entender. 
+
+Este compilador tiene DOS fases principales:
+
+    FASE 1: ANÁLISIS LÉXICO (lexer.py)
+    ├─ Lee el código carácter por carácter
+    ├─ Agrupa caracteres en "palabras" (tokens)
+    └─ Ejemplo: "entero x = 5;" → [ENTERO, ID, IGUAL, NUMERO, PUNTOCOMA]
+
+    FASE 2: ANÁLISIS SINTÁCTICO (parser.py)
+    ├─ Recibe los tokens del análisis léxico
+    ├─ Verifica que sigan las reglas del lenguaje
+    └─ Ejemplo: ¿Es válido declarar así? ¿Están en el orden correcto?
+
+
+================================================================================
+2. LEXER.PY - ANÁLISIS LÉXICO
+================================================================================
+
+DEFINICIÓN:
+-----------
+El lexer es un programa que convierte una secuencia de caracteres (el código)
+en una secuencia de tokens (palabras que tiene sentido para el compilador).
+
+Piensa en ello como leer una frase en español:
+    "entero x = 5;"
+    ↓↓↓ lexer convierte en ↓↓↓
+    "palabra-clave, identificador, operador, número, símbolo de fin"
+
+
+ESTRUCTURA DEL LEXER.PY:
+------------------------
+
+1. PALABRAS RESERVADAS (RESERVED DICTIONARY)
+   
+   Palabras que tienen significado especial en nuestro lenguaje:
+   
+   Tipos de datos:
+   - 'entero' → token ENTERO
+   - 'decimal' → token DECIMAL
+   - 'doble' → token DOBLE
+   - 'caracter' → token CARACTER
+   - 'boleano' → token BOLEANO
+   
+   Control de flujo:
+   - 'si' → token SI
+   - 'delocontrario' → token DELOCONTRARIO
+   - 'mientras' → token MIENTRAS
+   - 'casos' → token CASOS
+   - 'parar' → token PARAR
+   
+   Entrada/Salida:
+   - 'Ingresar' → token INGRESAR
+   - 'Imprimir' → token IMPRIMIR
+   
+   Subprogramas:
+   - 'funcion' → token FUNCION
+   - 'procedimiento' → token PROCEDIMIENTO
+   
+   Modificadores:
+   - 'constante' → token CONSTANTE
+   - 'verdadero' → token VERDADERO
+
+
+2. TOKENS SECUNDARIOS (OPERADORES Y SÍMBOLOS)
+   
+   Operadores aritméticos:
+   - '+' → token MAS
+   - '-' → token MENOS
+   - '*' → token POR
+   - '/' → token DIVIDIDO
+   
+   Operadores relacionales:
+   - '>' → token MAYOR
+   - '<' → token MENOR
+   - '>=' → token MAYORIGUAL
+   - '<=' → token MENORIGUAL
+   - '==' → token IGUALIGUAL
+   - '!=' → token DIFERENTE
+   
+   Operador de asignación:
+   - '=' → token IGUAL
+   
+   Delimitadores:
+   - '(' → token PARIZQ
+   - ')' → token PARDER
+   - '{' → token LLAVEIZQ
+   - '}' → token LLAVEDER
+   - '[' → token CORCHETEIZQ
+   - ']' → token CORCHETEDER
+   
+   Separadores:
+   - '.' → token PUNTO
+   - ',' → token COMA
+   - ';' → token PUNTOCOMA
+   - ':' → token DOSPUNTOS
+
+
+3. REGLAS DE RECONOCIMIENTO (PATRONES REGEX)
+   
+   El lexer usa expresiones regulares para identificar:
+   
+   a) NÚMEROS:
+      Patrón: \d+(\.\d+)?
+      Explicación: 
+      - \d+ : uno o más dígitos (0-9)
+      - (\.\d+)? : opcionalmente un punto seguido de dígitos
+      
+      Ejemplos que reconoce:
+      - "123" → token NUMERO
+      - "3.14" → token NUMERO
+      - "0" → token NUMERO
+      - "999.99" → token NUMERO
+   
+   b) CADENAS (STRINGS):
+      Patrón: \"([^\\\n]|(\\.))*?\"
+      Explicación:
+      - Comienza con "
+      - Acepta cualquier carácter excepto \ y saltos de línea
+      - O acepta \ seguido de cualquier carácter
+      - Termina con "
+      
+      Ejemplos que reconoce:
+      - "hola" → token CADENA
+      - "Hola Mundo 123" → token CADENA
+      - "Texto con números 456" → token CADENA
+   
+   c) IDENTIFICADORES (VARIABLES Y FUNCIONES):
+      Patrón: [a-zA-Z_áéíóúÁÉÍÓÚñÑ][a-zA-Z0-9_áéíóúÁÉÍÓÚñÑ]*
+      Explicación:
+      - Comienza con: letra, o carácter especial (_, ñ, acentos)
+      - Seguido de: letras, dígitos, _, o caracteres especiales
+      
+      Ejemplos que reconoce:
+      - "x" → token ID
+      - "miVariable" → token ID
+      - "var_1" → token ID
+      - "_privado" → token ID
+      - "edad" → token ID (si no está en palabras reservadas)
+      - "Ingresar" → token INGRESAR (porque está en palabras reservadas)
+   
+   d) COMENTARIOS:
+      Patrón: /\*[\s\S]*?\*/
+      Explicación:
+      - Comienza con /*
+      - Acepta cualquier carácter (incluyendo saltos de línea)
+      - Termina con */
+      
+      Ejemplos que reconoce:
+      - /* esto es comentario */ → SE IGNORA
+      - /* comentario
+        en múltiples líneas */ → SE IGNORA
+      
+      Nota: El lexer los ignora (no genera tokens para ellos)
+   
+   e) SALTOS DE LÍNEA:
+      El lexer mantiene un contador de línea para reportar errores con 
+      precisión de línea.
+
+
+4. MANEJO DE ERRORES
+   
+   Si encuentra un carácter que no reconoce:
+   - Imprime: "Error léxico en línea X: carácter no válido 'Y'"
+   - Salta el carácter problemático
+   - Continúa analizando el resto del código
+
+
+EJEMPLO PASO A PASO - ANÁLISIS LÉXICO:
+--------------------------------------
+
+Código fuente:
+    entero x = 5;
+
+Proceso de tokenización:
+
+1. Lee 'e','n','t','e','r','o' → Coincide con patrón ID
+   - Compara con palabras reservadas
+   - Encuentra 'entero' → token ENTERO
+
+2. Lee espacio ' ' → Se ignora (está en t_ignore)
+
+3. Lee 'x' → Coincide con patrón ID
+   - Compara con palabras reservadas
+   - No encuentra nada → token ID (con valor "x")
+
+4. Lee espacio ' ' → Se ignora
+
+5. Lee '=' → Coincide con patrón t_IGUAL
+   - token IGUAL
+
+6. Lee espacio ' ' → Se ignora
+
+7. Lee '5' → Coincide con patrón NUMERO
+   - token NUMERO (con valor "5")
+
+8. Lee ';' → Coincide con patrón t_PUNTOCOMA
+   - token PUNTOCOMA
+
+RESULTADO FINAL:
+    [ENTERO, ID, IGUAL, NUMERO, PUNTOCOMA]
+    
+Con valores:
+    [(ENTERO, 'entero'), (ID, 'x'), (IGUAL, '='), (NUMERO, '5'), (PUNTOCOMA, ';')]
+
+
+OTRO EJEMPLO - CÓDIGO MÁS COMPLEJO:
+-----------------------------------
+
+Código:
+    /* Comentario */ si (x > 5) { Imprimir("Hola"); }
+
+Tokenización:
+1. /* Comentario */ → SE IGNORA COMPLETAMENTE
+2. si → PALABRA RESERVADA → SI
+3. ( → PARIZQ
+4. x → IDENTIFICADOR → ID
+5. > → OPERADOR → MAYOR
+6. 5 → NÚMERO → NUMERO
+7. ) → PARDER
+8. { → LLAVEIZQ
+9. Imprimir → PALABRA RESERVADA → IMPRIMIR
+10. ( → PARIZQ
+11. "Hola" → CADENA → CADENA
+12. ) → PARDER
+13. ; → PUNTOCOMA
+14. } → LLAVEDER
+
+RESULTADO:
+    [SI, PARIZQ, ID, MAYOR, NUMERO, PARDER, LLAVEIZQ, IMPRIMIR, 
+     PARIZQ, CADENA, PARDER, PUNTOCOMA, LLAVEDER]
+
+
+================================================================================
+3. PARSER.PY - ANÁLISIS SINTÁCTICO
+================================================================================
+
+DEFINICIÓN:
+-----------
+El parser (analizador sintáctico) verifica que la secuencia de tokens 
+siga las reglas gramaticales del lenguaje.
+
+Es como un profesor de español que verifica:
+- ¿Está bien escrita la frase?
+- ¿Están las palabras en el orden correcto?
+- ¿Está completa la estructura?
+
+
+CONCEPTO: GRAMÁTICA LIBRE DE CONTEXTO (BNF)
+---------------------------------------------
+
+La gramática define todas las estructuras permitidas. Usamos notación BNF:
+
+    regla → opción1
+          | opción2
+          | opción3
+
+Significado:
+    "Una regla puede ser opción1 O opción2 O opción3"
+
+
+ESTRUCTURA DEL PARSER.PY:
+-------------------------
+
+El parser define 68 reglas de producción (reglas gramaticales):
+
+
+1. REGLA PRINCIPAL: ESTRUCTURA DEL PROGRAMA
+
+    programa : PROGRAMA ID PARIZQ PARDER LLAVEIZQ sentencias LLAVEDER
+
+    Explicación:
+    Un programa válido debe tener:
+    1. Palabra PROGRAMA
+    2. Un nombre de programa (ID)
+    3. Paréntesis abierto (
+    4. Paréntesis cerrado )
+    5. Llave abierta {
+    6. Una secuencia de sentencias
+    7. Llave cerrada }
+    
+    Ejemplo válido:
+        Programa miPrograma() {
+            entero x;
+        }
+    
+    Ejemplo inválido (falta el nombre):
+        Programa () {        ← ERROR: falta ID
+            entero x;
+        }
+
+
+2. REGLA: SENTENCIAS (LISTA DE INSTRUCCIONES)
+
+    sentencias : sentencias sentencia
+               | sentencia
+               | empty
+    
+    Explicación:
+    - Múltiples sentencias: una sentencia seguida de otra
+    - Una sola sentencia: válida
+    - Vacío: también válida (bloque vacío)
+    
+    Ejemplos válidos:
+        entero x;                  ← una sentencia
+        entero x; entero y;        ← dos sentencias
+        {}                          ← bloque vacío
+
+
+3. REGLA: TIPOS DE SENTENCIAS
+
+    sentencia : declaracion
+              | asignacion
+              | imprimir
+              | ingresar
+              | si
+              | mientras
+              | casos
+              | retornar
+              | funcion
+              | procedimiento
+    
+    Explicación:
+    Una sentencia puede ser cualquiera de estos 10 tipos.
+
+
+4. REGLA: TIPOS DE DATOS
+
+    tipo : ENTERO
+         | DECIMAL
+         | DOBLE
+         | CARACTER
+         | BOLEANO
+    
+    Explicación:
+    Los 5 tipos de datos permitidos.
+
+
+5. REGLA: DECLARACIONES
+
+    declaracion : tipo ID PUNTOCOMA
+                | CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    
+    Explicación:
+    Dos formas de declarar variables:
+    
+    Forma 1 (variable normal):
+        tipo nombre ;
+        Ejemplo: entero x;
+                 decimal precio;
+    
+    Forma 2 (constante):
+        CONSTANTE tipo nombre = valor ;
+        Ejemplo: constante entero MAX = 100;
+    
+    Ejemplo NO válido:
+        entero x = 5;    ← Si no está "constante", NO se puede asignar
+        
+    Ejemplo SÍ válido:
+        constante entero x = 5;
+
+
+6. REGLA: DECLARACIÓN DE ARREGLOS
+
+    declaracion_arreglo : tipo ID CORCHETEIZQ dimensiones CORCHETEDER PUNTOCOMA
+    dimensiones : NUMERO
+                | dimensiones COMA NUMERO
+    
+    Explicación:
+    Permite declarar arreglos (arrays):
+    
+    Ejemplos:
+        entero numeros[10];           ← arreglo de 10 elementos
+        decimal matriz[3,4];          ← matriz de 3x4
+        caracter datos[5,2,10];       ← arreglo 3D
+
+
+7. REGLA: ASIGNACIÓN
+
+    asignacion : ID IGUAL expresion PUNTOCOMA
+               | ID IGUAL INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    
+    Explicación:
+    Dos formas de asignar valores:
+    
+    Forma 1 (asignar expresión):
+        variable = expresion;
+        Ejemplo: x = 5 + 3;
+                 resultado = x * 2;
+    
+    Forma 2 (asignar entrada):
+        variable = Ingresar(parametros);
+        Ejemplo: x = Ingresar();
+
+
+8. REGLA: ENTRADA Y SALIDA
+
+    ingresar : INGRESAR PARIZQ parametros PARDER PUNTOCOMA
+    imprimir : IMPRIMIR PARIZQ parametros PARDER PUNTOCOMA
+    
+    Explicación:
+    Entrada: Ingresar(mensaje);
+    Salida:  Imprimir(valor);
+    
+    Ejemplos:
+        Ingresar(edad);
+        Imprimir("Hola", x, "años");
+
+
+9. REGLA: PARÁMETROS
+
+    parametros : expresion
+               | parametros COMA expresion
+               | parametros PUNTO expresion
+               | empty
+    
+    Explicación:
+    Los parámetros pueden ser:
+    - Una expresión
+    - Varias expresiones separadas por comas
+    - Varias expresiones separadas por puntos
+    - Ninguno (vacío)
+    
+    Ejemplos:
+        Imprimir(x);                    ← un parámetro
+        Imprimir(x, y, z);              ← tres parámetros con comas
+        Imprimir(x . y . z);            ← tres parámetros con puntos
+        Imprimir();                     ← ningún parámetro
+
+
+10. REGLA: SENTENCIA SI (CONDICIONAL)
+
+    si : SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+       | SI PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER 
+         DELOCONTRARIO LLAVEIZQ sentencias LLAVEDER
+    
+    Explicación:
+    Dos formas:
+    
+    Forma 1 (solo si):
+        si (condicion) {
+            sentencias
+        }
+    
+    Forma 2 (si-sino):
+        si (condicion) {
+            sentencias
+        }
+        delocontrario {
+            otras sentencias
+        }
+    
+    Ejemplos:
+        si (x > 5) {
+            Imprimir("x es mayor que 5");
+        }
+        
+        si (x > 5) {
+            Imprimir("x es mayor");
+        }
+        delocontrario {
+            Imprimir("x no es mayor");
+        }
+
+
+11. REGLA: SENTENCIA MIENTRAS (BUCLE)
+
+    mientras : MIENTRAS PARIZQ condicion PARDER LLAVEIZQ sentencias LLAVEDER
+    
+    Explicación:
+    Repetir mientras sea verdadera la condición:
+    
+        mientras (condicion) {
+            sentencias
+        }
+    
+    Ejemplo:
+        mientras (x < 10) {
+            Imprimir(x);
+            x = x + 1;
+        }
+
+
+12. REGLA: SENTENCIA CASOS (SWITCH)
+
+    casos : CASOS ID LLAVEIZQ lista_casos defecto LLAVEDER
+    lista_casos : lista_casos caso
+                | caso
+    caso : CASO NUMERO DOSPUNTOS sentencias PARAR PUNTOCOMA
+    defecto : DEFECTO DOSPUNTOS sentencias
+            | empty
+    
+    Explicación:
+    Estructura switch-case:
+    
+        casos variable {
+            caso 1:
+                sentencias
+                parar;
+            caso 2:
+                sentencias
+                parar;
+            defecto:
+                sentencias
+        }
+    
+    Ejemplo:
+        casos opcion {
+            caso 1:
+                Imprimir("Opción 1");
+                parar;
+            caso 2:
+                Imprimir("Opción 2");
+                parar;
+            defecto:
+                Imprimir("Opción no válida");
+        }
+
+
+13. REGLA: CONDICIONES
+
+    condicion : expresion operador_relacional expresion
+              | VERDADERO
+    
+    operador_relacional : MAYOR
+                        | MENOR
+                        | MAYORIGUAL
+                        | MENORIGUAL
+                        | IGUALIGUAL
+                        | DIFERENTE
+    
+    Explicación:
+    Las condiciones comparan dos expresiones:
+    
+        expresion > expresion     (mayor que)
+        expresion < expresion     (menor que)
+        expresion >= expresion    (mayor o igual)
+        expresion <= expresion    (menor o igual)
+        expresion == expresion    (igual)
+        expresion != expresion    (diferente)
+    
+    O simplemente:
+        verdadero                 (siempre verdadero)
+    
+    Ejemplos:
+        si (x > 5) { ... }
+        mientras (y <= 100) { ... }
+        si (verdadero) { ... }
+
+
+14. REGLA: EXPRESIONES (CÁLCULOS)
+
+    expresion : expresion MAS termino
+              | expresion MENOS termino
+              | termino
+    
+    termino : termino POR factor
+            | termino DIVIDIDO factor
+            | factor
+    
+    factor : NUMERO
+           | CADENA
+           | ID
+           | VERDADERO
+           | PARIZQ expresion PARDER
+    
+    Explicación:
+    Las expresiones respetan precedencia matemática:
+    - FACTOR: la unidad más pequeña (números, variables, paréntesis)
+    - TÉRMINO: factores multiplicados/divididos
+    - EXPRESIÓN: términos sumados/restados
+    
+    Ejemplos:
+        5                        ← factor
+        3 * 4                    ← término (factor * factor)
+        3 * 4 + 2                ← expresión (término + factor)
+        (2 + 3) * 4              ← paréntesis en factor
+        x + y * z                ← expresión respetando precedencia
+        
+    Precedencia (lo que se calcula primero):
+        1. Paréntesis ()
+        2. Multiplicación y División
+        3. Suma y Resta
+    
+    Ejemplo de precedencia:
+        2 + 3 * 4
+        = 2 + (3*4)              ← multiplicación primero
+        = 2 + 12
+        = 14                     ← NO 20
+    
+    Con paréntesis:
+        (2 + 3) * 4
+        = 5 * 4
+        = 20                     ← aquí paréntesis primero
+
+
+15. REGLA: FUNCIONES Y PROCEDIMIENTOS
+
+    funcion : tipo ID PARIZQ parametros_funcion PARDER 
+              LLAVEIZQ sentencias LLAVEDER
+    
+    procedimiento : ID PARIZQ parametros_funcion PARDER 
+                    LLAVEIZQ sentencias LLAVEDER
+    
+    parametros_funcion : tipo ID
+                       | parametros_funcion COMA tipo ID
+                       | empty
+    
+    Explicación:
+    FUNCIÓN: devuelve un valor del tipo especificado
+        tipo nombre(parámetros) {
+            sentencias
+        }
+    
+    PROCEDIMIENTO: no devuelve nada
+        nombre(parámetros) {
+            sentencias
+        }
+    
+    Ejemplos:
+    
+    Función que devuelve entero:
+        entero sumar(entero a, entero b) {
+            retornar(a + b);
+        }
+    
+    Procedimiento que imprime:
+        mostrarMensaje(caracter mensaje) {
+            Imprimir(mensaje);
+        }
+
+
+16. REGLA: RETORNO
+
+    retornar : RETORNAR PARIZQ expresion PARDER PUNTOCOMA
+    
+    Explicación:
+    Devuelve un valor de una función:
+    
+        retornar(valor);
+    
+    Ejemplo:
+        entero calcular() {
+            entero resultado = 10 * 5;
+            retornar(resultado);
+        }
+
+
+17. REGLA: VALOR VACÍO
+
+    empty : 
+    
+    Explicación:
+    Representa "nada" - usado cuando algo es opcional.
+    
+    Ubicaciones donde se usa:
+    - Sentencias vacías: {}
+    - Parámetros vacíos: Imprimir();
+    - Defecto vacío en casos
+
+
+MÉTODO DE ANÁLISIS: LALR
+------------------------
+
+LALR = Look-Ahead LR (LR con vista previa de 1 token)
+
+¿Cómo funciona?
+
+El parser mantiene una PILA de tokens mientras analiza:
+
+Ejemplo: analizar "entero x;"
+
+    Entrada: [ENTERO, ID, PUNTOCOMA, EOF]
+    
+    Paso 1: 
+    ├─ Lee ENTERO
+    ├─ Acción: SHIFT (agregar a pila)
+    └─ Pila: [ENTERO]
+    
+    Paso 2:
+    ├─ Lee ID
+    ├─ Acción: SHIFT
+    └─ Pila: [ENTERO, ID]
+    
+    Paso 3:
+    ├─ Lee PUNTOCOMA
+    ├─ Acción: REDUCE (reducir ENTERO+ID a "tipo ID")
+    └─ Pila: [declaracion]
+    
+    Paso 4:
+    ├─ Lee EOF (fin de archivo)
+    ├─ Acción: ACCEPT (aceptar)
+    └─ Resultado: VÁLIDO
+
+
+MANEJO DE ERRORES EN PARSER:
+----------------------------
+
+Si encuentra una estructura inválida:
+
+    def p_error(p):
+        if p:
+            mensaje = f"Error de sintaxis en línea {p.lineno}: 
+                        cerca de '{p.value}'"
+        else:
+            mensaje = "Error de sintaxis: final inesperado del archivo"
+        
+        errores.append(mensaje)
+
+Ejemplos de errores:
+    
+    "entero x"      ← Falta punto y coma
+    Error: "Error de sintaxis en línea 1: cerca de 'EOF'"
+    
+    "entero 123"    ← ID debe ser identificador, no número
+    Error: "Error de sintaxis en línea 1: cerca de '123'"
+
+
+================================================================================
+4. PARSETAB.PY - TABLA DE ANÁLISIS
+================================================================================
+
+DEFINICIÓN:
+-----------
+Archivo AUTOGENERADO que contiene la tabla de análisis LALR compilada.
+NO debe ser editado manualmente - se regenera cada vez que cambias parser.py
+
+
+CONTENIDO:
+----------
+
+1. METADATOS:
+    _tabversion = '3.10'        ← Versión de PLY
+    _lr_method = 'LALR'         ← Método de análisis
+    _lr_signature = '...'       ← Firma (tokens + reglas usadas)
+
+2. PRODUCCIONES (_lr_productions):
+    Lista de todas las reglas de producción compiladas
+    
+    Estructura:
+    (regla_en_texto, no-terminal, longitud, función, archivo, línea)
+    
+    Ejemplo:
+    ('programa -> PROGRAMA ID PARIZQ PARDER LLAVEIZQ sentencias LLAVEDER',
+     'programa', 7, 'p_programa', 'parser.py', 8)
+
+3. TABLA DE ACCIONES (_lr_action):
+    Decide qué hacer en cada estado cuando se lee un símbolo:
+    
+    - SHIFT n: agregar token a pila y pasar a estado n
+    - REDUCE n: aplicar regla de producción #n
+    - ACCEPT: programa válido
+    - ERROR: error de sintaxis
+    
+    Estructura:
+    _lr_action[estado][símbolo] = acción
+    
+    Ejemplo:
+    _lr_action[0]['PROGRAMA'] = 2    ← En estado 0, al leer PROGRAMA ir a 2
+
+4. TABLA DE GOTO (_lr_goto):
+    Transiciones después de reducir un no-terminal
+    
+    Estructura:
+    _lr_goto[estado][no-terminal] = nuevo_estado
+
+
+¿CÓMO SE GENERA PARSETAB.PY?
+-----------------------------
+
+Cuando ejecutas:
+    parser = yacc.yacc()
+
+PLY analiza todas las funciones p_* en parser.py y genera:
+1. Un autómata finito con ~150 estados
+2. Las tablas de acción y goto
+3. Guardado en parsetab.py
+4. Además genera parser.out para depuración
+
+
+¿POR QUÉ EXISTE?
+----------------
+
+Rendimiento: Las tablas precompiladas permiten análisis rápido
+sin reconstruir el autómata cada vez que ejecutas el compilador.
+
+Primera ejecución:
+    python main.py archivo.txt
+    └─ Genera parsetab.py (tarda un poco)
+
+Ejecuciones siguientes:
+    python main.py archivo.txt
+    └─ Lee parsetab.py (muy rápido)
+
+
+¿QUÉ PASA SI LO ELIMINO?
+------------------------
+
+Cuando ejecutes el compilador, se regenerará automáticamente.
+No hay problema, solo tardará más la primera ejecución.
+
+Si cambias parser.py:
+    Se detectan cambios en _lr_signature
+    Se regenera automáticamente parsetab.py
+
+
+================================================================================
+5. PARSER.OUT - SALIDA DE DEPURACIÓN
+================================================================================
+
+DEFINICIÓN:
+-----------
+Archivo AUTOGENERADO que muestra la tabla LALR en formato legible para humanos.
+Útil para depuración y entendimiento.
+
+
+CONTENIDO Y ESTRUCTURA:
+-----------------------
+
+SECCIÓN 1: METADATOS
+    Created by PLY version 3.11
+
+SECCIÓN 2: ADVERTENCIAS SOBRE TOKENS UNUSED
+    Unused terminals:
+        FUNCION
+        HACER
+        PARA
+        PROCEDIMIENTO
+    
+    Explicación:
+    Estos tokens están definidos en lexer.py pero NO se usan en ninguna regla
+    del parser. Esto es una advertencia:
+    
+    - ¿Por qué están declarados si no se usan?
+    - ¿Los olvidamos implementar en el parser?
+    - ¿Son para future use?
+
+SECCIÓN 3: GRAMÁTICA COMPLETA
+    Rule 0     S' -> programa
+    Rule 1     programa -> PROGRAMA ID PARIZQ PARDER LLAVEIZQ sentencias LLAVEDER
+    Rule 2     sentencias -> sentencias sentencia
+    ...
+    Rule 68    empty -> <empty>
+    
+    Muestra todas las 69 reglas (68 nuestras + 1 de PLY)
+
+SECCIÓN 4: TERMINALES USADO EN CADA REGLA
+    Terminals, with rules where they appear
+    
+    BOLEANO              : 20
+    CADENA               : 64
+    CARACTER             : 19
+    ...
+    
+    Explicación:
+    - BOLEANO se usa en la regla 20 (tipo → BOLEANO)
+    - CADENA se usa en la regla 64 (factor → CADENA)
+
+SECCIÓN 5: TABLA DE ANÁLISIS DETALLADA
+    state 0
+        ...entrada...
+        ...acciones...
+        ...transiciones...
+    
+    state 1
+        ...
+    
+    Este es el autómata finito que implementa el analizador LALR
+
+
+¿PARA QUÉ SIRVE PARSER.OUT?
+---------------------------
+
+1. DEPURACIÓN: Si hay conflictos de parsing, aquí verás detalles
+2. COMPRENSIÓN: Entender cómo funciona el analizador
+3. OPTIMIZACIÓN: Ver qué reglas se usan más
+4. ANÁLISIS: Verificar que la gramática es correcta
+
+
+¿QUÉ SON LOS CONFLICTOS DE PARSING?
+-----------------------------------
+
+Reduce-Reduce: ¿Cuál de dos reglas aplicar?
+Shift-Reduce: ¿Agregar más tokens o aplicar una regla?
+
+Si hay conflictos, PLY da una advertencia en parser.out:
+    WARNING: X shift/reduce conflicts
+    WARNING: Y reduce/reduce conflicts
+
+En nuestro caso: NO hay conflictos (compilador bien diseñado)
+
+
+================================================================================
+6. MAIN.PY - PROGRAMA PRINCIPAL
+================================================================================
+
+DEFINICIÓN:
+-----------
+Es el punto de entrada del compilador. Coordina todo el proceso.
+
+
+ESTRUCTURA Y FLUJO:
+-------------------
+
+1. FUNCIÓN: compilar(nombre_archivo)
+
+    def compilar(nombre_archivo):
+        try:
+            # PASO 1: Abre el archivo
+            with open(nombre_archivo, 'r', encoding='utf-8') as archivo:
+                codigo = archivo.read()
+            
+            # PASO 2: Reinicia el lexer
+            lexer.lineno = 1
+            
+            # PASO 3: Limpia errores previos
+            errores.clear()
+            
+            # PASO 4: Ejecuta el parser
+            resultado = parser.parse(codigo, lexer=lexer)
+            
+            # PASO 5: Reporta resultados
+            if len(errores) == 0:
+                print("Compilado correctamente")
+            else:
+                for error in errores:
+                    print(error)
+        
+        except FileNotFoundError:
+            print("No se encontró el archivo:", nombre_archivo)
+
+
+2. BLOQUE PRINCIPAL: if __name__ == "__main__"
+
+    if len(sys.argv) < 2:
+        print("Uso: python main.py archivo.txt")
+    else:
+        compilar(sys.argv[1])
+    
+    Explicación:
+    - sys.argv[0] = nombre del script ("main.py")
+    - sys.argv[1] = primer argumento (el archivo a compilar)
+    
+    Si no hay argumento: muestra instrucciones de uso
+    Si hay argumento: compila el archivo
+
+
+CÓMO SE USA:
+------------
+
+En terminal:
+    python main.py prueba_correcta.txt
+    
+    Donde:
+    - "prueba_correcta.txt" es sys.argv[1]
+    
+Output:
+    "Compilado correctamente"
+    
+    O si hay errores:
+    "Error de sintaxis en línea 5: cerca de 'NUMERO'"
+
+
+MANEJO DE ERRORES:
+------------------
+
+1. ARCHIVO NO ENCONTRADO:
+    try/except FileNotFoundError
+    Mensaje: "No se encontró el archivo: nombre"
+
+2. ERRORES LÉXICOS:
+    Reportados por lexer.py
+    Ejemplo: "Error léxico en línea 3: carácter no válido '@'"
+
+3. ERRORES SINTÁCTICOS:
+    Reportados por parser.py
+    Se almacenan en lista "errores"
+    Se imprimen al final
+
+
+FLUJO COMPLETO DE MAIN.PY:
+--------------------------
+
+    Inicio
+      ↓
+    ¿Hay argumento?
+      ├─ No → Mostrar uso
+      │
+      └─ Sí → Abrir archivo
+              ↓
+              ¿Existe?
+              ├─ No → Error: no encontrado
+              │
+              └─ Sí → Leer código
+                      ↓
+                      Inicializar lexer
+                      ↓
+                      Limpiar errores
+                      ↓
+                      Ejecutar parser
+                      ↓
+                      ¿Sin errores?
+                      ├─ Sí → "Compilado correctamente"
+                      │
+                      └─ No → Listar errores
+                              ↓
+                      Fin
+
+
+================================================================================
+7. FLUJO COMPLETO DE COMPILACIÓN
+================================================================================
+
+VISIÓN GENERAL:
+---------------
+
+Archivo entrada (.txt)
+        ↓
+[MAIN.PY]
+        ├─ Abre y lee archivo
+        └─ Inicializa componentes
+                ↓
+        [LEXER.PY]
+        ├─ Lee caracteres
+        ├─ Genera tokens
+        └─ Reporta errores léxicos (si los hay)
+                ↓
+        Lista de tokens
+                ↓
+        [PARSER.PY]
+        ├─ Lee tokens
+        ├─ Valida gramática
+        ├─ Usa [PARSETAB.PY] para decisiones
+        └─ Reporta errores sintácticos (si los hay)
+                ↓
+        Decisión final
+                ├─ ¿Sin errores?
+                │   └─ "Compilado correctamente"
+                │
+                └─ ¿Con errores?
+                    └─ Lista de errores
+
+
+EJEMPLO PASO A PASO - COMPILACIÓN EXITOSA:
+-------------------------------------------
+
+Archivo: prueba_correcta.txt
+
+    Programa suma() {
+        entero a;
+        entero b;
+        a = 5;
+        b = 10;
+        Imprimir(a + b);
+    }
+
+PASO 1: LEXER
+
+Código:
+    Programa suma() {
+    
+Tokens:
+    [PROGRAMA, ID(suma), PARIZQ, PARDER, LLAVEIZQ, ...]
+
+Código:
+    entero a;
+    
+Tokens:
+    [ENTERO, ID(a), PUNTOCOMA, ...]
+
+Código:
+    entero b;
+    
+Tokens:
+    [ENTERO, ID(b), PUNTOCOMA, ...]
+
+Código:
+    a = 5;
+    
+Tokens:
+    [ID(a), IGUAL, NUMERO(5), PUNTOCOMA, ...]
+
+Código:
+    b = 10;
+    
+Tokens:
+    [ID(b), IGUAL, NUMERO(10), PUNTOCOMA, ...]
+
+Código:
+    Imprimir(a + b);
+    
+Tokens:
+    [IMPRIMIR, PARIZQ, ID(a), MAS, ID(b), PARDER, PUNTOCOMA, ...]
+
+Código:
+    }
+    
+Tokens:
+    [LLAVEDER]
+
+RESULTADO LEXER:
+    [PROGRAMA, ID, PARIZQ, PARDER, LLAVEIZQ,
+     ENTERO, ID, PUNTOCOMA,
+     ENTERO, ID, PUNTOCOMA,
+     ID, IGUAL, NUMERO, PUNTOCOMA,
+     ID, IGUAL, NUMERO, PUNTOCOMA,
+     IMPRIMIR, PARIZQ, ID, MAS, ID, PARDER, PUNTOCOMA,
+     LLAVEDER, EOF]
+
+
+PASO 2: PARSER
+
+Token 1: PROGRAMA
+├─ Válido: regla "programa → PROGRAMA ..."
+└─ Continúa
+
+Tokens 2-3: ID PARIZQ PARDER
+├─ Válido: nombre y paréntesis
+└─ Continúa
+
+Token 4: LLAVEIZQ
+├─ Válido: abre bloque
+└─ Continúa
+
+Tokens 5-7: ENTERO ID PUNTOCOMA
+├─ Válido: declaración "tipo ID;"
+├─ Reduce a "declaracion"
+├─ Reduce a "sentencia"
+└─ Continúa
+
+Tokens 8-10: ENTERO ID PUNTOCOMA
+├─ Válido: otra declaración
+├─ Reduce a "declaracion"
+├─ Reduce a "sentencia"
+└─ Continúa
+
+Tokens 11-14: ID IGUAL NUMERO PUNTOCOMA
+├─ Válido: asignación "ID = expresion;"
+├─ Reduce a "asignacion"
+├─ Reduce a "sentencia"
+└─ Continúa
+
+Tokens 15-18: ID IGUAL NUMERO PUNTOCOMA
+├─ Válido: otra asignación
+├─ Reduce a "asignacion"
+├─ Reduce a "sentencia"
+└─ Continúa
+
+Tokens 19-25: IMPRIMIR PARIZQ ID MAS ID PARDER PUNTOCOMA
+├─ Válido: "Imprimir(expresion);"
+├─ ID + MAS + ID = expresión
+├─ Reduce a "expresion"
+├─ Reduce a "parametros"
+├─ Reduce a "imprimir"
+├─ Reduce a "sentencia"
+└─ Continúa
+
+Token 26: LLAVEDER
+├─ Válido: cierra bloque
+├─ Todas las sentencias están completas
+├─ Reduce a "programa"
+└─ Aceptar
+
+Resultado: VÁLIDO - "Compilado correctamente"
+
+
+EJEMPLO CON ERROR:
+------------------
+
+Archivo: prueba_error.txt
+
+    Programa suma() {
+        entero a
+        entero b;
+    }
+
+LEXER (Sin problemas):
+    [PROGRAMA, ID, PARIZQ, PARDER, LLAVEIZQ,
+     ENTERO, ID,
+     ENTERO, ID, PUNTOCOMA,
+     LLAVEDER, EOF]
+
+PARSER:
+
+Tokens: ENTERO ID ENTERO
+        ↓
+        ¿Regla válida?
+        declaracion → tipo ID PUNTOCOMA
+        
+        Tengo: tipo ID (pero falta PUNTOCOMA)
+        Siguiente token: ENTERO (diferente a PUNTOCOMA)
+        
+        Error: "Error de sintaxis en línea 2: cerca de 'ENTERO'"
+
+Resultado: INVÁLIDO - Se reporta el error
+
+
+================================================================================
+8. EJEMPLOS PRÁCTICOS
+================================================================================
+
+EJEMPLO 1: PROGRAMA SIMPLE
+--------------------------
+
+Código (entrada):
+    Programa hola() {
+        Imprimir("Hola Mundo");
+    }
+
+LEXER genera:
+    Token 1: PROGRAMA (palabra reservada)
+    Token 2: ID con valor "hola"
+    Token 3: PARIZQ "("
+    Token 4: PARDER ")"
+    Token 5: LLAVEIZQ "{"
+    Token 6: IMPRIMIR (palabra reservada)
+    Token 7: PARIZQ "("
+    Token 8: CADENA con valor "Hola Mundo"
+    Token 9: PARDER ")"
+    Token 10: PUNTOCOMA ";"
+    Token 11: LLAVEDER "}"
+    Token 12: EOF (fin de archivo)
+
+PARSER valida:
+    ✓ Estructura: Programa nombre() { ... }
+    ✓ Sentencia: Imprimir(parametros);
+    ✓ Parámetro: es una cadena válida
+    ✓ Todo correcto
+
+Output:
+    "Compilado correctamente"
+
+
+EJEMPLO 2: PROGRAMA CON VARIABLES
+----------------------------------
+
+Código (entrada):
+    Programa calculadora() {
+        entero numero1;
+        entero numero2;
+        numero1 = 10;
+        numero2 = 20;
+        Imprimir(numero1 + numero2);
+    }
+
+LEXER genera (simplificado):
+    PROGRAMA ID PARIZQ PARDER LLAVEIZQ
+    ENTERO ID PUNTOCOMA
+    ENTERO ID PUNTOCOMA
+    ID IGUAL NUMERO PUNTOCOMA
+    ID IGUAL NUMERO PUNTOCOMA
+    IMPRIMIR PARIZQ ID MAS ID PARDER PUNTOCOMA
+    LLAVEDER
+
+PARSER valida:
+    ✓ Declaraciones (entero numero1;)
+    ✓ Asignaciones (numero1 = 10;)
+    ✓ Expresiones (numero1 + numero2)
+    ✓ Llamadas función (Imprimir(...))
+
+Output:
+    "Compilado correctamente"
+
+
+EJEMPLO 3: PROGRAMA CON CONDICIONAL
+------------------------------------
+
+Código (entrada):
+    Programa comparar() {
+        entero x;
+        x = 15;
+        si (x > 10) {
+            Imprimir("x es mayor que 10");
+        }
+        delocontrario {
+            Imprimir("x no es mayor");
+        }
+    }
+
+LEXER genera:
+    PROGRAMA ID PARIZQ PARDER LLAVEIZQ
+    ENTERO ID PUNTOCOMA
+    ID IGUAL NUMERO PUNTOCOMA
+    SI PARIZQ ID MAYOR NUMERO PARDER LLAVEIZQ
+    IMPRIMIR PARIZQ CADENA PARDER PUNTOCOMA
+    LLAVEDER
+    DELOCONTRARIO LLAVEIZQ
+    IMPRIMIR PARIZQ CADENA PARDER PUNTOCOMA
+    LLAVEDER
+    LLAVEDER
+
+PARSER valida:
+    ✓ Sentencia SI
+    ✓ Condición (x > 10)
+    ✓ Bloque si { ... }
+    ✓ Bloque delocontrario { ... }
+
+Output:
+    "Compilado correctamente"
+
+
+EJEMPLO 4: ERROR - FALTA PUNTO Y COMA
+--------------------------------------
+
+Código (entrada):
+    Programa error() {
+        entero x
+        Imprimir(x);
+    }
+
+LEXER genera (sin problemas):
+    PROGRAMA ID PARIZQ PARDER LLAVEIZQ
+    ENTERO ID
+    IMPRIMIR PARIZQ ID PARDER PUNTOCOMA
+    LLAVEDER
+
+PARSER valida:
+    Tokens: ENTERO ID IMPRIMIR
+            
+    ¿Es válido?
+    declaracion → tipo ID PUNTOCOMA
+    
+    Tengo ENTERO ID pero el siguiente token es IMPRIMIR (no PUNTOCOMA)
+    
+    ERROR: "Error de sintaxis en línea 2: cerca de 'IMPRIMIR'"
+
+Output:
+    "Error de sintaxis en línea 2: cerca de 'IMPRIMIR'"
+
+
+EJEMPLO 5: ERROR - VARIABLE NO DECLARADA (Sin validar)
+-------------------------------------------------------
+
+Código (entrada):
+    Programa test() {
+        x = 5;
+    }
+
+LEXER genera (sin problemas):
+    PROGRAMA ID PARIZQ PARDER LLAVEIZQ
+    ID IGUAL NUMERO PUNTOCOMA
+    LLAVEDER
+
+PARSER valida (sin error):
+    asignacion → ID IGUAL expresion PUNTOCOMA
+    
+    ✓ Es una asignación válida
+    ✓ Estructura correcta
+
+Output:
+    "Compilado correctamente"
+    
+Nota: El compilador ACTUAL no valida tipos ni variables declaradas.
+      Solo valida la SINTAXIS (estructura), no la SEMÁNTICA (significado).
+
+
+EJEMPLO 6: ERROR - EXPRESIÓN MAL FORMADA
+------------------------------------------
+
+Código (entrada):
+    Programa test() {
+        entero resultado;
+        resultado = +5;
+    }
+
+LEXER genera:
+    PROGRAMA ID PARIZQ PARDER LLAVEIZQ
+    ENTERO ID PUNTOCOMA
+    ID IGUAL MAS NUMERO PUNTOCOMA
+    LLAVEDER
+
+PARSER valida:
+    expresion → expresion + termino
+            → termino
+    
+    termino → factor
+    factor → NUMERO
+    
+    Tenemos: MAS NUMERO
+    
+    ¿Válido?
+    factor → NUMERO ✓
+    
+    ¿Pero MAS es válido antes?
+    expresion → MAS ...  ✗ (no hay regla para esto)
+    
+    ERROR: "Error de sintaxis en línea 3: cerca de 'MAS'"
+
+Output:
+    "Error de sintaxis en línea 3: cerca de 'MAS'"
+
+
+================================================================================
+RESUMEN GENERAL
+================================================================================
+
+COMPONENTES Y SUS FUNCIONES:
+
+1. LEXER.PY
+   - Convierte código en tokens
+   - Usa expresiones regulares
+   - Reconoce palabras clave y símbolos
+   - Reporta errores léxicos
+
+2. PARSER.PY
+   - Valida estructura del código
+   - Usa reglas gramaticales (68 reglas)
+   - Método LALR de análisis
+   - Reporta errores sintácticos
+
+3. PARSETAB.PY
+   - Tabla compilada del parser
+   - Autogenerada, no editar
+   - Acelera el análisis
+
+4. PARSER.OUT
+   - Versión legible de parsetab.py
+   - Útil para depuración
+   - Autogenerada
+
+5. MAIN.PY
+   - Orquestador principal
+   - Lee archivo y coordina
+   - Reporta resultado final
+
+
+ORDEN DE EJECUCIÓN:
+
+    1. main.py lee archivo
+    2. main.py llama a parser.parse()
+    3. parser.parse() solicita tokens al lexer
+    4. lexer genera tokens del código
+    5. parser valida usando parsetab.py
+    6. parser reporta errores (si hay)
+    7. main.py muestra resultado
+
+
+TIPOS DE ERRORES:
+
+    Error Léxico:   "Error léxico en línea X: carácter no válido 'Y'"
+    Error Sintáctico: "Error de sintaxis en línea X: cerca de 'TOKEN'"
+
+
+DESARROLLO:
+
+Para agregar nuevas características:
+
+    1. Editar LEXER.PY:
+       - Agregar palabra reservada en "reserved"
+       - O token en "tokens"
+       - O regla de reconocimiento en función
+
+    2. Editar PARSER.PY:
+       - Agregar nueva función p_*() con reglas gramaticales
+       - PARSETAB.PY se regenera automáticamente
+
+    3. Ejecutar:
+       - python main.py archivo.txt
+       - PARSETAB.PY se actualiza si cambió parser.py
+
+
+================================================================================
+FIN DE LA DOCUMENTACIÓN
+================================================================================
