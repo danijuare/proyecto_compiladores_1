@@ -1,0 +1,71 @@
+Explicación de Procesamiento de Cadenas
+
+Ejemplo concreto: la línea en `prueba_1.txt`:
+	a=Ingresar("ingrese a");
+
+1) Archivos que intervienen
+- lexer.py: tokeniza la entrada en tokens (terminales).
+- parser.py: contiene la gramática (las funciones `p_<nombre>`) y crea el analizador sintáctico con PLY (yacc).
+- main.py: normaliza el texto, reinicia las listas de errores, y llama a `parser.parse(codigo, lexer=lexer)` mediante la función `compilar_codigo`.
+- prueba_1.txt: archivo de entrada que contiene la cadena/Programa a analizar.
+
+2) Paso a paso — cómo se procesa esa línea
+- Lectura: `main.py` lee el archivo completo y llama a `compilar_codigo(codigo)`.
+- Normalización: `normalizar_codigo` cambia comillas tipográficas a comillas ASCII (si aplica).
+- Inicialización: `main.py` fija `lexer.lineno = 1` y borra `errores` y `errores_lexicos`.
+- Tokenización (en `lexer.py`): la línea se convierte en la siguiente secuencia de tokens:
+    1. ID, con `t.value` = 'a'
+    2. IGUAL (símbolo '=')
+    3. INGRESAR (palabra reservada `Ingresar` mapeada desde `reserved`)
+    4. PARIZQ ('(')
+    5. CADENA, con `t.value` = '"ingrese a"' (la función `t_CADENA` captura literales entre comillas)
+    6. PARDER (')')
+    7. PUNTOCOMA (';')
+  Si hay caracteres no reconocidos, `t_error` añade un mensaje en `errores_lexicos` y avanza el lexer.
+
+- Parsing (en `parser.py`): PLY consume los tokens y emplea las producciones definidas en las funciones `p_...` para reconocer estructuras.
+  La regla relevante es `p_asignacion`, cuya docstring contiene:
+    asignacion : ID IGUAL expresion PUNTOCOMA
+               | ID IGUAL INGRESAR PARIZQ parametro_unico PARDER PUNTOCOMA
+  En nuestro caso se elige la segunda alternativa. Los pasos de reducción son, conceptualmente:
+    - `CADENA` reduce a `expresion` (a través de `parametro_unico` si corresponde).
+    - `INGRESAR PARIZQ parametro_unico PARDER` forma parte de la `asignacion`.
+    - `ID IGUAL ... PUNTOCOMA` completa la `asignacion`.
+  PLY internamente realiza desplazamientos (shift) y reducciones (reduce) según la tabla LR para llegar a un estado aceptado.
+
+- Acciones semánticas / valores: en PLY, dentro de una función `p_<regla>`, los elementos `p[1]`, `p[2]`, ... son los símbolos de la derecha; `p[0]` es el valor que la producción puede devolver. En este proyecto la mayoría de las funciones sólo validan la estructura (no construyen un árbol AST), por lo que `p[0]` suele no asignarse.
+
+3) Cómo se decide si la cadena es "aceptada"
+- Si no hay mensajes en `errores_lexicos` ni en `errores` (llenada por `p_error` en `parser.py`), `main.compilar_codigo` devuelve `{"exito": True, "errores": []}` — esto indica que la entrada fue aceptada léxica y sintácticamente.
+- Si hay errores, `compilar_codigo` devuelve `{"exito": False, "errores": [...]}` con los mensajes detallados.
+
+4) Ejemplo de ejecución
+Desde la terminal (en la carpeta del proyecto):
+
+```bash
+python main.py prueba_1.txt
+```
+
+Salida esperada si todo es correcto:
+
+Compilado correctamente
+
+Si prefieres usar la API desde Python:
+
+```python
+from main import compilar_codigo
+with open('prueba_1.txt','r',encoding='utf-8') as f:
+    codigo = f.read()
+res = compilar_codigo(codigo)
+print(res)
+```
+
+5) Puntos útiles para depurar y entender mejor
+- Habilitar debug del parser: `parser.parse(codigo, lexer=lexer, debug=1)` o crear el parser con `yacc.yacc(debug=True)` para ver trazas.
+- Añadir valores a `p[0]` en producciones clave para construir un AST y observar cómo se propagan los valores.
+- Revisar las listas `errores_lexicos` y `errores` tras la llamada para ver mensajes exactos.
+
+6) Resumen corto del flujo
+Entrada (archivo) → `main.compilar_codigo` → `lexer` tokeniza → `parser` aplica las reglas de `parser.py` → si no hay errores → resultado aceptado.
+
+Fin del documento.
