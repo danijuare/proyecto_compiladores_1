@@ -2,6 +2,7 @@ import ply.yacc as yacc
 from lexer import tokens
 
 errores = []
+_errores_sintaxis_reportados = 0
 
 def p_programa(p):
     '''
@@ -18,7 +19,8 @@ def p_sentencias(p):
 
 def p_sentencia(p):
     '''
-    sentencia : declaracion_o_funcion
+    sentencia : declaracion
+              | funcion
               | declaracion_arreglo
               | asignacion
               | imprimir
@@ -40,11 +42,16 @@ def p_tipo(p):
          | BOLEANO
     '''
 
-def p_declaracion_o_funcion(p):
+def p_declaracion(p):
     '''
-    declaracion_o_funcion : tipo ID PUNTOCOMA
-                          | tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
-                          | CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    declaracion : tipo ID PUNTOCOMA
+                | tipo ID IGUAL expresion PUNTOCOMA
+                | CONSTANTE tipo ID IGUAL expresion PUNTOCOMA
+    '''
+    
+def p_funcion(p):
+    '''
+    funcion : tipo ID PARIZQ parametros_funcion PARDER LLAVEIZQ sentencias LLAVEDER
     '''
 
 def p_declaracion_arreglo(p):
@@ -213,11 +220,19 @@ def p_empty(p):
     '''
 
 def p_error(p):
-    if p:
-        mensaje = f"Error de sintaxis en línea {p.lineno}: cerca de '{p.value}'"
-    else:
-        mensaje = "Error de sintaxis: final inesperado del archivo"
+    global _errores_sintaxis_reportados
+    from errores_reporte import error_sintaxis
 
-    errores.append(mensaje)
+    if _errores_sintaxis_reportados >= 3:
+        return
+    errores.append(error_sintaxis(p))
+    _errores_sintaxis_reportados += 1
+
+
+def reiniciar_errores_sintaxis():
+    global _errores_sintaxis_reportados
+    errores.clear()
+    _errores_sintaxis_reportados = 0
+
 
 parser = yacc.yacc()

@@ -99,9 +99,9 @@ def t_newline(t):
 errores_lexicos = []
 
 def t_error(t):
-    errores_lexicos.append(
-        f"Error léxico en línea {t.lineno}: carácter no válido '{t.value[0]}'"
-    )
+    from errores_reporte import error_lexico
+
+    errores_lexicos.append(error_lexico(t.lineno, t.lexpos, t.value[0]))
     t.lexer.skip(1)
 
 lexer = lex.lex()

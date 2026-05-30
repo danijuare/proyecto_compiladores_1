@@ -17,13 +17,16 @@ python main.py prueba_1.txt
 
 Muestra `Compilado correctamente` o los errores con número de línea.
 
-### Interfaz gráfica
+### Interfaz web (HTML/CSS)
 
 ```bash
-python gui.py
+pip install flask
+python web_app.py
 ```
 
-Permite abrir `.txt`, editar código, compilar con **F5** y ver el resultado.
+Abre en el navegador: **http://127.0.0.1:5000**
+
+Interfaz para abrir `.txt`, cargar ejemplos, editar código y compilar con **F5**.
 
 ## Archivos del proyecto
 
@@ -32,7 +35,8 @@ Permite abrir `.txt`, editar código, compilar con **F5** y ver el resultado.
 | `lexer.py` | Analizador léxico (tokens y palabras reservadas) |
 | `parser.py` | Gramática y analizador sintáctico |
 | `main.py` | Punto de entrada por consola |
-| `gui.py` | Interfaz gráfica opcional |
+| `web_app.py` | Servidor de la interfaz web |
+| `web/` | Interfaz HTML, CSS y JavaScript |
 | `prueba_*.txt` | Programas de prueba del enunciado |
 
 ## Pruebas incluidas

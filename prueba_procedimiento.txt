@@ -1,7 +1,0 @@
-Programa main(){
-    menu(entero a, b){
-        si (a>b){
-            Imprimir("el numero  ". a ."es mayor");
-        }
-    }
-}

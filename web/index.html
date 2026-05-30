@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compilador — Analizador léxico y sintáctico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+          </svg>
+        </div>
+        <div>
+          <h1>Compilador</h1>
+          <p class="subtitle">Analizador léxico y sintáctico · PLY</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <label class="btn btn-ghost" for="file-input">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Abrir .txt
+        </label>
+        <input type="file" id="file-input" accept=".txt,text/plain" hidden />
+        <select id="ejemplos-select" class="select" title="Cargar ejemplo">
+          <option value="">Ejemplos…</option>
+        </select>
+        <button type="button" id="btn-compilar" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Compilar
+          <kbd>F5</kbd>
+        </button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="panel panel-editor">
+        <div class="panel-head">
+          <span class="panel-title">Código fuente</span>
+          <span id="archivo-nombre" class="badge">sin archivo</span>
+        </div>
+        <div class="editor-wrap">
+          <div class="line-numbers" id="line-numbers" aria-hidden="true">1</div>
+          <textarea id="editor" spellcheck="false" placeholder="Programa ejemplo(){&#10;    entero a;&#10;    ...&#10;}"></textarea>
+        </div>
+      </section>
+
+      <section class="panel panel-result">
+        <div class="panel-head">
+          <span class="panel-title">Resultado</span>
+          <span id="estado-badge" class="badge badge-idle">En espera</span>
+        </div>
+        <div id="resultado" class="resultado resultado-idle">
+          <div class="resultado-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 16v-4M12 8h.01"/>
+            </svg>
+            <p>Pulsa <strong>Compilar</strong> o <kbd>F5</kbd> para analizar el programa.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span id="footer-stats">0 líneas · 0 caracteres</span>
+      <span class="footer-sep">·</span>
+      <span>Proyecto Compiladores</span>
+    </footer>
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

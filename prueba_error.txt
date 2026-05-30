@@ -1,7 +1,0 @@
-Programa prueba(){
-    entero a
-    entero b;
-
-    a = Ingresar("Ingrese a");
-    b = Ingresar("Ingrese b");
-}
